@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjType">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="code" property="code" />
+        <result column="proj_class" property="projClass" />
+        <result column="proj_level" property="projLevel" />
+        <result column="social_source" property="socialSource" />
+        <result column="tech_source" property="techSource" />
+        <result column="alias" property="alias" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, is_valid, code, proj_class, proj_level, social_source, tech_source, alias
+    </sql>
+    <select id="listProjType" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.ProjTypeDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ProjTypeVo">
+        select cspt.id as rowId,cspt.code,cspt.name,cspt.is_valid as isValid,proj_class as projClass ,cspc.name as projClassName , cspt.proj_level as projLevel,cspl.name as  projLevelName,tech_source,social_source
+        from ct_srm_proj_type cspt   left join ct_srm_project_class cspc on cspt.proj_class =cspc.code
+                 left join ct_srm_proj_level cspl on cspt.proj_level= cspl.code where 1=1
+    </select>
+    <select id="getProjectType" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from  ct_srm_proj_type cspt where is_valid=1
+
+        <if test="projTypeDto.name!=null and projTypeDto.name!=''">
+            and name LIKE CONCAT('%', #{projTypeDto.name}, '%')
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmClResearchProjDetailMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmClResearchProjDetail">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="title_abbre" property="titleAbbre" />
+        <result column="public_name" property="publicName" />
+        <result column="is_guided_by_tcm" property="isGuidedByTcm" />
+        <result column="is_stem_cell_project" property="isStemCellProject" />
+        <result column="is_material_donation" property="isMaterialDonation" />
+        <result column="is_dsmb_exists" property="isDsmbExists" />
+        <result column="is_subcenter_exists" property="isSubcenterExists" />
+        <result column="major_objective" property="majorObjective" />
+        <result column="objective_detail_info" property="objectiveDetailInfo" />
+        <result column="research_contents" property="researchContents" />
+        <result column="self_eval_of_value" property="selfEvalOfValue" />
+        <result column="self_eval_of_risk" property="selfEvalOfRisk" />
+        <result column="self_eval_of_value_risk_comp" property="selfEvalOfValueRiskComp" />
+        <result column="icd" property="icd" />
+        <result column="diseases_or_symptoms" property="diseasesOrSymptoms" />
+        <result column="is_take_additional_dealing" property="isTakeAdditionalDealing" />
+        <result column="is_resch_phase" property="isReschPhase" />
+        <result column="resch_design_type" property="reschDesignType" />
+        <result column="subject_gender" property="subjectGender" />
+        <result column="age_min" property="ageMin" />
+        <result column="age_max" property="ageMax" />
+        <result column="is_accept_healthy" property="isAcceptHealthy" />
+        <result column="is_involving_vulnerable_groups" property="isInvolvingVulnerableGroups" />
+        <result column="vulnerable_groups_type" property="vulnerableGroupsType" />
+        <result column="inclusioncriteria" property="inclusioncriteria" />
+        <result column="exclusioncriteria" property="exclusioncriteria" />
+        <result column="sample_size" property="sampleSize" />
+        <result column="sample_size_calc_basis" property="sampleSizeCalcBasis" />
+        <result column="expected_date_first_sign" property="expectedDateFirstSign" />
+        <result column="is_randomly_grouped" property="isRandomlyGrouped" />
+        <result column="randomly_group_method" property="randomlyGroupMethod" />
+        <result column="randomly_process" property="randomlyProcess" />
+        <result column="stat_method_desc" property="statMethodDesc" />
+        <result column="is_blg_sample_collection" property="isBlgSampleCollection" />
+        <result column="nmpa_date" property="nmpaDate" />
+        <result column="nmpa_no" property="nmpaNo" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="category_one_level" property="categoryOneLevel" />
+        <result column="category_two_level" property="categoryTwoLevel" />
+        <result column="category_three_level" property="categoryThreeLevel" />
+        <result column="research_head_dept_id" property="researchHeadDeptId" />
+        <result column="email_address" property="emailAddress" />
+        <result column="contact_unit" property="contactUnit" />
+        <result column="blind_method_type" property="blindMethodType" />
+        <result column="blind_bprinciple" property="blindBprinciple" />
+        <result column="assign_hidden_method" property="assignHiddenMethod" />
+        <result column="desc_of_hidden_method" property="descOfHiddenMethod" />
+        <result column="recruit_status" property="recruitStatus" />
+        <result column="fr_date" property="frDate" />
+        <result column="lr_date" property="lrDate" />
+        <result column="rs_date" property="rsDate" />
+        <result column="contact_name" property="contactName" />
+        <result column="contact_phone" property="contactPhone" />
+        <result column="contact_email" property="contactEmail" />
+        <result column="plat_info" property="platInfo" />
+        <result column="shared_declaration" property="sharedDeclaration" />
+        <result column="data_sharing_plan" property="dataSharingPlan" />
+        <result column="data_sharing_conditions" property="dataSharingConditions" />
+        <result column="website" property="website" />
+        <result column="statistical_results" property="statisticalResults" />
+        <result column="result_pub_method" property="resultPubMethod" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, title_abbre, public_name, is_guided_by_tcm, is_stem_cell_project, is_material_donation, is_dsmb_exists, is_subcenter_exists, major_objective, objective_detail_info, research_contents, self_eval_of_value, self_eval_of_risk, self_eval_of_value_risk_comp, icd, diseases_or_symptoms, is_take_additional_dealing, is_resch_phase, resch_design_type, subject_gender, age_min, age_max, is_accept_healthy, is_involving_vulnerable_groups, vulnerable_groups_type, inclusioncriteria, exclusioncriteria, sample_size, sample_size_calc_basis, expected_date_first_sign, is_randomly_grouped, randomly_group_method, randomly_process, stat_method_desc, is_blg_sample_collection, nmpa_date, nmpa_no, start_date, end_date, category_one_level, category_two_level, category_three_level, research_head_dept_id, email_address, contact_unit, blind_method_type, blind_bprinciple, assign_hidden_method, desc_of_hidden_method, recruit_status, fr_date, lr_date, rs_date, contact_name, contact_phone, contact_email, plat_info, shared_declaration, data_sharing_plan, data_sharing_conditions, website, statistical_results, result_pub_method
+    </sql>
+
+</mapper>

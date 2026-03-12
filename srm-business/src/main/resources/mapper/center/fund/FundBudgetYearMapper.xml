@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundBudgetYearMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundBudgetYear">
+        <id column="id" property="id" />
+        <result column="hosp_code" property="hospCode" />
+        <result column="year" property="year" />
+        <result column="adjust_no" property="adjustNo" />
+        <result column="note" property="note" />
+        <result column="is_approved" property="isApproved" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, hosp_code, year, adjust_no, note, is_approved
+    </sql>
+
+    <select id="listFundBudgetYear" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundBudgetYearDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundBudgetYearVo">
+        select cfby.id as rowId,cfby.year,cfby.is_valid as isValid,cfby.hosp_code as hospCode,csh.name as hospName,cfby.note
+        from cf_fund_budget_year cfby
+        left join ct_srm_hospital csh on cfby.hosp_code =csh.code
+    </select>
+
+</mapper>

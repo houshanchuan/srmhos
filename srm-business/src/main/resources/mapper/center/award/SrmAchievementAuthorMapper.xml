@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.award.SrmAchievementAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.award.SrmAchievementAuthor">
+        <id column="id" property="id" />
+        <result column="achievement_id" property="achievementId" />
+        <result column="author_id" property="authorId" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_name" property="authorName" />
+        <result column="author_type" property="authorType" />
+        <result column="author_unit_name" property="authorUnitName" />
+        <result column="author_ranking" property="authorRanking" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="is_first" property="isFirst" />
+        <result column="author_unit_id" property="authorUnitId" />
+        <result column="authordivision_id" property="authordivisionId" />
+        <result column="sex" property="sex" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="title" property="title" />
+        <result column="note" property="note" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, achievement_id, author_id, author_code, author_name, author_type, author_unit_name, author_ranking, work_ratio, is_first, author_unit_id, authordivision_id, sex, edu_level, edu_degree, title, note
+    </sql>
+    <select id="listAchievementAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.award.AchievementAuthorVo">
+        select saa.id as rowId,
+               saa.author_id as authorId,
+               puser.name as authorName,
+               saa.author_type as authorType,
+               ccspt.name as authorTypeName,
+               saa.author_code as authorCode,
+               saa.sex as sex,
+                case
+                when saa.sex=0 then '女'
+                when saa.sex=1 then '男'
+                else ''
+                END as sexName,
+                saa.edu_degree as eduDegree,csed.name as eduDegreeName,
+               saa.edu_level as eduLevel,csel.name as eduLevelName,
+               saa.title as title,ccsti.name as titleName,
+               sauthororder.code as authorRanking,sauthororder.name as authorRankingName,
+               saa.work_ratio as workRatio
+
+        from srm_achievement_author saa
+                 left join ct_srm_user puser on puser.id=saa.author_id
+                 left join ct_srm_person_type ccspt  on ccspt.code=saa.author_type
+                 left join ct_srm_title_info ccsti  on ccsti.code=saa.title
+                 left join ct_srm_edu_degree csed  on csed.code=saa.edu_degree
+                 left join ct_srm_edu_level csel  on csel.code=saa.edu_level
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=saa.author_ranking
+        where saa.achievement_id=#{parentId}
+    </select>
+    <delete id="deleteAuthorByParentId">
+        delete from srm_achievement_author where achievement_id=#{parentId}
+    </delete>
+</mapper>

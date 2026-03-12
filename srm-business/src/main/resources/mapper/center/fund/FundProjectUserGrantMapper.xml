@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundProjectUserGrantMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundProjectUserGrant">
+        <id column="id" property="id" />
+        <result column="exp_type" property="expType" />
+        <result column="project_type" property="projectType" />
+        <result column="project_id" property="projectId" />
+        <result column="user_id" property="userId" />
+        <result column="is_granted" property="isGranted" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, exp_type, project_type, project_id, user_id, is_granted
+    </sql>
+    <select id="listFundProjectUserGrant" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundProjectUserGrantDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundProjectUserGrantVo">
+        select cfpug.id as rowId, exp_type as expType,'' as expTypeName,cfpug.project_type as projectType,cfpug.project_id as projectId,sfpi.name as projectName,
+        user_id as userId,csu.name as userName, is_granted as isGranted from cf_fund_project_user_grant cfpug
+        left join ct_srm_user csu on cfpug.user_id=csu.id
+        left join srm_fund_project_info sfpi on cfpug.project_id=sfpi.id
+    </select>
+
+</mapper>

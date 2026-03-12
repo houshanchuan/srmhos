@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectSolicitMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectSolicitMember">
+        <id column="id" property="id" />
+        <result column="soli_proj_id" property="soliProjId" />
+        <result column="member_id" property="memberId" />
+        <result column="member_name" property="memberName" />
+        <result column="member_code" property="memberCode" />
+        <result column="dept_code" property="deptCode" />
+        <result column="unit_name" property="unitName" />
+        <result column="discipline" property="discipline" />
+        <result column="title_code" property="titleCode" />
+        <result column="edu_level_code" property="eduLevelCode" />
+        <result column="work_time" property="workTime" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="ranking" property="ranking" />
+        <result column="note" property="note" />
+        <result column="sex" property="sex" />
+        <result column="author_type_code" property="authorTypeCode" />
+        <result column="member_role_code" property="memberRoleCode" />
+        <result column="secret_level" property="secretLevel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, soli_proj_id, member_id, member_name, member_code, dept_code, unit_name, discipline, title_code, edu_level_code, work_time, work_ratio, ranking, note, sex, author_type_code, member_role_code, secret_level
+    </sql>
+    <select id="listProjectSolicitMember" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitMemberVo">
+        select spsm.id as rowId,
+               spsm.member_id as memberId,
+               puser.name as memberName,
+               spsm.author_type_code as authorTypeCode,
+               ccspt.name as authorTypeName,
+               spsm.sex as sex,
+               ccsti.code as titleCode,ccsti.name as titleName,
+               csel.code as eduLevelCode,csel.name as eduLevelName,
+               spsm.work_ratio as workRatio,spsm.work_time as workTime,
+               sauthororder.code as ranking,sauthororder.name as rankingName,spsm.note as note,spsm.work_ratio as wordRatio
+        from srm_project_solicit_member spsm
+                 left join ct_srm_user puser on puser.id=spsm.member_id
+
+                 left join ct_srm_dept fdept on fdept.id=spsm.dept_code
+                 left join ct_srm_person_type ccspt  on ccspt.code=spsm.author_type_code
+                 left join ct_srm_title_info ccsti  on ccsti.code=spsm.title_code
+                 left join ct_srm_edu_level csel  on csel.code=spsm.edu_level_code
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=spsm.ranking
+
+        where spsm.soli_proj_id=#{parentId}
+    </select>
+    <delete id="deleteAuthorByParent">
+        delete from srm_project_solicit_member where soli_proj_id=#{parentId}
+    </delete>
+</mapper>

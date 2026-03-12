@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmScoreFieldCoefficientMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmScoreFieldCoefficient">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="calc_method" property="calcMethod" />
+        <result column="field_id" property="fieldId" />
+        <result column="coefficient_type" property="coefficientType" />
+        <result column="default_value" property="defaultValue" />
+        <result column="fourmula_desc" property="fourmulaDesc" />
+        <result column="field_value" property="fieldValue" />
+        <result column="field_min_value" property="fieldMinValue" />
+        <result column="field_max_value" property="fieldMaxValue" />
+        <result column="step_size" property="stepSize" />
+        <result column="interval_coefficient" property="intervalCoefficient" />
+        <result column="min_value" property="minValue" />
+        <result column="max_value" property="maxValue" />
+        <result column="coefficient" property="coefficient" />
+        <result column="coefficient_desc" property="coefficientDesc" />
+        <result column="year" property="year" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, calc_method, field_id, coefficient_type, default_value, fourmula_desc, field_value, field_min_value, field_max_value, step_size, interval_coefficient, min_value, max_value, coefficient, coefficient_desc, year
+    </sql>
+
+</mapper>

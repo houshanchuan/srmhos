@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmAchvFundAnnoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmAchvFundAnno">
+        <id column="id" property="id" />
+        <result column="achv_rec_id" property="achvRecId" />
+        <result column="achv_type" property="achvType" />
+        <result column="first_fund_anno" property="firstFundAnno" />
+        <result column="first_fund_no" property="firstFundNo" />
+        <result column="first_ctrt_no" property="firstCtrtNo" />
+        <result column="second_fund_anno" property="secondFundAnno" />
+        <result column="second_fund_no" property="secondFundNo" />
+        <result column="second_ctrt_no" property="secondCtrtNo" />
+        <result column="third_fund_anno" property="thirdFundAnno" />
+        <result column="third_fund_no" property="thirdFundNo" />
+        <result column="third_ctrt_no" property="thirdCtrtNo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, achv_rec_id, achv_type, first_fund_anno, first_fund_no, first_ctrt_no, second_fund_anno, second_fund_no, second_ctrt_no, third_fund_anno, third_fund_no, third_ctrt_no
+    </sql>
+
+</mapper>

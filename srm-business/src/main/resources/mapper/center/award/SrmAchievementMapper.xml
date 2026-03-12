@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmAchievementMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.award.SrmAchievement">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="name" property="name" />
+        <result column="reward_type" property="rewardType" />
+        <result column="reward_name" property="rewardName" />
+        <result column="reward_level" property="rewardLevel" />
+        <result column="reward_unit" property="rewardUnit" />
+        <result column="reward_date" property="rewardDate" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="biz_type" property="bizType" />
+        <result column="dept_id" property="deptId" />
+        <result column="source" property="source" />
+        <result column="certificate_no" property="certificateNo" />
+        <result column="main_completer" property="mainCompleter" />
+        <result column="achv_cat" property="achvCat" />
+        <result column="achv_owner" property="achvOwner" />
+        <result column="award_name" property="awardName" />
+        <result column="division_id" property="divisionId" />
+        <result column="class_code" property="classCode" />
+        <result column="discipline" property="discipline" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="discipline_three" property="disciplineThree" />
+        <result column="author_sum" property="authorSum" />
+        <result column="project_source" property="projectSource" />
+        <result column="check_status" property="checkStatus" />
+        <result column="note" property="note" />
+        <result column="school_sign" property="schoolSign" />
+        <result column="unitsum" property="unitsum" />
+        <result column="fauthor_type" property="fauthorType" />
+        <result column="fauthor_name" property="fauthorName" />
+        <result column="fauthor_title" property="fauthorTitle" />
+        <result column="fauthor_sex" property="fauthorSex" />
+        <result column="in_fauthor_code" property="inFauthorCode" />
+        <result column="in_fauthor_id" property="inFauthorId" />
+        <result column="in_fauthor_edu_level" property="inFauthorEduLevel" />
+        <result column="in_fauthor_edu_degree" property="inFauthorEduDegree" />
+        <result column="operate_time" property="operateTime" />
+        <result column="award_level" property="awardLevel" />
+        <result column="creator_id" property="creatorId" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="award_apply_id" property="awardApplyId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, name, reward_type, reward_name, reward_level, reward_grade, reward_unit, reward_date,
+          our_unit_ranking, sub_user_id, sub_date, data_status, sys_no, biz_type,
+          dept_id, source, certificate_no, main_completer, achv_cat, achv_owner,
+          award_name, division_id, class_code, discipline, discipline_two, discipline_three,
+          author_sum, project_source, check_status, note, school_sign, unitsum, fauthor_type,
+          fauthor_name, fauthor_title, fauthor_sex, in_fauthor_code, in_fauthor_id,
+          in_fauthor_edu_level, in_fauthor_edu_degree, operate_time, award_level, creator_id,
+          creator_name, create_time, award_apply_id
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.award.AchievementVo">
+        select sa.id as rowId,sa.name as name,sa.award_name as awardName,sa.source as source,
+               sa.reward_date as rewardDate,sa.reward_unit as rewardUnit,
+               sa.fauthor_name as fauthorName,sa.certificate_no as certificateNo,
+               sa.school_sign as schoolSign,
+               csrt.code as "rewardType.id", csrt.name as "rewardType.name",csrt.name as rewardTypeName,
+               csal.code as "rewardLevel.id", csal.name as "rewardLevel.name",csal.name as rewardLevelName,
+               csag.code as "rewardGrade.id", csag.name as "rewardGrade.name",csag.name as rewardGradeName,
+               cuser.id as "mainCompleter.id", cuser.name as "mainCompleter.name",cuser.name as mainCompleterName,
+               fdept.id as "deptId.id", fdept.name as "deptId.name",fdept.name as deptIdName,
+               csy.code as "year.id", csy.name as "year.name",csy.name as yearName,sa.note as note,
+               sprojectsource.code as "projectSource.id", sprojectsource.name as "projectSource.name",sprojectsource.name as projectSourceName,
+               sclass.code as "classCode.id", sclass.name as "classCode.name",sclass.name as classCodeName,
+               fdiscipline.code as "discipline.id", fdiscipline.name as "discipline.name",fdiscipline.name as disciplineName,
+               sdiscipline.code as "disciplineTwo.id", sdiscipline.name as "disciplineTwo.name",sdiscipline.name as disciplineTwoName,
+               tdiscipline.code as "disciplineThree.id", tdiscipline.name as "disciplineThree.name",tdiscipline.name as disciplineThreeName,
+               csuo.code as "ourUnitRanking.id", csuo.name as "ourUnitRanking.name",csuo.name as ourUnitRankingName,
+               csac.code as "achvCat.id", csac.name as "achvCat.name",csac.name as achvCatName,
+               csru.code as "rewardUnit.id", csru.name as "rewardUnit.name", csru.name as rewardUnitName,
+               sa.data_status as dataStatus
+        from srm_achievement sa
+                 left join ct_srm_year csy on csy.code=sa.year
+                 left join ct_srm_dept fdept on fdept.id=sa.dept_id
+                 left join ct_srm_user cuser on cuser.id=sa.main_completer
+                 left join ct_srm_class sclass on sclass.code=sa.class_code
+                 left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=sa.project_source
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=sa.discipline
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=sa.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=sa.discipline_three
+                 left join ct_srm_unit_order csuo on csuo.code=sa.our_unit_ranking
+                 left join ct_srm_award_level csal  on csal.code=sa.reward_level
+                 left join ct_srm_reward_type csrt  on csrt.code=sa.reward_type
+                 left join ct_srm_award_grade csag   on csag.code=sa.reward_grade
+                 left join ct_srm_achievement_cat csac   on csac.code=sa.achv_cat
+                 left join ct_srm_rely_unit csru   on csru.code=sa.reward_unit
+
+        where sa.id=#{rowId}
+    </select>
+    <select id="listAchievement" resultType="com.mediway.hos.srm.business.center.model.vo.award.AchievementVo">
+        select sa.id as rowId,sa.name as name,sa.award_name as awardName,sa.source as source,
+               sa.reward_date as rewardDate,sa.reward_unit as rewardUnit,
+               sa.fauthor_name as fauthorName,sa.certificate_no as certificateNo,
+               sa.school_sign as schoolSign,suser.name as subUserName,sa.sub_date as subDate,
+               csrt.name as rewardTypeName,
+               csal.name as rewardLevelName,
+               csag.name as rewardGradeName,
+               cuser.name as mainCompleterName,
+               fdept.name as deptName,
+               csy.name as yearName,
+               sprojectsource.name as projectSourceName,
+               csuo.name as ourUnitRankingName,
+               csac.name as achvCatName,
+               sa.data_status as dataStatus
+        from srm_achievement sa
+                 left join ct_srm_year csy on csy.code=sa.year
+                 left join ct_srm_dept fdept on fdept.id=sa.dept_id
+                 left join ct_srm_user cuser on cuser.id=sa.main_completer
+                left join ct_srm_user suser on suser.id=sa.sub_user_id
+
+                 left join ct_srm_class sclass on sclass.code=sa.class_code
+                 left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=sa.project_source
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=sa.discipline
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=sa.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=sa.discipline_three
+                 left join ct_srm_unit_order csuo on csuo.code=sa.our_unit_ranking
+                 left join ct_srm_award_level csal  on csal.code=sa.reward_level
+                 left join ct_srm_reward_type csrt  on csrt.code=sa.reward_type
+                 left join ct_srm_award_grade csag   on csag.code=sa.reward_grade
+                 left join ct_srm_achievement_cat csac   on csac.code=sa.achv_cat
+                 left join ct_srm_rely_unit csru   on csru.code=sa.reward_unit
+        where
+        (
+            sa.creator_id=#{achievementDto.userId} or sa.id in
+            (SELECT achievement_id FROM srm_achievement_author WHERE author_id = #{achievementDto.userId})
+        )
+        <if test="achievementDto.name!=null and achievementDto.name!=''">
+            and sa.name LIKE CONCAT('%', #{achievementDto.name}, '%')
+        </if>
+        <if test="achievementDto.rewardName!=null and achievementDto.rewardName!=''">
+            and sa.reward_name LIKE CONCAT('%', #{achievementDto.rewardName}, '%')
+        </if>
+        <if test="achievementDto.year!=null and achievementDto.year!=''">
+            and sa.year =#{achievementDto.year}
+        </if>
+        <if test="achievementDto.dataStatus!=null">
+            and sa.data_status = #{achievementDto.dataStatus}
+        </if>
+        order by sa.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_achievement
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAchievement" resultType="com.mediway.hos.srm.business.center.model.vo.award.AchievementVo">
+        select sa.id as rowId,sa.name as name,sa.award_name as awardName,sa.source as source,
+               sa.reward_date as rewardDate,sa.reward_unit as rewardUnit,
+               sa.fauthor_name as fauthorName,sa.certificate_no as certificateNo,
+               sa.school_sign as schoolSign,
+               csrt.name as rewardTypeName,
+               csal.name as rewardLevelName,
+               csag.name as rewardGradeName,
+               cuser.name as mainCompleterName,
+               fdept.name as deptName,
+               csy.name as yearName,
+               sprojectsource.name as projectSourceName,
+               csuo.name as ourUnitRankingName,
+               csac.name as achvCatName,
+               sa.data_status as dataStatus
+        from srm_achievement sa
+                 left join ct_srm_year csy on csy.code=sa.year
+                 left join ct_srm_dept fdept on fdept.id=sa.dept_id
+                 left join ct_srm_user cuser on cuser.id=sa.main_completer
+                 left join ct_srm_class sclass on sclass.code=sa.class_code
+                 left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=sa.project_source
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=sa.discipline
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=sa.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=sa.discipline_three
+                 left join ct_srm_unit_order csuo on csuo.code=sa.our_unit_ranking
+                 left join ct_srm_award_level csal  on csal.code=sa.reward_level
+                 left join ct_srm_reward_type csrt  on csrt.code=sa.reward_type
+                 left join ct_srm_award_grade csag   on csag.code=sa.reward_grade
+                 left join ct_srm_achievement_cat csac   on csac.code=sa.achv_cat
+                 left join ct_srm_rely_unit csru   on csru.code=sa.reward_unit
+
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=sa.sys_no and eafrec.check_rec_id=sa.id
+        where
+            eafrec.step_no>1
+            <if test="achievementDto.auditState== null and achievementDto.auditState == ''">
+                and (
+                (sa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{achievementDto.userId}, '|%'))
+                or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where sa.sys_no=seafrec.sys_no and seafrec.check_rec_id=sa.id) and eafrec.checker_string  LIKE CONCAT('%|', #{achievementDto.userId}, '|%') and eafrec.check_datetime is not null)
+                or (sa.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{achievementDto.userId}, '|%'))
+                )
+            </if>
+            <if test='achievementDto.auditState=="0"'>
+                and sa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{achievementDto.userId}, '|%')
+            </if>
+            <if test='achievementDto.auditState=="1"'>
+                and sa.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{achievementDto.userId}, '|%')
+            </if>
+            <if test='achievementDto.auditState=="2"'>
+                and sa.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{achievementDto.userId}, '|%')
+            </if>
+            <if test="achievementDto.name!=null and achievementDto.name!=''">
+                and sa.name LIKE CONCAT('%', #{achievementDto.name}, '%')
+            </if>
+            <if test="achievementDto.rewardName!=null and achievementDto.rewardName!=''">
+                and sa.reward_name LIKE CONCAT('%', #{achievementDto.rewardName}, '%')
+            </if>
+            <if test="achievementDto.year!=null and achievementDto.year!=''">
+                and sa.year =#{achievementDto.year}
+            </if>
+    </select>
+</mapper>

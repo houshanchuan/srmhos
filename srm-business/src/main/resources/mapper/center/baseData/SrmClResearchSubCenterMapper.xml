@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmClResearchSubCenterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmClResearchSubCenter">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="center_name" property="centerName" />
+        <result column="center_post" property="centerPost" />
+        <result column="center_addr" property="centerAddr" />
+        <result column="center_head_name" property="centerHeadName" />
+        <result column="center_head_tel" property="centerHeadTel" />
+        <result column="center_head_email" property="centerHeadEmail" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, center_name, center_post, center_addr, center_head_name, center_head_tel, center_head_email
+    </sql>
+
+</mapper>

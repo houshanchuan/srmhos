@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjStatSourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjStatSource">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="class_code" property="classCode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid, class_code
+    </sql>
+    <select id="listProjStatSource" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.ProjStatSourceDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ProjStatSourceVo">
+        select cspss.id as rowId,cspss.code,cspss.name,cspss.is_valid as isValid,cspss.class_code as classCode,csc.name as className
+        from ct_srm_proj_stat_source cspss left join ct_srm_class csc on cspss.class_code=csc.code
+    </select>
+    <select id="getProjStatSource" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from ct_srm_proj_stat_source
+    </select>
+</mapper>

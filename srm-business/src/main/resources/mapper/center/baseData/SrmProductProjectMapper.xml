@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProductProjectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProductProject">
+        <id column="id" property="id" />
+        <result column="rec_sys_no" property="recSysNo" />
+        <result column="rec_id" property="recId" />
+        <result column="proj_id" property="projId" />
+        <result column="outproj_name" property="outprojName" />
+        <result column="product_desc" property="productDesc" />
+        <result column="product_type" property="productType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rec_sys_no, rec_id, proj_id, outproj_name, product_desc, product_type
+    </sql>
+
+</mapper>

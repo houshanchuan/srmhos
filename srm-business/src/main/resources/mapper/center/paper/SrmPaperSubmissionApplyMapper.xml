@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.paper.SrmPaperSubmissionApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.paper.SrmPaperSubmissionApply">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="biz_type" property="bizType" />
+        <result column="title" property="title" />
+        <result column="dept_id" property="deptId" />
+        <result column="record_type" property="recordType" />
+        <result column="journal" property="journal" />
+        <result column="journal_name" property="journalName" />
+        <result column="scope_type" property="scopeType" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_user_code" property="subUserCode" />
+        <result column="sub_user_name" property="subUserName" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="data_status" property="dataStatus" />
+        <result column="check_status" property="checkStatus" />
+        <result column="operate_time" property="operateTime" />
+        <result column="content" property="content" />
+        <result column="is_multi_contribution" property="isMultiContribution" />
+        <result column="is_keep_secret" property="isKeepSecret" />
+        <result column="proj_id" property="projId" />
+        <result column="press" property="press" />
+        <result column="serial_no" property="serialNo" />
+        <result column="thesis_type" property="thesisType" />
+        <result column="language" property="language" />
+        <result column="contribute_date" property="contributeDate" />
+        <result column="classCode" property="classCode" />
+        <result column="discipline" property="discipline" />
+        <result column="research_field" property="researchField" />
+        <result column="pub_unit_name" property="pubUnitName" />
+        <result column="all_code" property="allCode" />
+        <result column="first_author_id" property="firstAuthorId" />
+        <result column="first_author_name" property="firstAuthorName" />
+        <result column="first_author_code" property="firstAuthorCode" />
+        <result column="first_author_dept_id" property="firstAuthorDeptId" />
+        <result column="first_author_type" property="firstAuthorType" />
+        <result column="first_author_title" property="firstAuthorTitle" />
+        <result column="person_serialno" property="personSerialno" />
+        <result column="is_graduate" property="isGraduate" />
+        <result column="mentor1" property="mentor1" />
+        <result column="is_in_two_years" property="isInTwoYears" />
+        <result column="mentor2" property="mentor2" />
+        <result column="tfauthor" property="tfauthor" />
+        <result column="tfauthor_dept_id" property="tfauthorDeptId" />
+        <result column="corr_author_id" property="corrAuthorId" />
+        <result column="corr_author_name" property="corrAuthorName" />
+        <result column="corr_author_code" property="corrAuthorCode" />
+        <result column="corr_author_type" property="corrAuthorType" />
+        <result column="corr_author_title" property="corrAuthorTitle" />
+        <result column="corr_author_dept_id" property="corrAuthorDeptId" />
+        <result column="tcauthor" property="tcauthor" />
+        <result column="tcauthor_dept_id" property="tcauthorDeptId" />
+        <result column="is_contributed" property="isContributed" />
+        <result column="reg_paper_id" property="regPaperId" />
+        <result column="is_reimburse" property="isReimburse" />
+        <result column="reimburse_way" property="reimburseWay" />
+        <result column="project_code" property="projectCode" />
+        <result column="awardee_type" property="awardeeType" />
+        <result column="awardee_account" property="awardeeAccount" />
+        <result column="awardee_id_no" property="awardeeIdNo" />
+        <result column="awardee_bank" property="awardeeBank" />
+        <result column="awardee_bank_account" property="awardeeBankAccount" />
+        <result column="awardee_contact_tel" property="awardeeContactTel" />
+        <result column="file_ids" property="fileIds" />
+        <result column="note" property="note" />
+        <result column="proj_author" property="projAuthor" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, biz_type, title, dept_id, record_type, journal, journal_name, scope_type, sub_user_id, sub_user_code, sub_user_name, sub_date, sub_time, data_status, check_status, operate_time, content, is_multi_contribution, is_keep_secret, proj_id, press, serial_no, thesis_type, language, contribute_date, class, discipline, research_field, pub_unit_name, all_code, first_author_id, first_author_name, first_author_code, first_author_dept_id, first_author_type, first_author_title, person_serialno, is_graduate, mentor1, is_in_two_years, mentor2, tfauthor, tfauthor_dept_id, corr_author_id, corr_author_name, corr_author_code, corr_author_type, corr_author_title, corr_author_dept_id, tcauthor, tcauthor_dept_id, is_contributed, reg_paper_id, is_reimburse, reimburse_way, project_code, awardee_type, awardee_account, awardee_id_no, awardee_bank, awardee_bank_account, awardee_contact_tel, file_ids, note, proj_author
+    </sql>
+    <select id="listPaperSubmissionApply" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionApplyVo">
+        select ply.id as rowId,ply.title as title, ply.data_status as dataStatus,ply.sub_date as subDate,
+        suser.name as subUserName,ply.contribute_date as sendDate,
+        fuser.name as firstAuthorName,cuser.name as corrAuthorName,fdept.name as firstAuthorName,
+        cdept.name as corrAuthorName,fdept.name as firstAuthorDeptName,cdept.name as corrAuthorDeptName,createuser.name as creatorName
+        from srm_paper_submission_apply ply
+        left join ct_srm_user suser on suser.id=ply.sub_user_id
+        left join ct_srm_user fuser on fuser.id=ply.first_author_id
+        left join ct_srm_user cuser on cuser.id=ply.corr_author_id
+        left join ct_srm_user createuser on createuser.id=ply.creator
+        left join ct_srm_dept fdept on fdept.id=ply.first_author_dept_id
+        left join ct_srm_dept cdept on cdept.id=ply.corr_author_dept_id
+        where (ply.creator=#{paperSubmissionApplyDto.userId}
+            or ply.sub_user_id=#{paperSubmissionApplyDto.userId}
+            or ply.first_author_id=#{paperSubmissionApplyDto.userId}
+            or ply.corr_author_id=#{paperSubmissionApplyDto.userId})
+        <if test="paperSubmissionApplyDto.title!=null and paperSubmissionApplyDto.title!=''">
+            and ply.title like CONCAT('%', #{paperSubmissionApplyDto.title}, '%')
+        </if>
+        <if test="paperSubmissionApplyDto.firstAuthor!=null and paperSubmissionApplyDto.firstAuthor!=''">
+            and ply.first_author_id=#{paperSubmissionApplyDto.firstAuthor}
+        </if>
+        <if test="paperSubmissionApplyDto.startDate!=null and paperSubmissionApplyDto.startDate!=''">
+            and ply.sub_date &gt;= #{paperSubmissionApplyDto.startDate}
+        </if>
+        <if test="paperSubmissionApplyDto.endDate!=null and paperSubmissionApplyDto.endDate!=''">
+            and ply.sub_date &lt;= #{paperSubmissionApplyDto.endDate}
+        </if>
+        <if test="paperSubmissionApplyDto.journal!=null and paperSubmissionApplyDto.journal!=''">
+            and ply.journal=#{paperSubmissionApplyDto.journal}
+        </if>
+        <if test="paperSubmissionApplyDto.dataStatus!=null">
+            and ply.data_status = #{paperSubmissionApplyDto.dataStatus}
+        </if>
+        order by ply.id desc
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionApplyVo">
+        select ply.id as rowId,ply.title as title,sj.code as "journal.id",sj.name as "journal.name",sj.name as journalName,
+               csjt.code as "journalType.id",csjt.name as "journalType.name",csjt.name as journalTypeName,
+        slanguage.code as "language.id",slanguage.name as "language.name",slanguage.name as languageName,
+               fuser.id as "firstAuthor.id",fuser.name as "firstAuthor.name",fuser.name as firstAuthorName,
+        cuser.id as "corrAuthor.id",cuser.name as "corrAuthor.name",cuser.name as corrAuthorName,
+               fcspt.code as "firstAuthorType.id",fcspt.name as "firstAuthorType.name",fcspt.name as firstAuthorTypeName,
+        ccspt.code as "corrAuthorType.id",ccspt.name as "corrAuthorType.name",ccspt.name as corrAuthorTypeName,
+        fcsti.code as "firstAuthorPosition.id",fcsti.name as "firstAuthorPosition.name",fcsti.name as firstAuthorPositionName,
+               ccsti.code as "corrAuthorPosition.id",ccsti.name as "corrAuthorPosition.name",ccsti.name as corrAuthorPositionName,
+               fdept.id as "firstAuthorDept.id",fdept.name as "firstAuthorDept.name",fdept.name as firstAuthorDeptName,
+               cdept.id as "corrAuthorDept.id",cdept.name as "corrAuthorDept.name",cdept.name as corrAuthorDeptName,
+               ply.is_reimburse as jackFreeFlag,ply.serial_no as seriousNo,ply.contribute_date as sendDate,
+               ply.project_code as projNo,
+               csrw.code as "reimburseWay.id",csrw.name as "reimburseWay.name",csrw.name as reimburseWayName,
+               puser.id as "leadUser.id",puser.name as "leadUser.name",puser.name as leadUserName,
+               ply.awardee_type as encouragetype,ply.awardee_account as personCode,
+               ply.awardee_id_no as personIdentify,ply.awardee_contact_tel as personTel,
+               ply.awardee_bank as personBankNo,ply.awardee_bank_account as personBankAccount,
+        ply.note as remark,ply.data_status as dataStatus
+        from srm_paper_submission_apply ply
+        left join srm_journal sj  on sj.code=ply.journal
+        left join ct_srm_journal_type csjt  on csjt.code=ply.record_type
+        left join ct_srm_reimbursement_way csrw on csrw.code=ply.reimburse_way
+        left join ct_srm_language slanguage on slanguage.code=ply.language
+        left join ct_srm_user fuser on fuser.id=ply.first_author_id
+        left join ct_srm_user cuser on cuser.id=ply.corr_author_id
+        left join ct_srm_user puser on puser.id=ply.proj_author
+        left join ct_srm_dept fdept on fdept.id=ply.first_author_dept_id
+        left join ct_srm_dept cdept on cdept.id=ply.corr_author_dept_id
+        left join ct_srm_person_type fcspt  on fcspt.code=ply.first_author_type
+        left join ct_srm_person_type ccspt  on ccspt.code=ply.corr_author_type
+        left join ct_srm_title_info fcsti  on fcsti.code=ply.first_author_title
+        left join ct_srm_title_info ccsti  on ccsti.code=ply.corr_author_title
+        where ply.id=#{rowId}
+    </select>
+    <update id="updateStatus">
+        update srm_paper_submission_apply
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditPaperSubmissionApply" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionApplyVo">
+        select ply.id as rowId,ply.title as title, ply.data_status as dataStatus,ply.sub_date as subDate,
+        suser.name as subUserName,ply.contribute_date as sendDate,
+        fuser.name as firstAuthorName,cuser.name as corrAuthorName,
+        fdept.name as firstAuthorDeptName,cdept.name as corrAuthorDeptName,createuser.name as creatorName
+        from srm_paper_submission_apply ply
+        left join ct_srm_user suser on suser.id=ply.sub_user_id
+        left join ct_srm_user createuser on createuser.id=ply.creator
+        left join ct_srm_user fuser on fuser.id=ply.first_author_id
+        left join ct_srm_user cuser on cuser.id=ply.corr_author_id
+        left join ct_srm_dept fdept on fdept.id=ply.first_author_dept_id
+        left join ct_srm_dept cdept on cdept.id=ply.corr_author_dept_id
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=ply.sys_no and eafrec.check_rec_id=ply.id
+        where eafrec.step_no>1
+        <if test='paperSubmissionApplyDto.pstatus==null or paperSubmissionApplyDto.pstatus==""'>
+           and ((ply.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%'))
+          or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where ply.sys_no=seafrec.sys_no and seafrec.check_rec_id=ply.id) and eafrec.checker_string  LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%') and eafrec.check_datetime is not null)
+          or (ply.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%'))
+          )
+        </if>
+        <if test='paperSubmissionApplyDto.pstatus=="0"'>
+            and ply.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%')
+        </if>
+        <if test='paperSubmissionApplyDto.pstatus=="1"'>
+            and ply.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%')
+        </if>
+        <if test='paperSubmissionApplyDto.pstatus=="2"'>
+            and ply.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{paperSubmissionApplyDto.userId}, '|%')
+        </if>
+        <if test="paperSubmissionApplyDto.title!=null and paperSubmissionApplyDto.title!=''">
+            and ply.title like CONCAT('%', #{paperSubmissionApplyDto.title}, '%')
+        </if>
+        <if test="paperSubmissionApplyDto.firstAuthor!=null and paperSubmissionApplyDto.firstAuthor!=''">
+            and ply.first_author_id=#{paperSubmissionApplyDto.firstAuthor}
+        </if>
+        <if test="paperSubmissionApplyDto.startDate!=null and paperSubmissionApplyDto.startDate!=''">
+            and ply.sub_date &gt;= #{paperSubmissionApplyDto.startDate}
+        </if>
+        <if test="paperSubmissionApplyDto.endDate!=null and paperSubmissionApplyDto.endDate!=''">
+            and ply.sub_date &lt;= #{paperSubmissionApplyDto.endDate}
+        </if>
+        <if test="paperSubmissionApplyDto.journal!=null and paperSubmissionApplyDto.journal!=''">
+            and ply.journal=#{paperSubmissionApplyDto.journal}
+        </if>
+    </select>
+    <select id="listExpertAuditPaperSubmission" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionExpertAuditVo">
+        select spsg.id as rowId, ply.title as title,spsg.app_rowId as appRowId,spsg.note as note,
+        csu.name as subUserName, ply.sub_date as subDate ,
+        fuser.name as firstAuthorName,cuser.name as corrAuthorName,
+        fdept.name as firstAuthorDeptName,cdept.name as corrAuthorDeptName,
+        spsg.audit_status as auditStatus,spsg.data_status as dataStatus
+        from srm_paper_submission_grade spsg
+        left join srm_paper_submission_apply ply on ply.id=spsg.app_rowId
+        left join ct_srm_user csu on csu.id=ply.sub_user_id
+        left join ct_srm_user fuser on fuser.id=ply.first_author_id
+        left join ct_srm_user cuser on cuser.id=ply.corr_author_id
+        left join ct_srm_dept fdept on fdept.id=ply.first_author_dept_id
+        left join ct_srm_dept cdept on cdept.id=ply.corr_author_dept_id
+
+        where spsg.expert=#{paperSubmissionExpertAuditDto.userId} and spsg.sys_no=#{paperSubmissionExpertAuditDto.sysNo}
+        <if test="paperSubmissionExpertAuditDto.title!=null and paperSubmissionExpertAuditDto.title!=''">
+            and ply.title=#{paperSubmissionExpertAuditDto.title}
+        </if>
+
+    </select>
+
+</mapper>

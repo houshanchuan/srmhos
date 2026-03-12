@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmYearMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmYear">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, start_date, end_date, is_valid
+    </sql>
+    <select id="getYear" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+        code id, name
+        FROM
+        ct_srm_year year
+        where is_valid=1
+        <if test="yearDto.name!=null and yearDto.name!=''">
+            and name LIKE CONCAT('%', #{yearDto.name}, '%')
+        </if>
+
+        order by name desc
+    </select>
+    <insert id="saveYear" useGeneratedKeys="true" keyProperty="id">
+        insert into ct_srm_year
+            (code , name, start_date, end_date, is_valid)
+        values
+            (#{code}, #{name},#{startDate, jdbcType= TIMESTAMP},#{endDate , jdbcType= TIMESTAMP},#{isValid})
+
+    </insert>
+    <select id="listYear" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.YearDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.YearVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_year
+    </select>
+</mapper>

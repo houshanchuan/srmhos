@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmFieldInputSetupMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmFieldInputSetup">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="field_id" property="fieldId" />
+        <result column="field_label" property="fieldLabel" />
+        <result column="is_required" property="isRequired" />
+        <result column="udf_field_label" property="udfFieldLabel" />
+        <result column="field_name" property="fieldName" />
+        <result column="wanYuanFlag" property="wanYuanFlag" />
+        <result column="appFieldName" property="appFieldName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, field_id, field_label, is_required, udf_field_label, field_name, wanYuanFlag, appFieldName
+    </sql>
+    <select id="getFieldInputSetup" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.FieldInputSetUpVo">
+        select id as rowId, sys_no as sysNo, field_id as fieldId, field_label as fieldLabel,
+               is_required as isRequired, udf_field_label as udfFieldLabel, field_name as fieldName,
+               wanYuanFlag , appFieldName
+        from cf_srm_field_input_setup
+        where sys_no=#{sysNo} order by id
+    </select>
+    <select id="getRowIdBySysField" resultType="Long">
+        select id
+        from cf_srm_field_input_setup
+        where sys_no=#{sysNo} and field_id=#{fieldId}
+    </select>
+    <delete id="deleteFieldInputSet">
+        delete from cf_srm_field_input_setup where sys_no=#{sysNo}
+    </delete>
+</mapper>

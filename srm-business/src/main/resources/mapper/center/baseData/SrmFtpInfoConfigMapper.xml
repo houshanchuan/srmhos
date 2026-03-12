@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmFtpInfoConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmFtpInfoConfig">
+        <id column="id" property="id" />
+        <result column="ftp_user" property="ftpUser" />
+        <result column="ftp_password" property="ftpPassword" />
+        <result column="ftp_ip" property="ftpIp" />
+        <result column="ftp_desc" property="ftpDesc" />
+        <result column="ftp_type" property="ftpType" />
+        <result column="ftp_src" property="ftpSrc" />
+        <result column="ftp_ssl" property="ftpSsl" />
+        <result column="kk_file_view_flag" property="kkFileViewFlag" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, ftp_user, ftp_password, ftp_ip, ftp_desc, ftp_type, ftp_src, ftp_ssl, kk_file_view_flag
+    </sql>
+    <select id="listFtpInfoConfig" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.FtpInfoConfigDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.FtpInfoConfigVo">
+        SELECT id as rowId,ftp_user as ftpUser,
+               ftp_password  as ftpPassword,ftp_ip as ftpIp ,ftp_desc  as ftpDesc,ftp_type as ftpType ,'' as ftpTypeName,ftp_src as ftpSrc ,
+               ftp_ssl as ftpSsl ,kk_file_view_flag as kkFileViewFlag  FROM cf_srm_ftp_info_config
+    </select>
+</mapper>

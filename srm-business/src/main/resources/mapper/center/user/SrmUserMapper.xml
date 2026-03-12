@@ -1,0 +1,694 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.user.SrmUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.user.SrmUser">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="person_type" property="personType" />
+        <result column="is_valid" property="isValid" />
+        <result column="sex" property="sex" />
+        <result column="birthday" property="birthday" />
+        <result column="id_num" property="idNum" />
+        <result column="title" property="title" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="hospital_id" property="hospitalId" />
+        <result column="monograph_num" property="monographNum" />
+        <result column="paper_num" property="paperNum" />
+        <result column="patent_num" property="patentNum" />
+        <result column="inv_tech_std_num" property="invTechStdNum" />
+        <result column="train_num" property="trainNum" />
+        <result column="hold_train_num" property="holdTrainNum" />
+        <result column="in_training_num" property="inTrainingNum" />
+        <result column="dept" property="dept" />
+        <result column="job_type" property="jobType" />
+        <result column="is_teacher" property="isTeacher" />
+        <result column="is_expert" property="isExpert" />
+        <result column="is_ethical_expert" property="isEthicalExpert" />
+        <result column="profess" property="profess" />
+        <result column="direction" property="direction" />
+        <result column="parttime_pos" property="parttimePos" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="division" property="division" />
+        <result column="class_code" property="classCode" />
+        <result column="discipline_one" property="disciplineOne" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="discipline_three" property="disciplineThree" />
+        <result column="name_en" property="nameEn" />
+        <result column="account" property="account" />
+        <result column="account_state" property="accountState" />
+        <result column="is_stat" property="isStat" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="nationlity" property="nationlity" />
+        <result column="nation" property="nation" />
+        <result column="polity" property="polity" />
+        <result column="duty" property="duty" />
+        <result column="duty_date" property="dutyDate" />
+        <result column="work_date" property="workDate" />
+        <result column="person_state" property="personState" />
+        <result column="tutor_type" property="tutorType" />
+        <result column="employ_date" property="employDate" />
+        <result column="operate_time" property="operateTime" />
+        <result column="creator_name" property="creatorName" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="create_time" property="createTime" />
+        <result column="advisor_name" property="advisorName" />
+        <result column="advisor_code" property="advisorCode" />
+        <result column="advisor_unit" property="advisorUnit" />
+        <result column="qq" property="qq" />
+        <result column="bank_name" property="bankName" />
+        <result column="bank_account" property="bankAccount" />
+        <result column="graduate_school" property="graduateSchool" />
+        <result column="experience_abroad" property="experienceAbroad" />
+        <result column="introduction" property="introduction" />
+        <result column="honor_title" property="honorTitle" />
+        <result column="occupation_category" property="occupationCategory" />
+        <result column="learning" property="learning" />
+        <result column="parttime" property="parttime" />
+        <result column="learn_specialty" property="learnSpecialty" />
+        <result column="check_status" property="checkStatus" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="is_refer_secret" property="isReferSecret" />
+        <result column="alias" property="alias" />
+        <result column="foreign_language1" property="foreignLanguage1" />
+        <result column="foreign_language1_degree" property="foreignLanguage1Degree" />
+        <result column="foreign_language2" property="foreignLanguage2" />
+        <result column="foreign_language2_degree" property="foreignLanguage2Degree" />
+        <result column="postcode" property="postcode" />
+        <result column="portraiture" property="portraiture" />
+        <result column="mobile" property="mobile" />
+        <result column="teacher_type" property="teacherType" />
+        <result column="note" property="note" />
+        <result column="job_level" property="jobLevel" />
+        <result column="hr_dept_code" property="hrDeptCode" />
+        <result column="hr_user_code" property="hrUserCode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, person_type, is_valid, sex, birthday, id_num, title, phone, email, edu_degree, hospital_id, monograph_num, paper_num, patent_num, inv_tech_std_num, train_num, hold_train_num, in_training_num, dept, job_type, is_teacher, is_expert, is_ethical_expert, profess, direction, parttime_pos, start_date, end_date, division, class_code, discipline_one, discipline_two, discipline_three, name_en, account, account_state, is_stat, edu_level, nationlity, nation, polity, duty, duty_date, work_date, person_state, tutor_type, employ_date, operate_time, creator_name, creator_code, create_time, advisor_name, advisor_code, advisor_unit, qq, bank_name, bank_account, graduate_school, experience_abroad, introduction, honor_title, occupation_category, learning, parttime, learn_specialty, check_status, is_deleted, is_refer_secret, alias, foreign_language1, foreign_language1_degree, foreign_language2, foreign_language2_degree, postcode, portraiture, mobile, teacher_type, note, job_level, hr_dept_code, hr_user_code
+    </sql>
+    <select id="getUser" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+            id , name,code
+        FROM
+            ct_srm_user
+        where is_valid=1
+        <if test="userDto.personType!=null and userDto.personType!=''">
+            and person_type=#{userDto.personType}
+        </if>
+        <if test="userDto.name!=null and userDto.name!=''">
+
+            and (name LIKE CONCAT('%', #{userDto.name}, '%') or account LIKE CONCAT('%', #{userDto.name}, '%') or alias LIKE CONCAT('%', #{userDto.name}, '%'))
+        </if>
+    </select>
+    <select id="getUserNamesByIds" resultType="String">
+        SELECT name
+        FROM ct_srm_user
+        WHERE id IN
+        <foreach item="userId" collection="ids" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </select>
+
+    <select id="getUserIdByAccount" resultType="Long">
+        select id from ct_srm_user where account=#{account} limit 1
+    </select>
+
+    <select id="getUserDetail" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,pt.code as "personType.id",pt.name as "personType.name",pt.code as personTypeCode,pt.name as personTypeName,
+        pt.is_external as is_external,pt.is_graduate,id_num as idNum,title, phone, email,edu_degree,bank_name as bankName, bank_account as bankAccount,
+        stt.code as titleCode,stt.name as titleName,sed.code as eduDegreeCode,sed.name as eduDegreeName,
+        stt.code as "title.id",stt.name as "title.name",sed.code as "eduDegree.id",sed.name as "eduDegree.name",account,
+        csd.id as "dept.id",csd.name as "dept.name",csd.name as deptName,su.account as account,su.bank_account as bankAccount,
+        pt.is_external,
+        case
+        when pt.is_external=0 then '1'
+        else '0'
+        END as isOurHosp,
+        su.sex as sex,
+        case
+        when su.sex=0 then '女'
+        when su.sex=1 then '男'
+        else ''
+        END as sexName,
+        su.duty,
+            case
+            when pt.is_external=1 then 'ExternalUser'
+            when pt.is_graduate=1 then 'GradUser'
+            else 'User'
+            END as personTypeAlias,su.is_teacher as isTeacher,
+        su.update_time as auditDate,
+        (select name from ct_srm_user WHERE id=su.update_user)  as auditUserName,
+        case
+        when su.check_status=1 then '通过'
+        when su.check_status=2 then '不通过'
+        else '' end as checkStatus
+        from ct_srm_user su
+        left join ct_srm_person_type pt on su.person_type=pt.code
+        left join ct_srm_title_info stt on su.title=stt.code
+        left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+        left join ct_srm_dept_user sdu on su.id=sdu.user
+        left join ct_srm_dept csd on csd.id=su.dept
+        left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+        left join ct_srm_edu_level csel on csel.code=su.edu_level
+        left join ct_srm_job_type csjt on csjt.code=su.job_type
+        left join ct_srm_job_level csjl on csjl.code=su.job_level
+        left join ct_srm_parttime_job cspj on cspj.code=su.parttime
+        left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+        left join ct_srm_polity csp on csp.code=su.polity
+        left join ct_srm_nationality csnc on csnc.code=su.nationlity
+        left join ct_srm_nation csnm on csnm.code=su.nation
+        where 1=1
+        <if test="code!=null and code!=''">
+            and su.code=#{code}
+        </if>
+        <if test="id!=null and id!=''">
+            and su.id=#{id}
+        </if>
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,su.sex as sex,
+               su.sex as "sexComb.id",
+        case
+        when su.sex=0 then '女'
+        when su.sex=1 then '男'
+        else ''
+        END as "sexComb.name",
+        case
+        when su.sex=0 then '女'
+        when su.sex=1 then '男'
+        else ''
+        END as sexName,
+        pt.code as "personType.id",pt.name as "personType.name",pt.name as personTypeName,
+        csoc.code as "occupationCategory.id",csoc.name as "occupationCategory.name",csoc.name as occupationCategoryName,
+        stt.code as "title.id",stt.name as "title.name",stt.name as titleName,
+        csel.code as "eduLevel.id",csel.name as "eduLevel.name",csel.name as eduLevelName,
+        su.duty_date as dutyDate,
+        sdept.id as "dept.id",sdept.name as "dept.name",sdept.name as deptName,
+        sed.code as "eduDegree.id",sed.name as "eduDegree.name",sed.name as eduDegreeName,
+        su.account as account,su.is_expert as isExpert,su.is_ethical_expert as isEthicalExpert,
+        su.direction as direction,su.is_stat as isStat,su.is_valid as isValid,su.introduction as introduction,
+        su.id_num as idNum,su.birthday as birthday,su.email as email,
+        csjl.code as "jobLevel.id",csjl.name as "jobLevel.name",csjl.name as jobLevelName,
+        csjt.code as "jobType.id",csjt.name as "jobType.name",csjt.name as jobTypeName,
+        fdiscipline.code as "disciplineOne.id",fdiscipline.name as "disciplineOne.name",
+        sdiscipline.code as "disciplineTwo.id",sdiscipline.name as "disciplineTwo.name",
+        tdiscipline.code as "disciplineThree.id",tdiscipline.name as "disciplineThree.name",
+        cspj.code as "parttimePos.id",cspj.name as "parttimePos.name",
+        su.graduate_school as graduateSchool,su.start_date as startDate,su.end_date as endDate,
+        su.profess as profess,csty.code as "teacherType.id",csty.name as "teacherType.name",
+        su.employ_date as employDate,su.duty as duty,
+        csnc.code as "nationlity.id",csnc.name as "nationlity.name",
+        csnm.code as "nation.id",csnm.name as "nation.name",
+        su.postcode  as postcode,su.portraiture as portraiture,su.mobile as mobile,
+        su.learning as learning,su.experience_abroad as experienceAbroad,csdu.is_director as isDirector,
+        case
+        when pt.is_external=1 then 'ExternalUser'
+        when pt.is_graduate=1 then 'GradUser'
+        else 'User'
+        END as personTypeAlias
+        ,su.phone
+        ,su.polity
+        ,su.person_state as personState
+        ,su.class_code as classCode
+        ,su.honor_title as honorTitle
+        ,su.division
+        ,su.is_teacher as isTeacher
+        ,su.create_time
+        ,hua.code as creator_code,hua.name as creator_name,
+         su.update_time as auditDate,
+         (select name from ct_srm_user WHERE id=su.update_user)  as auditUserName,
+               case
+                   when su.check_status=1 then '通过'
+                   when su.check_status=2 then '不通过'
+                   else '' end as checkStatus
+        from ct_srm_user su
+        left join ct_srm_person_type pt on su.person_type=pt.code
+        left join ct_srm_title_info stt on su.title=stt.code
+        left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+        left join ct_srm_dept_user sdu on su.id=sdu.user
+        left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+        left join ct_srm_edu_level csel on csel.code=su.edu_level
+        left join ct_srm_job_type csjt on csjt.code=su.job_type
+        left join ct_srm_job_level csjl on csjl.code=su.job_level
+        left join ct_srm_parttime_job cspj on cspj.code=su.parttime_pos
+        left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+        left join ct_srm_polity csp on csp.code=su.polity
+        left join ct_srm_nationality csnc on csnc.code=su.nationlity
+        left join ct_srm_nation csnm on csnm.code=su.nation
+        left join ct_srm_class sclass on sclass.code=su.class_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=su.discipline_one
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=su.discipline_two
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=su.discipline_three
+        left join ct_srm_dept sdept on sdept.id=su.dept
+        left join ct_srm_dept_user csdu on csdu.dept=su.dept and csdu.user=su.id
+        left join hos_user_account hua on su.creator_code=hua.code
+        where su.id=#{RowId}
+
+    </select>
+    <select id="listUser" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,
+                case
+                   when su.sex=0 then '女'
+                   when su.sex=1 then '男'
+                   else ''
+                   END as sexName,
+                pt.name as personTypeName,
+                csoc.name as occupationCategoryName,
+                stt.name as titleName,
+               csel.name as eduLevelName,
+               su.duty_date as dutyDate,
+               sdept.name as deptName,
+               sed.name as eduDegreeName,
+               su.account as account,su.is_expert as isExpert,su.is_ethical_expert as isEthicalExpert,
+               su.direction as direction,su.is_stat as isStat,su.is_valid as isValid,su.introduction as introduction,
+               su.id_num as idNum,su.birthday as birthday,su.email as email,
+               csjl.name as jobLevelName,
+               csjt.name as jobTypeName,
+               fdiscipline.name as disciplineOneName,
+               sdiscipline.name as disciplineTwoName,
+               tdiscipline.name as disciplineThreeName,
+               cspj.name as parttimePosName,
+               su.graduate_school as graduateSchool,su.start_date as startDate,su.end_date as endDate,
+               su.profess as profess,csty.name as teacherTypeName,
+               su.employ_date as employDate,su.duty as duty,
+               csnc.name as nationlityName,
+                csnm.name as nationName,
+               su.postcode  as postcode,su.portraiture as portraiture,su.mobile as mobile,su.learning as learning,su.experience_abroad as experienceAbroad,
+               case
+                   when pt.is_external=1 then 'ExternalUser'
+                   when pt.is_graduate=1 then 'GradUser'
+                   else 'User'
+                   END as personTypeAlias
+                ,su.person_state as personState,csps.name as personStateName
+                ,su.class_code as classCode,sclass.name as classCodeName
+                ,su.phone
+                ,su.is_teacher as isTeacher
+        from ct_srm_user su
+                 left join ct_srm_person_type pt on su.person_type=pt.code
+                 left join ct_srm_title_info stt on su.title=stt.code
+                 left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+                 left join ct_srm_dept_user sdu on su.id=sdu.user
+                 left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+                 left join ct_srm_edu_level csel on csel.code=su.edu_level
+                 left join ct_srm_job_type csjt on csjt.code=su.job_type
+                 left join ct_srm_job_level csjl on csjl.code=su.job_level
+                 left join ct_srm_parttime_job cspj on cspj.code=su.parttime_pos
+                 left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+                 left join ct_srm_polity csp on csp.code=su.polity
+                 left join ct_srm_nationality csnc on csnc.code=su.nationlity
+                 left join ct_srm_nation csnm on csnm.code=su.nation
+                 left join ct_srm_class sclass on sclass.code=su.class_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=su.discipline_one
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=su.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=su.discipline_three
+                 left join ct_srm_dept sdept on sdept.id=su.dept
+                 left join ct_srm_person_state csps on su.person_state=csps.code
+        where 1=1
+        <if test="userDto.isOut!=null and userDto.isOut!=''">
+            and pt.is_external=#{userDto.isOut}
+        </if>
+        <if test="userDto.isGraduate!=null and userDto.isGraduate!=''">
+            and pt.is_graduate=#{userDto.isGraduate}
+        </if>
+        <if test="userDto.isInStaff!=null and userDto.isInStaff!=''">
+            and pt.is_instaff=#{userDto.isInStaff}
+        </if>
+        <if test="userDto.auditState!=null and userDto.auditState!=''">
+            and su.check_status=#{userDto.auditState}
+        </if>
+
+        <if test="userDto.account!=null and userDto.account!=''">
+            and su.account like concat('%',#{userDto.account},'%')
+        </if>
+        <if test="userDto.code!=null and userDto.code!=''">
+            and su.code like concat('%',#{userDto.code},'%')
+        </if>
+        <if test="userDto.name!=null and userDto.name!=''">
+            and su.name like concat('%',#{userDto.name},'%')
+        </if>
+        <if test="userDto.dept!=null and userDto.dept!=''">
+            and su.dept =#{userDto.dept}
+        </if>
+        <if test="userDto.eduLevel!=null and userDto.eduLevel!=''">
+            and su.edu_level =#{userDto.eduLevel}
+        </if>
+        <if test="userDto.eduDegree!=null and userDto.eduDegree!=''">
+            and su.edu_degree =#{userDto.eduDegree}
+        </if>
+        <if test="userDto.occupationCategory!=null and userDto.occupationCategory!=''">
+            and su.occupation_category =#{userDto.occupationCategory}
+        </if>
+        <if test="userDto.jobType!=null and userDto.jobType!=''">
+            and su.job_type =#{userDto.jobType}
+        </if>
+        <if test="userDto.isExpert!=null and userDto.isExpert!=''">
+            and su.is_expert =#{userDto.isExpert}
+        </if>
+        <if test="userDto.isEthicalExpert!=null and userDto.isEthicalExpert!=''">
+            and su.is_ethical_expert =#{userDto.isEthicalExpert}
+        </if>
+        <if test="userDto.auditState!=null and userDto.auditState!=''">
+            and su.check_status=#{userDto.auditState}
+        </if>
+    </select>
+    <update id="updateStatus">
+        update ct_srm_user
+        <set>
+            <if test="isValid != null">
+                is_valid = #{isValid},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditUser" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,
+               case
+                   when su.sex=0 then '女'
+                   when su.sex=1 then '男'
+                   else ''
+                   END as sexName,
+               pt.name as personTypeName,
+               csoc.name as occupationCategoryName,
+               stt.name as titleName,
+               csel.name as eduLevelName,
+               su.duty_date as dutyDate,
+               sdept.name as deptName,
+               sed.name as eduDegreeName,
+               su.account as account,su.is_expert as isExpert,su.is_ethical_expert as isEthicalExpert,
+               su.direction as direction,su.is_stat as isStat,su.is_valid as isValid,su.introduction as introduction,
+               su.id_num as idNum,su.birthday as birthday,su.email as email,
+               csjl.name as jobLevelName,
+               csjt.name as jobTypeName,
+               fdiscipline.name as disciplineOneName,
+               sdiscipline.name as disciplineTwoName,
+               tdiscipline.name as disciplineThreeName,
+               cspj.name as parttimePosName,
+               su.graduate_school as graduateSchool,su.start_date as startDate,su.end_date as endDate,
+               su.profess as profess,csty.name as teacherTypeName,
+               su.employ_date as employDate,su.duty as duty,
+               csnc.name as nationlityName,
+               csnm.name as nationName,
+               su.postcode  as postcode,su.portraiture as portraiture,su.mobile as mobile,su.learning as learning,su.experience_abroad as experienceAbroad,
+               case
+                   when pt.is_external=1 then 'ExternalUser'
+                   when pt.is_graduate=1 then 'GradUser'
+                   else 'User'
+                   END as personTypeAlias
+                ,su.phone,su.is_teacher as isTeacher
+        from ct_srm_user su
+                 left join ct_srm_person_type pt on su.person_type=pt.code
+                 left join ct_srm_title_info stt on su.title=stt.code
+                 left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+                 left join ct_srm_dept_user sdu on su.id=sdu.user
+                 left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+                 left join ct_srm_edu_level csel on csel.code=su.edu_level
+                 left join ct_srm_job_type csjt on csjt.code=su.job_type
+                 left join ct_srm_job_level csjl on csjl.code=su.job_level
+                 left join ct_srm_parttime_job cspj on cspj.code=su.parttime_pos
+                 left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+                 left join ct_srm_polity csp on csp.code=su.polity
+                 left join ct_srm_nationality csnc on csnc.code=su.nationlity
+                 left join ct_srm_nation csnm on csnm.code=su.nation
+                 left join ct_srm_class sclass on sclass.code=su.class_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=su.discipline_one
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=su.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=su.discipline_three
+                 left join ct_srm_dept sdept on sdept.id=su.dept
+        where su.is_valid=1
+        <if test="userDto.isOut!=null and userDto.isOut!=''">
+            and pt.is_external=#{userDto.isOut}
+        </if>
+        <if test="userDto.isGraduate!=null and userDto.isGraduate!=''">
+            and pt.is_graduate=#{userDto.isGraduate}
+        </if>
+        <if test="userDto.account!=null and userDto.account!=''">
+            and su.account like concat('%',#{userDto.account},'%')
+        </if>
+        <if test="userDto.code!=null and userDto.code!=''">
+            and su.code like concat('%',#{userDto.code},'%')
+        </if>
+        <if test="userDto.name!=null and userDto.name!=''">
+            and su.name like concat('%',#{userDto.name},'%')
+        </if>
+        <if test="userDto.dept!=null and userDto.dept!=''">
+            and su.dept =#{userDto.dept}
+        </if>
+        <if test="userDto.eduLevel!=null and userDto.eduLevel!=''">
+            and su.edu_level =#{userDto.eduLevel}
+        </if>
+        <if test="userDto.eduDegree!=null and userDto.eduDegree!=''">
+            and su.edu_degree =#{userDto.eduDegree}
+        </if>
+        <if test="userDto.honorTitle!=null and userDto.honorTitle!=''">
+            and su.honor_title =#{userDto.honorTitle}
+        </if>
+        <if test="userDto.jobType!=null and userDto.jobType!=''">
+            and su.job_type =#{userDto.jobType}
+        </if>
+        <if test="userDto.auditState!=null and userDto.auditState!=''">
+            and su.check_status=#{userDto.auditState}
+        </if>
+        <if test="userDto.personType!=null and userDto.personType!=''">
+            and su.person_type=#{userDto.personType}
+        </if>
+
+
+    </select>
+    <select id="listUserExpert" parameterType="com.mediway.hos.srm.business.center.model.dto.user.UserExpertQueryDto" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,
+               case
+                   when su.sex=0 then '女'
+                   when su.sex=1 then '男'
+                   else ''
+                   END as sexName,
+               pt.name as personTypeName,
+               csoc.name as occupationCategoryName,
+               stt.name as titleName,
+               csel.name as eduLevelName,
+               su.duty_date as dutyDate,
+               sdept.name as deptName,
+               sed.name as eduDegreeName,
+               su.account as account,su.is_expert as isExpert,su.is_ethical_expert as isEthicalExpert,
+               su.direction as direction,su.is_stat as isStat,su.is_valid as isValid,su.introduction as introduction,
+               su.id_num as idNum,su.birthday as birthday,su.email as email,
+               csjl.name as jobLevelName,
+               csjt.name as jobTypeName,
+               fdiscipline.name as disciplineOneName,
+               sdiscipline.name as disciplineTwoName,
+               tdiscipline.name as disciplineThreeName,
+               cspj.name as parttimePosName,
+               su.graduate_school as graduateSchool,su.start_date as startDate,su.end_date as endDate,
+               su.profess as profess,csty.name as teacherTypeName,
+               su.employ_date as employDate,su.duty as duty,
+               csnc.name as nationlityName,
+               csnm.name as nationName,
+               su.postcode  as postcode,su.portraiture as portraiture,su.mobile as mobile,su.learning as learning,su.experience_abroad as experienceAbroad,
+               case
+                   when pt.is_external=1 then 'ExternalUser'
+                   when pt.is_graduate=1 then 'GradUser'
+                   else 'User'
+                   END as personTypeAlias
+                ,su.phone,su.is_teacher as isTeacher
+        from ct_srm_user su
+                 left join ct_srm_person_type pt on su.person_type=pt.code
+                 left join ct_srm_title_info stt on su.title=stt.code
+                 left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+                 left join ct_srm_dept_user sdu on su.id=sdu.user
+                 left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+                 left join ct_srm_edu_level csel on csel.code=su.edu_level
+                 left join ct_srm_job_type csjt on csjt.code=su.job_type
+                 left join ct_srm_job_level csjl on csjl.code=su.job_level
+                 left join ct_srm_parttime_job cspj on cspj.code=su.parttime_pos
+                 left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+                 left join ct_srm_polity csp on csp.code=su.polity
+                 left join ct_srm_nationality csnc on csnc.code=su.nationlity
+                 left join ct_srm_nation csnm on csnm.code=su.nation
+                 left join ct_srm_class sclass on sclass.code=su.class_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=su.discipline_one
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=su.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=su.discipline_three
+                 left join ct_srm_dept sdept on sdept.id=su.dept
+        where su.is_expert =1
+        <if test="userExpertQueryDto.paUserCode!=null and userExpertQueryDto.paUserCode!=''">
+            and su.code like concat('%',#{userExpertQueryDto.paUserCode},'%')
+        </if>
+        <if test="userExpertQueryDto.paUserName!=null and userExpertQueryDto.paUserName!=''">
+            and su.name like concat('%',#{userExpertQueryDto.paUserName},'%')
+        </if>
+        <if test="userExpertQueryDto.paUserType!=null and userExpertQueryDto.paUserType!=''">
+            and su.person_type=#{userExpertQueryDto.paUserType}
+        </if>
+        <if test="userExpertQueryDto.paUserSex!=null and userExpertQueryDto.paUserSex!=''">
+            and su.sex=#{userExpertQueryDto.paUserSex}
+        </if>
+        <if test="userExpertQueryDto.paUserDegree!=null and userExpertQueryDto.paUserDegree!=''">
+            and su.edu_degree=#{userExpertQueryDto.paUserDegree}
+        </if>
+        <if test="userExpertQueryDto.paUserEduLevel!=null and userExpertQueryDto.paUserEduLevel!=''">
+            and su.edu_level=#{userExpertQueryDto.paUserEduLevel}
+        </if>
+        <if test="userExpertQueryDto.paUserTitle!=null and userExpertQueryDto.paUserTitle!=''">
+            and su.title=#{userExpertQueryDto.paUserTitle}
+        </if>
+        <if test="userExpertQueryDto.paUserDirection!=null and userExpertQueryDto.paUserDirection!=''">
+            and su.direction like concat('%',#{userExpertQueryDto.paUserDirection},'%')
+        </if>
+        <if test="userExpertQueryDto.paOccuCategory!=null and userExpertQueryDto.paOccuCategory!=''">
+            and su.occupation_category=#{userExpertQueryDto.paOccuCategory}
+        </if>
+        <if test="userExpertQueryDto.paDept!=null and userExpertQueryDto.paDept!=''">
+            and su.dept =#{userExpertQueryDto.paDept}
+        </if>
+        <if test="userExpertQueryDto.paHonorTitle!=null and userExpertQueryDto.paHonorTitle!=''">
+            and su.honor_title =#{userExpertQueryDto.paHonorTitle}
+        </if>
+        <if test="userExpertQueryDto.paJobType!=null and userExpertQueryDto.paJobType!=''">
+            and su.job_type =#{userExpertQueryDto.paJobType}
+        </if>
+        <if test="userExpertQueryDto.paPartTimePos!=null and userExpertQueryDto.paPartTimePos!=''">
+            and su.parttime_pos =#{userExpertQueryDto.paPartTimePos}
+        </if>
+
+    </select>
+    <insert id="setAuthExpertGrp">
+        insert into ct_srm_expert_group_relation(group_id,user_id) values (#{expertGrpId},#{userId})
+    </insert>
+    <select id="ifUserInExpertGroup" resultType="Long">
+        select id from ct_srm_expert_group_relation where user_id =#{userId} and group_id=#{expertGrpId}
+    </select>
+   <delete id="cancelAuthExpertGrp">
+       delete from ct_srm_expert_group_relation where id=#{RowId}
+   </delete>
+   <select id="listUserInExpertGroup" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserExpertGroupVo">
+       select csegr.group_id as expertGroupId,cseg.name as expertGroupName
+       from ct_srm_expert_group_relation csegr
+       left join ct_srm_expert_group cseg on csegr.group_id =cseg.code
+       where csegr.user_id = #{userCode}
+   </select>
+    <select id="listUserNotInExpertGroup" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserExpertGroupVo">
+        select cseg.id as expertGroupId,cseg.name as expertGroupName
+        from ct_srm_expert_group cseg
+        where cseg.code  not in (select csegr.group_id from ct_srm_expert_group_relation csegr where csegr.user_id = #{userCode} )
+
+    </select>
+    <select id="selectUserForExpert" parameterType="com.mediway.hos.srm.business.center.model.dto.user.UserExpertQueryDto" resultType="com.mediway.hos.srm.business.center.model.vo.user.UserVo">
+        select su.id as rowId,su.code as code,su.name as name,
+        case
+        when su.sex=0 then '女'
+        when su.sex=1 then '男'
+        else ''
+        END as sexName,
+        pt.name as personTypeName,
+        csoc.name as occupationCategoryName,
+        stt.name as titleName,
+        csel.name as eduLevelName,
+        su.duty_date as dutyDate,
+        sdept.name as deptName,
+        sed.name as eduDegreeName,
+        su.account as account,su.is_expert as isExpert,su.is_ethical_expert as isEthicalExpert,
+        su.direction as direction,su.is_stat as isStat,su.is_valid as isValid,su.introduction as introduction,
+        su.id_num as idNum,su.birthday as birthday,su.email as email,
+        csjl.name as jobLevelName,
+        csjt.name as jobTypeName,
+        fdiscipline.name as disciplineOneName,
+        sdiscipline.name as disciplineTwoName,
+        tdiscipline.name as disciplineThreeName,
+        cspj.name as parttimePosName,
+        su.graduate_school as graduateSchool,su.start_date as startDate,su.end_date as endDate,
+        su.profess as profess,csty.name as teacherTypeName,
+        su.employ_date as employDate,su.duty as duty,
+        csnc.name as nationlityName,
+        csnm.name as nationName,
+        su.postcode  as postcode,su.portraiture as portraiture,su.mobile as mobile,su.learning as learning,su.experience_abroad as experienceAbroad,
+        case
+        when pt.is_external=1 then 'ExternalUser'
+        when pt.is_graduate=1 then 'GradUser'
+        else 'User'
+        END as personTypeAlias
+        ,su.phone,su.is_teacher as isTeacher
+        from ct_srm_user su
+        left join ct_srm_person_type pt on su.person_type=pt.code
+        left join ct_srm_title_info stt on su.title=stt.code
+        left join ct_srm_edu_degree sed on su.edu_degree=sed.code
+        left join ct_srm_dept_user sdu on su.id=sdu.user
+        left join  ct_srm_occupation_category csoc on csoc.code=su.occupation_category
+        left join ct_srm_edu_level csel on csel.code=su.edu_level
+        left join ct_srm_job_type csjt on csjt.code=su.job_type
+        left join ct_srm_job_level csjl on csjl.code=su.job_level
+        left join ct_srm_parttime_job cspj on cspj.code=su.parttime_pos
+        left join ct_srm_teacher_type csty on csty.code=su.teacher_type
+        left join ct_srm_polity csp on csp.code=su.polity
+        left join ct_srm_nationality csnc on csnc.code=su.nationlity
+        left join ct_srm_nation csnm on csnm.code=su.nation
+        left join ct_srm_class sclass on sclass.code=su.class_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=su.discipline_one
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=su.discipline_two
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=su.discipline_three
+        left join ct_srm_dept sdept on sdept.id=su.dept
+        where su.is_valid =1
+
+        <if test="userExpertQueryDto.paUserCode!=null and userExpertQueryDto.paUserCode!=''">
+            and su.code like concat('%',#{userExpertQueryDto.paUserCode},'%')
+        </if>
+        <if test="userExpertQueryDto.paUserName!=null and userExpertQueryDto.paUserName!=''">
+            and su.name like concat('%',#{userExpertQueryDto.paUserName},'%')
+        </if>
+        <if test="userExpertQueryDto.paUserType!=null and userExpertQueryDto.paUserType!=''">
+            and su.person_type=#{userExpertQueryDto.paUserType}
+        </if>
+        <if test="userExpertQueryDto.paUserSex!=null and userExpertQueryDto.paUserSex!=''">
+            and su.sex=#{userExpertQueryDto.paUserSex}
+        </if>
+        <if test="userExpertQueryDto.paUserDegree!=null and userExpertQueryDto.paUserDegree!=''">
+            and su.edu_degree=#{userExpertQueryDto.paUserDegree}
+        </if>
+        <if test="userExpertQueryDto.paUserEduLevel!=null and userExpertQueryDto.paUserEduLevel!=''">
+            and su.edu_level=#{userExpertQueryDto.paUserEduLevel}
+        </if>
+        <if test="userExpertQueryDto.paUserTitle!=null and userExpertQueryDto.paUserTitle!=''">
+            and su.title=#{userExpertQueryDto.paUserTitle}
+        </if>
+        <if test="userExpertQueryDto.paUserDirection!=null and userExpertQueryDto.paUserDirection!=''">
+            and su.direction like concat('%',#{userExpertQueryDto.paUserDirection},'%')
+        </if>
+        <if test="userExpertQueryDto.paOccuCategory!=null and userExpertQueryDto.paOccuCategory!=''">
+            and su.occupation_category=#{userExpertQueryDto.paOccuCategory}
+        </if>
+        <if test="userExpertQueryDto.paDept!=null and userExpertQueryDto.paDept!=''">
+            and su.dept =#{userExpertQueryDto.paDept}
+        </if>
+        <if test="userExpertQueryDto.paHonorTitle!=null and userExpertQueryDto.paHonorTitle!=''">
+            and su.honor_title =#{userExpertQueryDto.paHonorTitle}
+        </if>
+        <if test="userExpertQueryDto.paJobType!=null and userExpertQueryDto.paJobType!=''">
+            and su.job_type =#{userExpertQueryDto.paJobType}
+        </if>
+        <if test="userExpertQueryDto.paPartTimePos!=null and userExpertQueryDto.paPartTimePos!=''">
+            and su.parttime_pos =#{userExpertQueryDto.paPartTimePos}
+        </if>
+
+    </select>
+    <insert id="submitExpert">
+        insert into ct_srm_expert_group_relation(group_id ,user_id) values (#{expertGroup},#{userCode})
+    </insert>
+    <select id="ifExistUserExpert" resultType="Long" >
+        select id from ct_srm_expert_group_relation where group_id= #{expertGroup} and user_id=#{userCode}
+    </select>
+    <update id="auditUserChkStatus" >
+        update ct_srm_user set check_status =#{status},is_valid=1 where id=#{rowId}
+    </update>
+
+    <select id="getTutor" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT  id , name,code  FROM ct_srm_user where is_valid=1 and tutor_type is not null
+    </select>
+</mapper>

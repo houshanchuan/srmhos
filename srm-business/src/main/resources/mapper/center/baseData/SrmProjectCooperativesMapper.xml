@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjectCooperativesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjectCooperatives">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="comp_id" property="compId" />
+        <result column="divide_work" property="divideWork" />
+        <result column="fund_total_amt" property="fundTotalAmt" />
+        <result column="fund_gov_amt" property="fundGovAmt" />
+        <result column="coop_unit_type" property="coopUnitType" />
+        <result column="coop_unit_name" property="coopUnitName" />
+        <result column="file_id" property="fileId" />
+        <result column="file_name" property="fileName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, comp_id, divide_work, fund_total_amt, fund_gov_amt, coop_unit_type, coop_unit_name, file_id, file_name
+    </sql>
+
+    <select id="listProjectCooperatives" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ProjectCooperativesVo">
+        select spc.id as rowId,spc.comp_id as compId,csru.name as compName,spc.contact_name as contactName,spc.contact_tel as contactTel
+        from srm_project_cooperatives spc
+        left join ct_srm_rely_unit csru on csru.code=spc.comp_id
+        where proj_id=#{projectId}
+
+    </select>
+    <delete id="deleteProjectCooperatives">
+        delete from srm_project_cooperatives where proj_id=#{projectId}
+    </delete>
+</mapper>

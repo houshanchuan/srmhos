@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmAchvExpenseReimbursementMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmAchvExpenseReimbursement">
+        <id column="id" property="id" />
+        <result column="regpaper_id" property="regpaperId" />
+        <result column="reim_amount" property="reimAmount" />
+        <result column="inv_code" property="invCode" />
+        <result column="inv_no" property="invNo" />
+        <result column="inv_amount" property="invAmount" />
+        <result column="is_finished" property="isFinished" />
+        <result column="author" property="author" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="unit_money" property="unitMoney" />
+        <result column="reim_ratio" property="reimRatio" />
+        <result column="re_amount" property="reAmount" />
+        <result column="cost_rec_id" property="costRecId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, regpaper_id, reim_amount, inv_code, inv_no, inv_amount, is_finished, author, sub_date, data_status, sys_no, unit_money, reim_ratio, re_amount, cost_rec_id
+    </sql>
+
+</mapper>

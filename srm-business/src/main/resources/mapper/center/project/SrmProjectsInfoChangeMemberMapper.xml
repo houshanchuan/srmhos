@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectsInfoChangeMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectsInfoChangeMember">
+        <id column="id" property="id" />
+        <result column="change_parref_id" property="changeParrefId" />
+        <result column="change_type" property="changeType" />
+        <result column="member" property="member" />
+        <result column="name" property="name" />
+        <result column="work_code" property="workCode" />
+        <result column="person_type" property="personType" />
+        <result column="ranking" property="ranking" />
+        <result column="title" property="title" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="sex" property="sex" />
+        <result column="dept_id" property="deptId" />
+        <result column="rely_unit" property="relyUnit" />
+        <result column="dept_unit_name" property="deptUnitName" />
+        <result column="orig_member_id" property="origMemberId" />
+        <result column="note" property="note" />
+        <result column="work_ratio" property="workRatio" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, change_parref_id, change_type, member, name, work_code, person_type, ranking, title, edu_level, sex, dept_id, rely_unit, dept_unit_name, orig_member_id, note, work_ratio
+    </sql>
+
+    <select id="listProjectsInfoChangeAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoChangeMemberVo">
+        select spicm.id as rowId,
+        spicm.member as member,
+        puser.name as memberName,
+        ccspt.code as personType,
+        ccspt.name as personTypeName,
+        puser.account as workCode,spicm.orig_member_id as origMemberId,
+        spicm.edu_level as eduLevel,csel.name as eduLevelName,
+        sauthororder.code as ranking,sauthororder.name as rankingName,
+        spicm.title as title,ccsti.name as titleName,spicm.change_type as changeType,
+        case
+        when spicm.change_type="1" then '调整入'
+        when spicm.change_type="2" then '调整出'
+        else ''
+        END as changeTypeName
+        from srm_projects_info_change_member spicm
+        left join ct_srm_user puser on puser.id=spicm.member
+        left join ct_srm_person_type ccspt  on ccspt.code=spicm.person_type
+        left join ct_srm_title_info ccsti  on ccsti.code=spicm.title
+        left join ct_srm_edu_level csel  on csel.code=spicm.edu_level
+        left join ct_srm_paper_author_order sauthororder on sauthororder.code=spicm.ranking
+        where spicm.change_parref_id=#{parentId}
+    </select>
+
+    <delete id="deleteAuthorByParent">
+        delete from srm_projects_info_change_member spicm  where spicm.change_parref_id=#{parentId}
+    </delete>
+</mapper>

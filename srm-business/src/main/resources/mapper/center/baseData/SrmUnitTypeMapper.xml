@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmUnitTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmUnitType">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+
+    <select id="listUnitType" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.UnitTypeDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.UnitTypeVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_unit_type
+    </select>
+    <select id="getUnitType" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name  from ct_srm_unit_type csut where is_valid =1
+    </select>
+</mapper>

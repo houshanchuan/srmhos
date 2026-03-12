@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.systemConfig.SrmSysParameterMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.systemConfig.SrmSysParameter">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="para_value" property="paraValue" />
+        <result column="para_type" property="paraType" />
+        <result column="para_desc" property="paraDesc" />
+        <result column="para_explain" property="paraExplain" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, para_value, para_type, para_desc, para_explain
+    </sql>
+    <select id="listSysParameter" resultType="com.mediway.hos.srm.business.center.model.vo.systemConfig.SysParameterVo">
+        select id as rowId,code ,name ,para_value as paraValue ,para_type as paraType ,para_desc as paraDesc ,para_explain as paraExplain
+        from cf_srm_sys_parameter where para_type=#{paraType}
+    </select>
+</mapper>

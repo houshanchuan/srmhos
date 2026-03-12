@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectApplyInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectApplyInfo">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="discipline" property="discipline" />
+        <result column="project_class" property="projectClass" />
+        <result column="proj_type" property="projType" />
+        <result column="source_unit_name" property="sourceUnitName" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="state" property="state" />
+        <result column="note" property="note" />
+        <result column="create_time" property="createTime" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="is_review_needed" property="isReviewNeeded" />
+        <result column="file_ids" property="fileIds" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, discipline, project_class, proj_type, source_unit_name, start_date, end_date, state, note, create_time, creator_code, is_review_needed, file_ids
+    </sql>
+    <select id="listProjectApplyPlan" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectApplyInfoVo">
+        select spai.id as rowId,spai.name,spai.state as state,
+        spai.start_date as startDate,cspat.name as projTypeName,spai.end_date as endDate,spai.note as note,spai.source_unit_name as sourceUnitName
+
+        from srm_project_apply_info spai
+        left join ct_srm_proj_type cspat on cspat.code=spai.proj_type
+        where 1=1
+        <if test="projectApplyInfoDto.name!=null and projectApplyInfoDto.name!=''">
+            and spai.name LIKE CONCAT('%', #{projectApplyInfoDto.name}, '%')
+        </if>
+        <if test="projectApplyInfoDto.state!=null and projectApplyInfoDto.state!=''">
+            and spai.state=#{projectApplyInfoDto.state}
+        </if>
+        order by spai.id desc
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectApplyInfoVo">
+        select spai.id as rowId,spai.name,spai.state as state,
+        spai.start_date as startDate, spai.end_date as endDate,spai.note as note,
+        spai.source_unit_name as sourceUnitName,cspat.code as "projType.id",cspat.name as "projType.name"
+        from srm_project_apply_info spai
+        left join ct_srm_proj_type cspat on cspat.code=spai.proj_type
+        where spai.id=#{rowId}
+    </select>
+</mapper>

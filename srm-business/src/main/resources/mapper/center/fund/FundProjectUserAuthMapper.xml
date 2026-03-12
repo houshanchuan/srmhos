@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundProjectUserAuthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundProjectUserAuth">
+        <id column="id" property="id" />
+        <result column="project_id" property="projectId" />
+        <result column="user_id" property="userId" />
+        <result column="is_submit" property="isSubmit" />
+        <result column="is_audit" property="isAudit" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, project_id, user_id, is_submit, is_audit
+    </sql>
+    <select id="listFundProjectUserAuth" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundProjectUserAuthDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundProjectUserAuthVo">
+        select id as rowId,project_id as projectId,user_id as userId,is_submit as isSubmit,is_audit as isAudit from cf_fund_project_user_auth
+    </select>
+
+</mapper>

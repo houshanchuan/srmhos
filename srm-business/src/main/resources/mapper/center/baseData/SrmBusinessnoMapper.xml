@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmBusinessnoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmBusinessno">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="currentno" property="currentno" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, currentno
+    </sql>
+    <select id="getSrmBusinessno" resultType="com.mediway.hos.srm.business.center.model.entity.baseData.SrmBusinessno">
+        select id, type, currentno from cf_srm_businessno where type=#{type}
+    </select>
+</mapper>

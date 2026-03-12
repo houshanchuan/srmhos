@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.patent.SrmPatentInfoAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.patent.SrmPatentInfoAuthor">
+        <id column="id" property="id" />
+        <result column="patent_id" property="patentId" />
+        <result column="patent_no" property="patentNo" />
+        <result column="author" property="author" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_name" property="authorName" />
+        <result column="author_unit" property="authorUnit" />
+        <result column="author_ranking" property="authorRanking" />
+        <result column="author_type" property="authorType" />
+        <result column="author_dept_id" property="authorDeptId" />
+        <result column="author_division" property="authorDivision" />
+        <result column="is_first" property="isFirst" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="note" property="note" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="title" property="title" />
+        <result column="sex" property="sex" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, patent_id, patent_no, author, author_code, author_name, author_unit, author_ranking, author_type, author_dept_id, author_division, is_first, work_ratio, note, edu_degree, edu_level, title, sex
+    </sql>
+    <select id="listPatentInfoAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentInfoAuthorVo">
+        select spia.id as rowId,
+               spia.author as author,
+               puser.name as authorName,
+               spia.author_type as authorType,
+               ccspt.name as authorTypeName,
+               spia.author_code as authorCode,
+               spia.sex as sex,
+                spia.sex as sex,
+                        case
+                        when spia.sex=0 then '女'
+                        when spia.sex=1 then '男'
+                else ''
+                END as sexName,
+                spia.edu_degree as eduDegree,csed.name as eduDegreeName,
+               spia.edu_level as eduLevel,csel.name as eduLevelName,
+               sauthororder.code as authorRanking,sauthororder.name as authorRankingName,
+               spia.title as title,ccsti.name as titleName,spia.work_ratio as workRatio
+        from srm_patent_info_author spia
+                 left join ct_srm_user puser on puser.id=spia.author
+                 left join ct_srm_dept fdept on fdept.id=spia.author_dept_id
+                 left join ct_srm_person_type ccspt  on ccspt.code=spia.author_type
+                 left join ct_srm_title_info ccsti  on ccsti.code=spia.title
+                 left join ct_srm_edu_degree csed  on csed.code=spia.edu_degree
+                 left join ct_srm_edu_level csel  on csel.code=spia.edu_level
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=spia.author_ranking
+        where patent_id=#{parentId}
+    </select>
+    <delete id="deleteAuthorByParent">
+        delete from srm_patent_info_author where paper_id=#{parentId}
+    </delete>
+</mapper>

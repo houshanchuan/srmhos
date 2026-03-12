@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.patent.SrmPatentInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.patent.SrmPatentInfo">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="biz_type" property="bizType" />
+        <result column="name" property="name" />
+        <result column="patent_type" property="patentType" />
+        <result column="dept_id" property="deptId" />
+        <result column="year" property="year" />
+        <result column="patent_no" property="patentNo" />
+        <result column="certificate_no" property="certificateNo" />
+        <result column="apply_date" property="applyDate" />
+        <result column="apply_no" property="applyNo" />
+        <result column="ann_date" property="annDate" />
+        <result column="ann_no" property="annNo" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="register_date" property="registerDate" />
+        <result column="ann_organization" property="annOrganization" />
+        <result column="score" property="score" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="research_field" property="researchField" />
+        <result column="key_words" property="keyWords" />
+        <result column="patent_country" property="patentCountry" />
+        <result column="division" property="division" />
+        <result column="scope" property="scope" />
+        <result column="state" property="state" />
+        <result column="check_status" property="checkStatus" />
+        <result column="note" property="note" />
+        <result column="author_numbers" property="authorNumbers" />
+        <result column="is_duty" property="isDuty" />
+        <result column="sign_type" property="signType" />
+        <result column="first_author_name" property="firstAuthorName" />
+        <result column="first_author_title" property="firstAuthorTitle" />
+        <result column="first_author_sex" property="firstAuthorSex" />
+        <result column="first_author_type" property="firstAuthorType" />
+        <result column="in_first_author_id" property="inFirstAuthorId" />
+        <result column="in_first_author_code" property="inFirstAuthorCode" />
+        <result column="in_first_author_edu_level" property="inFirstAuthorEduLevel" />
+        <result column="in_first_author_edu_degree" property="inFirstAuthorEduDegree" />
+        <result column="operate_time" property="operateTime" />
+        <result column="file_ids" property="fileIds" />
+        <result column="is_pct" property="isPct" />
+        <result column="pct_code" property="pctCode" />
+        <result column="pct_name" property="pctName" />
+        <result column="pct_date" property="pctDate" />
+        <result column="pct_priority_date" property="pctPriorityDate" />
+        <result column="pct_enter_country" property="pctEnterCountry" />
+        <result column="apply_info" property="applyInfo" />
+        <result column="cooperation_type" property="cooperationType" />
+        <result column="is_valid" property="isValid" />
+        <result column="end_reason" property="endReason" />
+        <result column="apply_id" property="applyId" />
+        <result column="serial_no" property="serialNo" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, biz_type, name, patent_type, dept_id, year, patent_no, certificate_no, apply_date, apply_no, ann_date, ann_no, sub_user_id, sub_date, data_status, register_date, ann_organization, score, our_unit_ranking, research_field, key_words, patent_country, division, scope, state, check_status, note, author_numbers, is_duty, sign_type, first_author_name, first_author_title, first_author_sex, first_author_type, in_first_author_id, in_first_author_code, in_first_author_edu_level, in_first_author_edu_degree, operate_time, file_ids, is_pct, pct_code, pct_name, pct_date, pct_priority_date, pct_enter_country, apply_info, cooperation_type, is_valid, end_reason, apply_id, serial_no, creator_code, creator_name, create_time
+    </sql>
+
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentInfoVo">
+        select spi.id as rowId ,spi.data_status as dataStatus,
+               spi.patent_no as patentNo ,spi.ann_no as annNo,spi.ann_date as annDate,
+               spi.name as name ,spi.apply_date as applyDate,spi.apply_no as applyNo,
+               spi.is_pct as isPct ,spi.cooperation_type as cooperationType,
+
+               spi.pct_code as pctCode ,spi.pct_name as pctName,
+               spi.pct_date as pctDate ,spi.pct_priority_date as pctPriorityDate,
+               spi.certificate_no as certificateNo ,spapply.id as applyId, spapply.name as applyPatentName,
+               csy.code as "year.id",csy.name as "year.name",csy.name as yearName,
+               sps.code as "state.id",sps.name as "state.name",sps.name as stateName,
+               fdept.id as "deptId.id",fdept.name as "deptId.name",fdept.name as deptName,
+               fuser.id as "subUserId.id",fuser.name as "subUserId.name",fuser.name as subUserName,
+               csuo.code as "ourUnitRanking.id",csuo.name as "ourUnitRanking.name",csuo.name as ourUnitRankingName,
+               spt.code as "patentType.id",spt.name as "patentType.name",spt.name as patentTypeName,
+                csnl.code as "patentCountry.id",csnl.name as "patentCountry.name",csnl.name as patentCountryName
+        from srm_patent_info spi
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept fdept on fdept.id=spi.dept_id
+                 left join ct_srm_user fuser on fuser.id=spi.sub_user_id
+                 left join ct_srm_unit_order csuo on csuo.code=spi.our_unit_ranking
+                 left join ct_srm_patent_state sps on sps.code=spi.state
+                 left join  ct_srm_patent_type spt on spt.code=spi.patent_type
+                left join ct_srm_nationality csnl on csnl.code=spi.patent_country
+                left join srm_patent_apply spapply on spapply.id=spi.apply_id
+        where spi.id=#{rowId}
+    </select>
+    <select id="listPatentInfo" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentInfoVo">
+        select spi.id as rowId ,spi.data_status as dataStatus,
+               spi.patent_no as patentNo ,spi.ann_no as annNo,spi.ann_date as annDate,
+               spi.name as name ,spi.apply_date as applyDate,spi.apply_no as applyNo,
+               spi.is_pct as isPct ,spi.cooperation_type as cooperationType,
+               spi.pct_code as pctCode ,spi.pct_name as pctName,
+               spi.pct_date as pctDate ,spi.pct_priority_date as pctPriorityDate,
+               spi.certificate_no as certificateNo ,spapply.name as applyPatentName,
+               csy.name as yearName,
+               sps.name as stateName,
+               fdept.name as deptName,
+               fuser.name as subUserName,
+               csuo.name as ourUnitRankingName,
+               spt.name as patentTypeName
+        from srm_patent_info spi
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept fdept on fdept.id=spi.dept_id
+                 left join ct_srm_user fuser on fuser.id=spi.sub_user_id
+                 left join ct_srm_unit_order csuo on csuo.code=spi.our_unit_ranking
+                 left join ct_srm_patent_state sps on sps.code=spi.state
+                 left join  ct_srm_patent_type spt on spt.code=spi.patent_type
+                 left join ct_srm_nationality csnl on csnl.code=spi.patent_country
+                 left join srm_patent_apply spapply on spapply.id=spi.apply_id
+        where
+        (spi.sub_user_id=#{patentInfoDto.userId} or spi.id in
+        (SELECT patent_id FROM srm_patent_info_author WHERE author = #{patentInfoDto.userId})
+        )
+
+        <if test="patentInfoDto.name!=null and patentInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{patentInfoDto.name}, '%')
+        </if>
+        <if test="patentInfoDto.patentType!=null and patentInfoDto.patentType!=''">
+            and spi.patent_type =#{patentInfoDto.patentType}
+        </if>
+        <if test="patentInfoDto.patentNo!=null and patentInfoDto.patentNo!=''">
+            and spi.patent_no =#{patentInfoDto.patentNo}
+        </if>
+        <if test="patentInfoDto.startDate!=null and patentInfoDto.startDate!=''">
+            and spi.sub_date &gt;= #{patentInfoDto.startDate}
+        </if>
+        <if test="patentInfoDto.endDate!=null and patentInfoDto.endDate!=''">
+            and spi.sub_date &lt;= #{patentInfoDto.endDate}
+        </if>
+        <if test="patentInfoDto.dataStatus!=null">
+            and spi.data_status = #{patentInfoDto.dataStatus}
+        </if>
+    </select>
+    <update id="updateStatus">
+        update srm_patent_info
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditPatentInfo"  resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentInfoVo">
+        select spi.id as rowId ,spi.data_status as dataStatus,
+               spi.patent_no as patentNo ,spi.ann_no as annNo,spi.ann_date as annDate,
+               spi.name as name ,spi.apply_date as applyDate,spi.apply_no as applyNo,
+               spi.is_pct as isPct ,spi.cooperation_type as cooperationType,
+               spi.pct_code as pctCode ,spi.pct_name as pctName,
+               spi.pct_date as pctDate ,spi.pct_priority_date as pctPriorityDate,
+               spi.certificate_no as certificateNo ,
+               csy.name as yearName,
+               sps.name as stateName,
+               fdept.name as deptName,
+               fuser.name as subUserName,
+               csuo.name as ourUnitRankingName,
+               spt.name as patentTypeName
+        from srm_patent_info spi
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept fdept on fdept.id=spi.dept_id
+                 left join ct_srm_user fuser on fuser.id=spi.sub_user_id
+                 left join ct_srm_unit_order csuo on csuo.code=spi.our_unit_ranking
+                 left join ct_srm_patent_state sps on sps.code=spi.state
+                 left join  ct_srm_patent_type spt on spt.code=spi.patent_type
+                 left join srm_patent_apply spapply on spapply.id=spi.apply_id
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spi.sys_no and eafrec.check_rec_id=spi.id
+        where
+            eafrec.step_no>1
+            <if test='patentInfoDto.auditState==null or patentInfoDto.auditState==""'>
+                and ((spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%'))
+                or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spi.sys_no=seafrec.sys_no and seafrec.check_rec_id=spi.id) and eafrec.checker_string  LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%') and eafrec.check_datetime is not null)
+                or (spi.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%'))
+                )
+            </if>
+            <if test='patentInfoDto.auditState=="0"'>
+                and spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%')
+            </if>
+            <if test='patentInfoDto.auditState=="1"'>
+                and spi.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%')
+            </if>
+            <if test='patentInfoDto.auditState=="2"'>
+                and spi.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{patentInfoDto.userId}, '|%')
+            </if>
+            <if test="patentInfoDto.name!=null and patentInfoDto.name!=''">
+                and spi.name LIKE CONCAT('%', #{patentInfoDto.name}, '%')
+            </if>
+            <if test="patentInfoDto.patentType!=null and patentInfoDto.patentType!=''">
+                and spi.patent_type =#{patentInfoDto.patentType}
+            </if>
+            <if test="patentInfoDto.patentNo!=null and patentInfoDto.patentNo!=''">
+                and spi.patent_no =#{patentInfoDto.patentNo}
+            </if>
+            <if test="patentInfoDto.startDate!=null and patentInfoDto.startDate!=''">
+                and spi.sub_date &gt;= #{patentInfoDto.startDate}
+            </if>
+            <if test="patentInfoDto.endDate!=null and patentInfoDto.endDate!=''">
+                and spi.sub_date &lt;= #{patentInfoDto.endDate}
+            </if>
+            order by eafrec.id desc
+    </select>
+    <select id="getPatentApply" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select spa.id as id,spa.name as name from srm_patent_apply spa
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spa.sys_no and eafrec.check_rec_id=spa.id
+        where eafrec.step_no>1 and
+        ( spa.sub_user_id=#{userId} or
+        spa.id in
+        (SELECT apply_patent_id FROM srm_patent_apply_author WHERE author_id = #{userId})
+        )
+        and "2"=(select eafrec2.check_result from cf_srm_eaf_rec eafrec2 where eafrec2.sys_no=spa.sys_no and eafrec2.check_rec_id=spa.id order by eafrec2.step_no desc limit 1)
+    </select>
+    <select id="getPatentInfo" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select distinct  spi.id as id,spi.name as name from srm_patent_info spi
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spi.sys_no and eafrec.check_rec_id=spi.id
+        where
+        "2" = (select check_result from cf_srm_eaf_rec seafrec where spi.sys_no=seafrec.sys_no and seafrec.check_rec_id=spi.id order by step_no desc limit 1)
+
+    </select>
+</mapper>

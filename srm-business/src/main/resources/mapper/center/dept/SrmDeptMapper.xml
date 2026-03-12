@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.dept.SrmDeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.dept.SrmDept">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="dept_type" property="deptType" />
+        <result column="is_valid" property="isValid" />
+        <result column="dept_level" property="deptLevel" />
+        <result column="super_dept_id" property="superDeptId" />
+        <result column="is_accounting" property="isAccounting" />
+        <result column="hospital" property="hospital" />
+        <result column="discipline_code" property="disciplineCode" />
+        <result column="is_research" property="isResearch" />
+        <result column="creator_no" property="creatorNo" />
+        <result column="create_date" property="createDate" />
+        <result column="operate_time" property="operateTime" />
+        <result column="alias" property="alias" />
+        <result column="hr_id" property="hrId" />
+        <result column="director" property="director" />
+        <result column="is_budg" property="isBudg" />
+        <result column="is_item" property="isItem" />
+        <result column="is_last" property="isLast" />
+        <result column="administrator" property="administrator" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, dept_type, is_valid, dept_level, super_dept_id, is_accounting, hospital, discipline_code, is_research, creator_no, create_date, operate_time, alias, hr_id, director, is_budg, is_item, is_last, administrator
+    </sql>
+    <select id="getDept" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+            id , name,code
+        FROM
+            ct_srm_dept
+        where is_valid=1
+        <if test="deptDto.name!=null and deptDto.name!=''">
+
+            and (name LIKE CONCAT('%', #{deptDto.name}, '%') or code LIKE CONCAT('%', #{deptDto.name}, '%'))
+        </if>
+    </select>
+    <select id="listDept" resultType="com.mediway.hos.srm.business.center.model.vo.dept.DeptVo">
+        SELECT
+            csd.id as rowId, csd.code as code , csd.name as name,csd.dept_level,
+            csd.dept_type,csdl.name as dept_level_name,csdt.name as dept_type_name,
+            csd2.name as super_dept_name,csd.is_valid,csd.administrator,csd.is_accounting
+        FROM
+            ct_srm_dept csd
+                left join  ct_srm_dept_level csdl on csdl.id=csd.dept_level
+                left join ct_srm_dept_type csdt on csdt.id=csd.dept_type
+                left join ct_srm_dept csd2 on csd2.id=csd.super_dept_id
+        where csd.is_valid=1
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.dept.DeptVo">
+        select csd.id as rowId, csd.code as code, csd.name as name, csd.is_valid as isValid,
+               csd.is_accounting as isAccounting,csd.is_research as isResearch,
+               csd.hr_id as hrId, csd.is_budg as isBudg, csd.is_item as isItem, csd.is_last as isLast,
+               fdiscipline.code as "disciplineCode.id",fdiscipline.name as "disciplineCode.name",
+               puser.id as "director.id",puser.name as "director.name",
+               csdt.code as "deptType.id",csdt.name as "deptType.name",
+               csdl.code as "deptLevel.id",csdl.name as "deptLevel.name",
+               csd2.id as "superDeptId.id",csd2.name as "superDeptId.name",
+               hoo.code as "hospital.id",hoo.name as "hospital.name",
+               csd.creator_no,csd.create_date,csd.operate_time
+        from ct_srm_dept csd
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code= csd.discipline_code
+                 left join ct_srm_user puser on puser.id=csd.director and puser.dept=csd.id
+                 left join ct_srm_dept csd2 on csd2.id=csd.super_dept_id
+                 left join ct_srm_dept_level csdl on csdl.code=csd.dept_level
+                 left join ct_srm_dept_type csdt on csdt.code=csd.dept_type
+                 left join hos_org_organization hoo on hoo.code=csd.hospital
+        where csd.id=#{RowId}
+    </select>
+    <select id="getDivision" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT   id , name  FROM  ct_srm_dept  where is_valid=1 and is_research =1
+    </select>
+
+</mapper>

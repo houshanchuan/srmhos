@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmPaperAuthorOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmPaperAuthorOrder">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="order_id" property="orderId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid, order_id
+    </sql>
+    <select id="getPaperAuthorOrder" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+            code as id , name
+        FROM
+            ct_srm_paper_author_order
+        where is_valid=1
+    </select>
+    <select id="listPaperAuthorOrder" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.PaperAuthorOrderVo">
+        select id as rowId,code,name,is_valid as isValid,order_id as orderId from ct_srm_paper_author_order
+    </select>
+
+</mapper>

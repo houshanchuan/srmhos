@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.patent.SrmPatentInfoPatenteeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.patent.SrmPatentInfoPatentee">
+        <id column="id" property="id" />
+        <result column="patent_info_id" property="patentInfoId" />
+        <result column="patentee_type" property="patenteeType" />
+        <result column="patentee_rec_id" property="patenteeRecId" />
+        <result column="patentee_name" property="patenteeName" />
+        <result column="note" property="note" />
+        <result column="contact_person" property="contactPerson" />
+        <result column="contact_tel" property="contactTel" />
+        <result column="contact_email" property="contactEmail" />
+        <result column="is_hosp" property="isHosp" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, patent_info_id, patentee_type, patentee_rec_id, patentee_name, note, contact_person, contact_tel, contact_email, is_hosp
+    </sql>
+
+</mapper>

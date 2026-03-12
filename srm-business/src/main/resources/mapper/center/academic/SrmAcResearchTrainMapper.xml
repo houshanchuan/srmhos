@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.academic.SrmAcResearchTrainMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.academic.SrmAcResearchTrain">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="name" property="name" />
+        <result column="check_status" property="checkStatus" />
+        <result column="sponsor_unit" property="sponsorUnit" />
+        <result column="address" property="address" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="expected_start_date" property="expectedStartDate" />
+        <result column="expected_end_date" property="expectedEndDate" />
+        <result column="train_number" property="trainNumber" />
+        <result column="meeting_fee_amt" property="meetingFeeAmt" />
+        <result column="material_fee_amt" property="materialFeeAmt" />
+        <result column="hotel_fee_amt" property="hotelFeeAmt" />
+        <result column="traffic_fee_amt" property="trafficFeeAmt" />
+        <result column="other_fee_amt" property="otherFeeAmt" />
+        <result column="funds_account" property="fundsAccount" />
+        <result column="train_code" property="trainCode" />
+        <result column="parter_id" property="parterId" />
+        <result column="parter_name" property="parterName" />
+        <result column="parter_duty" property="parterDuty" />
+        <result column="parter_title" property="parterTitle" />
+        <result column="parter_dept_id" property="parterDeptId" />
+        <result column="parter_account" property="parterAccount" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="file_ids" property="fileIds" />
+        <result column="note" property="note" />
+        <result column="sub_flag" property="subFlag" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, name, check_status, sponsor_unit, address, start_date, end_date, expected_start_date, expected_end_date, train_number, meeting_fee_amt, material_fee_amt, hotel_fee_amt, traffic_fee_amt, other_fee_amt, funds_account, train_code, parter_id, parter_name, parter_duty, parter_title, parter_dept_id, parter_account, creator, creator_name, create_time, file_ids, note, sub_flag, sub_user_id, sub_date, sub_time
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcResearchTrainVo">
+        select sart.id as rowId , sart.name as name,sart.sub_flag as subFlag,
+        sart.title as title,sart.train_code as trainCode,sart.address,sart.start_date as startDate,sart.end_date as endDate,
+        csru.code as "sponsorUnit.id",csru.name as "sponsorUnit.name",csru.name as sponsorUnitName,
+        puser.id as "parterId.id",puser.name as "parterId.name",puser.name as parterName,sart.parter_duty as parterDuty,
+        ccsti.code as "parterTitle.id",ccsti.name as "parterTitle.name",
+        sdept.id as "parterDeptId.id",sdept.name as "parterDeptId.name",
+        sart.parter_account as parterAccount,sart.note as note,sart.expected_start_date as expectedStartDate,
+        sart.expected_end_date as expectedEndDate,sart.train_number as trainNumber,
+        sart.meeting_fee_amt as meetingFeeAmt,sart.material_fee_amt as materialFeeAmt,
+        sart.hotel_fee_amt as hotelFeeAmt,sart.traffic_fee_amt as trafficFeeAmt,sart.other_fee_amt as otherFeeAmt,
+        sart.funds_account as fundsAccount,cuser.name as creator_name,sart.create_time,sart.check_status
+        from srm_ac_research_train sart
+        left join ct_srm_rely_unit csru on csru.code=sart.sponsor_unit
+        left join ct_srm_user puser on puser.id=sart.parter_id
+        left join ct_srm_user cuser on cuser.id=sart.creator
+        left join ct_srm_title_info ccsti  on ccsti.code=sart.parter_title
+        left join ct_srm_dept sdept on sdept.id=sart.parter_dept_id
+        where sart.id=#{rowId}
+    </select>
+    <select id="listAcResearchTrain" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcResearchTrainVo">
+        select sart.id as rowId , sart.name as name,sart.sub_flag as subFlag,
+        sart.title as title,sart.train_code as trainCode,sart.address,sart.start_date as startDate,sart.end_date as endDate,
+        csru.name as sponsorUnitName,
+        puser.name as parterName,sart.parter_duty as parterDuty,
+        ccsti.name as parterTitleName,
+        sdept.name as parterDeptName,
+        sart.parter_account as parterAccount,sart.note as note,sart.expected_start_date as expectedStartDate,
+        sart.expected_end_date as expectedEndDate,sart.train_number as trainNumber,
+        sart.meeting_fee_amt as meetingFeeAmt,sart.material_fee_amt as materialFeeAmt,
+        sart.hotel_fee_amt as hotelFeeAmt,sart.traffic_fee_amt as trafficFeeAmt,sart.other_fee_amt as otherFeeAmt,
+        sart.funds_account as fundsAccount,sart.create_time,sart.sub_date,puser1.name as creatorName,puser2.name as subUserName
+        from srm_ac_research_train sart
+        left join ct_srm_rely_unit csru on csru.code=sart.sponsor_unit
+        left join ct_srm_user puser on puser.id=sart.parter_id
+        left join ct_srm_user puser1 on puser1.id=sart.creator
+        left join ct_srm_user puser2 on puser2.id=sart.sub_user_id
+        left join ct_srm_title_info ccsti  on ccsti.code=sart.parter_title
+        left join ct_srm_dept sdept on sdept.id=sart.parter_dept_id
+        where (sart.sub_user_id=#{acResearchTrainDto.userId} or sart.creator=#{acResearchTrainDto.userId} )
+        <if test="acResearchTrainDto.subFlag != null and acResearchTrainDto.subFlag != ''">
+            and sart.sub_flag = #{acResearchTrainDto.subFlag}
+        </if>
+        <if test="acResearchTrainDto.name!=null and acResearchTrainDto.name!=''">
+            and sart.name LIKE CONCAT('%', #{acResearchTrainDto.name}, '%')
+        </if>
+        <if test="acResearchTrainDto.startDate != null and acResearchTrainDto.startDate != ''">
+            and sart.sub_date &gt;= #{acResearchTrainDto.startDate}
+        </if>
+        <if test="acResearchTrainDto.endDate != null and acResearchTrainDto.endDate != ''">
+            and sart.sub_date &lt;= #{acResearchTrainDto.endDate}
+        </if>
+        order by sart.id desc
+    </select>
+    <update id="updateStatus">
+        update  srm_ac_research_train
+        <set>
+            <if test="status != null">
+                sub_flag = #{status},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAcResearchTrain" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcResearchTrainVo">
+        select sart.id as rowId , sart.name as name,sart.sub_flag as subFlag,
+        sart.title as title,sart.train_code as trainCode,sart.address,sart.start_date as startDate,sart.end_date as endDate,
+        csru.name as sponsorUnitName,
+        puser.name as parterName,sart.parter_duty as parterDuty,
+        ccsti.name as parterTitleName,
+        sdept.name as parterDeptName,
+        sart.parter_account as parterAccount,sart.note as note,sart.expected_start_date as expectedStartDate,
+        sart.expected_end_date as expectedEndDate,sart.train_number as trainNumber,
+        sart.meeting_fee_amt as meetingFeeAmt,sart.material_fee_amt as materialFeeAmt,
+        sart.hotel_fee_amt as hotelFeeAmt,sart.traffic_fee_amt as trafficFeeAmt,sart.other_fee_amt as otherFeeAmt,
+        sart.funds_account as fundsAccount
+        from srm_ac_research_train sart
+        left join ct_srm_rely_unit csru on csru.code=sart.sponsor_unit
+        left join ct_srm_user puser on puser.id=sart.parter_id
+        left join ct_srm_title_info ccsti  on ccsti.code=sart.parter_title
+        left join ct_srm_dept sdept on sdept.id=sart.parter_dept_id
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no="P043" and eafrec.check_rec_id=sart.id
+        where
+        eafrec.step_no>1
+
+        <if test="acResearchTrainDto.name!=null and acResearchTrainDto.name!=''">
+            and sart.name LIKE CONCAT('%', #{acResearchTrainDto.name}, '%')
+        </if>
+        <if test="acResearchTrainDto.startDate != null and acResearchTrainDto.startDate != ''">
+            and sart.sub_date &gt;= #{acResearchTrainDto.startDate}
+        </if>
+
+        <if test="acResearchTrainDto.endDate != null and acResearchTrainDto.endDate != ''">
+            and sart.sub_date &lt;= #{acResearchTrainDto.endDate}
+        </if>
+        <if test="acResearchTrainDto.auditState== null and acResearchTrainDto.auditState == ''">
+            and (
+            (sart.sub_flag="1" and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where seafrec.sys_no="P043" and seafrec.check_rec_id=sart.id) and eafrec.checker_string  LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (sart.sub_flag="0" and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%'))
+            )
+        </if>
+        <if test='acResearchTrainDto.auditState=="0"'>
+            and sart.sub_flag="1" and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%')
+        </if>
+        <if test='acResearchTrainDto.auditState=="1"'>
+            and sart.sub_flag="1" and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%')
+        </if>
+        <if test='acResearchTrainDto.auditState=="2"'>
+            and sart.sub_flag="0" and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{acResearchTrainDto.userId}, '|%')
+        </if>
+
+    </select>
+</mapper>

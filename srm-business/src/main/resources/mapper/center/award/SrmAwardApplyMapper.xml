@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.award.SrmAwardApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.award.SrmAwardApply">
+        <id column="id" property="id" />
+        <result column="apply_info_id" property="applyInfoId" />
+        <result column="award_name" property="awardName" />
+        <result column="first_author_type" property="firstAuthorType" />
+        <result column="first_author_code" property="firstAuthorCode" />
+        <result column="first_author_name" property="firstAuthorName" />
+        <result column="product_name" property="productName" />
+        <result column="dept_id" property="deptId" />
+        <result column="apply_date" property="applyDate" />
+        <result column="award_level" property="awardLevel" />
+        <result column="classCode" property="classCode" />
+        <result column="discipline" property="discipline" />
+        <result column="productproj_ectsource" property="productprojEctsource" />
+        <result column="product_mode" property="productMode" />
+        <result column="is_registered" property="isRegistered" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="award" property="award" />
+        <result column="file_ids" property="fileIds" />
+        <result column="note" property="note" />
+        <result column="check_status" property="checkStatus" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="operate_time" property="operateTime" />
+        <result column="year" property="year" />
+        <result column="reward_type" property="rewardType" />
+        <result column="main_completer_id" property="mainCompleterId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, apply_info_id, award_name, first_author_type, first_author_code, first_author_name, product_name, dept_id, apply_date, award_level, classs, discipline, productproj_ectsource, product_mode, is_registered, our_unit_ranking, award, file_ids, note, check_status, creator_code, creator_name, create_time, operate_time, year, reward_type, main_completer_id
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyVo">
+        select saa.id as rowId, saa.apply_info_id as applyInfoId, saa.award_name as awardName, saa.product_name as productName,
+               fdept.id as "deptId.id",fdept.name as "deptId.name",fdept.name as deptName, saa.apply_date as applyDate,
+               saa.data_status as dataStatus,
+               csal.code as "awardLevel.id",csal.name as "awardLevel.name",csal.name as awardLevelName,
+                sclass.code as "classCode.id",sclass.name as "classCode.name",sclass.name as classCodeName,
+               fdiscipline.code as "discipline.id",fdiscipline.name as "discipline.name", fdiscipline.name as disciplineName,
+        saa.productproj_ectsource,
+               cspm.code as "productMode.id",cspm.name as "productMode.name",cspm.name as productModeName,
+               saa.is_registered as isRegistered,
+        csuo.code as "ourUnitRanking.id", csuo.name as "ourUnitRanking.name",saa.note,csuo.name as ourUnitRankingName,
+               saa.check_status, saa.creator_code, saa.creator_name,
+               saa.create_time,saa.operate_time,
+               syear.code as "year.id",syear.name as "year.name",syear.name as yearName,
+               csrt.code as "rewardType.id",csrt.name as "rewardType.name",csrt.name as rewardTypeName,
+               suser.id as "mainCompleterId.id",suser.name as "mainCompleterId.name",suser.name as mainCompleterName
+        from srm_award_apply saa
+            left join ct_srm_year syear on syear.code=saa.year
+            left join ct_srm_dept fdept on fdept.id=saa.dept_id
+            left join ct_srm_class sclass on sclass.code=saa.classCode
+            left join ct_srm_discipline fdiscipline on fdiscipline.code=saa.discipline
+            left join ct_srm_unit_order csuo on csuo.code=saa.our_unit_ranking
+            left join ct_srm_award_level csal  on csal.code=saa.award_level
+            left join ct_srm_reward_type csrt  on csrt.code=saa.reward_type
+            left join ct_srm_product_mode cspm  on cspm.code=saa.product_mode
+            left join ct_srm_rely_unit suser on suser.id=saa.main_completer_id
+        where saa.id=#{rowId}
+    </select>
+    <select id="listAwardApply" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyVo">
+        select saa.id as rowId, saa.apply_info_id as applyInfoId, saa.award_name as awardName,
+        saa.product_name as productName,
+        fdept.name as deptName, saa.apply_date as applyDate,
+        saa.data_status as dataStatus,
+        csal.name as awardLevelName,sclass.name as classCodeName,
+        fdiscipline.name as disciplineName, saa.productproj_ectsource,
+        cspm.name as productModeName,
+        saa.is_registered as isRegistered,  csuo.name as ourUnitRankingName,saa.note,
+        saa.check_status, saa.creator_code, cuser.name as creatorName,
+        saa.create_time,saa. operate_time,
+        syear.name as yearName,
+        csrt.name as rewardTypeName,
+        suser.name as mainCompleterName
+        from srm_award_apply saa
+        left join ct_srm_year syear on syear.code=saa.year
+        left join ct_srm_dept fdept on fdept.id=saa.dept_id
+        left join ct_srm_class sclass on sclass.code=saa.classCode
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=saa.discipline
+        left join ct_srm_unit_order csuo on csuo.code=saa.our_unit_ranking
+        left join ct_srm_award_level csal  on csal.code=saa.award_level
+        left join ct_srm_reward_type csrt  on csrt.code=saa.reward_type
+        left join ct_srm_product_mode cspm  on cspm.code=saa.product_mode
+        left join ct_srm_rely_unit suser on suser.id=saa.main_completer_id
+        left join ct_srm_user cuser on cuser.id=saa.creator_id
+        where
+        (saa.creator_id=#{awardApplyDto.userId} or saa.id in
+        (SELECT award_apply_id FROM srm_award_apply_author WHERE author_id = #{awardApplyDto.userId})
+        )
+        <if test="awardApplyDto.applyInfoId!=null and awardApplyDto.applyInfoId!=''">
+            and saa.apply_info_id=#{awardApplyDto.applyInfoId}
+        </if>
+        <if test="awardApplyDto.awardName!=null and awardApplyDto.awardName!=''">
+            and spaper.award_name LIKE CONCAT('%', #{awardApplyDto.awardName}, '%')
+        </if>
+        <if test="awardApplyDto.startDate != null and awardApplyDto.startDate != ''">
+            and saa.create_time &gt;= #{awardApplyDto.startDate}
+        </if>
+
+        <if test="awardApplyDto.endDate != null and awardApplyDto.endDate != ''">
+            and saa.create_time &lt;= #{awardApplyDto.endDate}
+        </if>
+        <if test="awardApplyDto.dataStatus!=null">
+            and saa.data_status = #{awardApplyDto.dataStatus}
+        </if>
+        order by saa.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_award_apply
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAwardApply" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyVo">
+        select saa.id as rowId, saa.apply_info_id as applyInfoId, saa.award_name as awardName,
+               saa.product_name as productName,
+               fdept.name as deptName, saa.apply_date as applyDate,
+               saa.data_status as dataStatus,
+               csal.name as awardLevelName,sclass.name as classCodeName,
+               fdiscipline.name as disciplineName, saa.productproj_ectsource,
+               cspm.name as productModeName,
+               saa.is_registered as isRegistered,  csuo.name as ourUnitRankingName,saa.note,
+               saa.check_status, saa.creator_code, saa.creator_name,
+               saa.create_time,saa. operate_time,saai.apply_name as applyInfoName,
+               syear.name as yearName,
+               csrt.name as rewardTypeName,
+               suser.name as mainCompleterName,cuser.name as creatorName
+        from srm_award_apply saa
+                 left join ct_srm_year syear on syear.code=saa.year
+                 left join ct_srm_dept fdept on fdept.id=saa.dept_id
+                 left join ct_srm_class sclass on sclass.code=saa.classCode
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=saa.discipline
+                 left join ct_srm_unit_order csuo on csuo.code=saa.our_unit_ranking
+                 left join ct_srm_award_level csal  on csal.code=saa.award_level
+                 left join ct_srm_reward_type csrt  on csrt.code=saa.reward_type
+                 left join ct_srm_product_mode cspm  on cspm.code=saa.product_mode
+                 left join ct_srm_rely_unit suser on suser.id=saa.main_completer_id
+                left join ct_srm_user cuser on cuser.id=saa.creator_id
+
+                 left join srm_award_apply_info saai on saai.id=saa.apply_info_id
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no="P045" and eafrec.check_rec_id=saa.id
+        where
+            eafrec.step_no>1
+            <if test="awardApplyDto.auditState== null and awardApplyDto.auditState == ''">
+                and (
+                (saa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%'))
+                or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where saa.sys_no=seafrec.sys_no and seafrec.check_rec_id=saa.id) and eafrec.checker_string  LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%') and eafrec.check_datetime is not null)
+                or (saa.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%'))
+                )
+            </if>
+            <if test='awardApplyDto.auditState=="0"'>
+                and saa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%')
+            </if>
+            <if test='awardApplyDto.auditState=="1"'>
+                and saa.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%')
+            </if>
+            <if test='awardApplyDto.auditState=="2"'>
+                and saa.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{awardApplyDto.userId}, '|%')
+            </if>
+            <if test="awardApplyDto.awardName!=null and awardApplyDto.awardName!=''">
+                and saa.award_name LIKE CONCAT('%', #{awardApplyDto.awardName}, '%')
+            </if>
+
+    </select>
+
+    <select id="listExpertAuditAwardApply" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionExpertAuditVo">
+        select spsg.id as rowId,spsg.app_rowId as appRowId,spsg.note as note,
+        csu.name as creatorName, saa.create_time as createTime ,
+        spsg.audit_status as auditStatus,spsg.data_status as dataStatus,
+        saa.award_name as awardName,saa.data_status as dataStatus,fdept.name as deptName
+        from srm_paper_submission_grade spsg
+        left join srm_award_apply saa on saa.id=spsg.app_rowId
+        left join ct_srm_user csu on csu.id=saa.creator_id
+
+        left join ct_srm_dept fdept on fdept.id=saa.dept_id
+        where spsg.expert=#{paperSubmissionExpertAuditDto.userId} and spsg.sys_no=#{paperSubmissionExpertAuditDto.sysNo}
+        <if test="paperSubmissionExpertAuditDto.title!=null and paperSubmissionExpertAuditDto.title!=''">
+            and saa.award_name LIKE CONCAT('%', #{paperSubmissionExpertAuditDto.title}, '%')
+        </if>
+
+    </select>
+</mapper>

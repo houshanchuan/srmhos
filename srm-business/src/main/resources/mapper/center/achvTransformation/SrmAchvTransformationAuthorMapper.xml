@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.achvTransformation.SrmAchvTransformationAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.achvTransformation.SrmAchvTransformationAuthor">
+        <id column="id" property="id" />
+        <result column="transform_id" property="transformId" />
+        <result column="author_id" property="authorId" />
+        <result column="author_name" property="authorName" />
+        <result column="author_unit_name" property="authorUnitName" />
+        <result column="author_ranking" property="authorRanking" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="note" property="note" />
+        <result column="author_type" property="authorType" />
+        <result column="is_first" property="isFirst" />
+        <result column="author_unit" property="authorUnit" />
+        <result column="author_division" property="authorDivision" />
+        <result column="sex" property="sex" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="title" property="title" />
+        <result column="author_code" property="authorCode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, transform_id, author_id, author_name, author_unit_name, author_ranking, work_ratio, note, author_type, is_first, author_unit, author_division, sex, edu_level, edu_degree, title, author_code
+    </sql>
+
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.paper.SrmPaperSubmissionAuditorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.paper.SrmPaperSubmissionAuditor">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="app_rowId" property="appRowId" />
+        <result column="expert_list" property="expertList" />
+        <result column="ethic_expert_list" property="ethicExpertList" />
+        <result column="journal_type" property="journalType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, app_rowId, expert_list, ethic_expert_list, journal_type
+    </sql>
+    <select id="getMainInfo" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionAuditorVo">
+        select id as rowId,expert_list as expertList
+        from srm_paper_submission_auditor
+        where 1=1
+        and sys_no=#{paperSubmissionAuditorDto.sysNo}
+        and app_rowId=#{paperSubmissionAuditorDto.appRowId}
+    </select>
+    <select id="getRowId" resultType="String">
+        select id srm_paper_submission_auditor
+        where 1=1
+            and sys_no=#{paperSubmissionAuditorDto.sysNo}
+            and app_rowId=#{paperSubmissionAuditorDto.appRowId}
+    </select>
+    <select id="getCurExpertList" resultType="String">
+        select expert_list from srm_paper_submission_auditor where sys_no=#{sysNo} and app_rowId=#{appRowId}
+    </select>
+
+    <select id="getNoAllotExpert" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionAuditorVo">
+        select csu.id as rowId,csu.account as account,csu.name as name
+        from ct_srm_user csu
+        where is_expert=1
+    </select>
+
+    <update id="updateExpertAudit">
+        update srm_paper_submission_auditor
+        set expert_list=#{expertList}
+        where 1=1
+        <if test="sysNo!=null and sysNo!=''">
+            and sys_no=#{sysNo}
+        </if>
+        <if test="appRowId!=null and appRowId!=''">
+            and app_rowId=#{appRowId}
+        </if>
+
+
+    </update>
+</mapper>

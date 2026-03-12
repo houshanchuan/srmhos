@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectsInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectsInfo">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="dept_id" property="deptId" />
+        <result column="head" property="head" />
+        <result column="sub_source" property="subSource" />
+        <result column="sub_no" property="subNo" />
+        <result column="app_funds_amt" property="appFundsAmt" />
+        <result column="gra_funds_amt" property="graFundsAmt" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="con_date" property="conDate" />
+        <result column="rely_unit" property="relyUnit" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="res_audit" property="resAudit" />
+        <result column="res_desc" property="resDesc" />
+        <result column="audit_user_id" property="auditUserId" />
+        <result column="audit_date" property="auditDate" />
+        <result column="proj_status" property="projStatus" />
+        <result column="remark" property="remark" />
+        <result column="sys_no" property="sysNo" />
+        <result column="issued_date" property="issuedDate" />
+        <result column="proj_class" property="projClass" />
+        <result column="year" property="year" />
+        <result column="proj_fund_gov" property="projFundGov" />
+        <result column="proj_fund_own" property="projFundOwn" />
+        <result column="prj_fund_matched" property="prjFundMatched" />
+        <result column="is_govbuy" property="isGovbuy" />
+        <result column="alert_percent" property="alertPercent" />
+        <result column="monograph_num" property="monographNum" />
+        <result column="paper_num" property="paperNum" />
+        <result column="patent_num" property="patentNum" />
+        <result column="invin_custom_stan_num" property="invinCustomStanNum" />
+        <result column="train_num" property="trainNum" />
+        <result column="hold_train_num" property="holdTrainNum" />
+        <result column="in_training_num" property="inTrainingNum" />
+        <result column="is_ethical_approval" property="isEthicalApproval" />
+        <result column="ethical_audit_state" property="ethicalAuditState" />
+        <result column="is_delay" property="isDelay" />
+        <result column="delay_date" property="delayDate" />
+        <result column="delay_data_state" property="delayDataState" />
+        <result column="delay_audit_state" property="delayAuditState" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="biz_type" property="bizType" />
+        <result column="capital_name" property="capitalName" />
+        <result column="department" property="department" />
+        <result column="out_person" property="outPerson" />
+        <result column="prj_lifes" property="prjLifes" />
+        <result column="budg_total_amt" property="budgTotalAmt" />
+        <result column="act_pay_wait_amt" property="actPayWaitAmt" />
+        <result column="act_pay_amt" property="actPayAmt" />
+        <result column="fina_no" property="finaNo" />
+        <result column="fina_audit_user_id" property="finaAuditUserId" />
+        <result column="fina_audit_date" property="finaAuditDate" />
+        <result column="fina_audit_time" property="finaAuditTime" />
+        <result column="score" property="score" />
+        <result column="au_dept_id" property="auDeptId" />
+        <result column="partistr" property="partistr" />
+        <result column="from_soli_proj" property="fromSoliProj" />
+        <result column="discipline" property="discipline" />
+        <result column="research_type" property="researchType" />
+        <result column="research_field" property="researchField" />
+        <result column="english_name" property="englishName" />
+        <result column="proj_level" property="projLevel" />
+        <result column="is_human_genetic_res_required" property="isHumanGeneticResRequired" />
+        <result column="is_changed" property="isChanged" />
+        <result column="division_code" property="divisionCode" />
+        <result column="head_code" property="headCode" />
+        <result column="head_name" property="headName" />
+        <result column="head_type_code" property="headTypeCode" />
+        <result column="proj_sub_type" property="projSubType" />
+        <result column="class" property="classCode" />
+        <result column="source_unit_name" property="sourceUnitName" />
+        <result column="authorize_date" property="authorizeDate" />
+        <result column="authorize_sn" property="authorizeSn" />
+        <result column="product_mode_code" property="productModeCode" />
+        <result column="industry_code" property="industryCode" />
+        <result column="proj_cooperate_code" property="projCooperateCode" />
+        <result column="proj_orgform_code" property="projOrgformCode" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="proj_dependence_type_code" property="projDependenceTypeCode" />
+        <result column="contract_type_code" property="contractTypeCode" />
+        <result column="proj_secrect_level_code" property="projSecrectLevelCode" />
+        <result column="proj_orgnize_unit" property="projOrgnizeUnit" />
+        <result column="proj_stat_source_code" property="projStatSourceCode" />
+        <result column="authorize_fee_amt" property="authorizeFeeAmt" />
+        <result column="operate_time" property="operateTime" />
+        <result column="tel" property="tel" />
+        <result column="partner_name" property="partnerName" />
+        <result column="partner_type_code" property="partnerTypeCode" />
+        <result column="partner_address" property="partnerAddress" />
+        <result column="partner_area" property="partnerArea" />
+        <result column="partner_zip_code" property="partnerZipCode" />
+        <result column="partner_tel" property="partnerTel" />
+        <result column="partner_representative" property="partnerRepresentative" />
+        <result column="pay_type_code" property="payTypeCode" />
+        <result column="finish_note" property="finishNote" />
+        <result column="self_raised_funds" property="selfRaisedFunds" />
+        <result column="enterprise_funds" property="enterpriseFunds" />
+        <result column="file_number" property="fileNumber" />
+        <result column="approval_number" property="approvalNumber" />
+        <result column="acceptance_date" property="acceptanceDate" />
+        <result column="appraisal_date" property="appraisalDate" />
+        <result column="project_account" property="projectAccount" />
+        <result column="special_funds" property="specialFunds" />
+        <result column="socio_economic_obj_code" property="socioEconomicObjCode" />
+        <result column="national_economy_industry" property="nationalEconomyIndustry" />
+        <result column="proj_type" property="projType" />
+        <result column="contract_role" property="contractRole" />
+        <result column="check_fina_audit_user_id" property="checkFinaAuditUserId" />
+        <result column="check_fina_audit_date" property="checkFinaAuditDate" />
+        <result column="check_fina_audit_time" property="checkFinaAuditTime" />
+        <result column="check_fina_audit_status" property="checkFinaAuditStatus" />
+        <result column="check_fina_auditnote" property="checkFinaAuditnote" />
+        <result column="contacts" property="contacts" />
+        <result column="winbid_year" property="winbidYear" />
+        <result column="is_transform_contract" property="isTransformContract" />
+        <result column="project_id" property="projectId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, dept_id, head, sub_source, sub_no, app_funds_amt, gra_funds_amt, start_date,
+          end_date, con_date, rely_unit, sub_user_id, sub_date, data_status, res_audit, res_desc,
+          audit_user_id, audit_date, proj_status, remark, sys_no, issued_date, proj_class, year,
+          proj_fund_gov, proj_fund_own, prj_fund_matched, is_govbuy, alert_percent, monograph_num,
+          paper_num, patent_num, invin_custom_stan_num, train_num, hold_train_num, in_training_num, is_ethical_approval,
+          ethical_audit_state, is_delay, delay_date, delay_data_state, delay_audit_state, our_unit_ranking, biz_type,
+          capital_name, department, out_person, prj_lifes, budg_total_amt, act_pay_wait_amt, act_pay_amt, fina_no,
+          fina_audit_user_id, fina_audit_date, fina_audit_time, score, au_dept_id, partistr, from_soli_proj, discipline,
+          research_type, research_field, english_name, proj_level, is_human_genetic_res_required, is_changed,
+          division_code, head_code, head_name, head_type_code, proj_sub_type, class, source_unit_name, authorize_date,
+          authorize_sn, product_mode_code, industry_code, proj_cooperate_code, proj_orgform_code, creator_code,
+          proj_dependence_type_code, contract_type_code, proj_secrect_level_code, proj_orgnize_unit,
+          proj_stat_source_code, authorize_fee_amt, operate_time, tel, partner_name, partner_type_code,
+          partner_address, partner_area, partner_zip_code, partner_tel, partner_representative, pay_type_code,
+          finish_note, self_raised_funds, enterprise_funds, file_number, approval_number, acceptance_date, appraisal_date,
+          project_account, special_funds, socio_economic_obj_code, national_economy_industry, proj_type, contract_role,
+          check_fina_audit_user_id, check_fina_audit_date, check_fina_audit_time, check_fina_audit_status,
+          check_fina_auditnote, contacts, winbid_year, is_transform_contract, project_id
+    </sql>
+    <select id="getVerticalDetail" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,spi.year as "year.id",csy.name as "year.name",csy.name as yearName,
+               spi.head as "head.id",huser.name as "head.name",huser.name as headName,
+               spi.dept_id as "deptId.id",sdept.name as "deptId.name",sdept.name as deptName,
+               spi.head_type_code as "headTypeCode.id",ccspt.name as "headTypeCode.name",ccspt.name as headTypeName,
+               spi.classCode as classCode,spi.proj_class as projClass,
+               spi.proj_level as "projLevel.id",cspl.name as "projLevel.name",cspl.name as projLevelName,
+               spi.proj_type as "projType.id",cspt.name as "projType.name",cspt.name as projTypeName,
+                huser.account as headAccount,cuser.id as creator,cuser.name as creatorName,spi.create_time as createTime,
+               csps.code as "projStatSourceCode.id",csps.name as "projStatSourceCode.name",csps.name as projStatSourceName,
+               spi.topic_type as topicType,spi.is_chief_scientist as isChiefScientist,spi.research_type as researchType,
+               spi.prj_fund_matched as prjFundMatched,spi.fund_account as fundAccount,spi.self_raised_funds as selfRaisedFunds,
+               spi.self_financing_account as selfFinancingAccount,spi.enterprise_account as enterpriseAccount,
+               spi.approval_number as approvalNumber,proj_orgnize_unit as projOrgnizeUnit,spi.surplus_account as surplusAccount,
+               spi.remark as remark,
+                csnei1.code as "nationalEconomyIndustry.id",csnei1.name as "nationalEconomyIndustry.name",csnei1.name as nationalEconomyIndustryName,
+                csnei2.code as "nationalEconomyIndustryMiddle.id",csnei2.name as "nationalEconomyIndustryMiddle.name",csnei2.name as nationalEconomyIndustryMiddleName,
+                csnei3.code as "nationalEconomyIndustrySmall.id",csnei3.name as "nationalEconomyIndustrySmall.name",csnei3.name as nationalEconomyIndustrySmallName,
+                cspcf.code as "projCooperateCode.id",cspcf.name as "projCooperateCode.name",cspcf.name as projCooperateCodeName,
+                csseo.code as "socioEconomicObjCode.id",csseo.name as "socioEconomicObjCode.name",csseo.name as socioEconomicObjName,
+                cspof.code as "projOrgformCode.id",cspof.name as "projOrgformCode.name",cspof.name as projOrgformName,
+                fdiscipline.code as "discipline.id",fdiscipline.name as "discipline.name",fdiscipline.name as disciplineName,
+               spi.sub_no as subNo,spi.file_number as fileNumber,spi.start_date as startDate,spi.appraisal_date as appraisalDate,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus
+        from srm_projects_info spi
+        left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+        left join ct_srm_year csy on csy.code=spi.year
+        left join ct_srm_dept sdept on sdept.id=spi.dept_id
+        left join ct_srm_user huser on huser.id=spi.head
+        left join ct_srm_user cuser on cuser.id=spi.creator
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+        left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+        left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+
+        left join ct_srm_proj_stat_source csps on csps.code=spi.proj_stat_source_code
+        left join ct_srm_national_economy_industry csnei1 on csnei1.code=  spi.national_economy_industry
+        left join ct_srm_national_economy_industry csnei2 on csnei2.code=  spi.national_economyIndustry_middle
+        left join ct_srm_national_economy_industry csnei3 on csnei3.code=  spi.national_economyIndustry_small
+        left join ct_srm_project_cooperation_form  cspcf on  cspcf.code=spi.proj_cooperate_code
+        left join ct_srm_soc_economic_obj csseo on csseo.code=spi.socio_economic_obj_code
+        left join ct_srm_project_org_form cspof on  cspof.code=spi.proj_orgform_code
+
+        where spi.id=#{rowId}
+    </select>
+    <select id="listVerticalProject" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,cuser.id as creator,cuser.name as creatorName,spi.create_time as createTime,
+              huser.name as headName,sdept.name as deptName,spi.sub_no as subNo,
+              spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+                spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate,suser.name as subUserName
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+        left join ct_srm_user cuser on cuser.id=spi.creator
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+                    left join ct_srm_user suser on suser.id=spi.sub_user_id
+        where spi.sys_no=#{projectsInfoDto.sysNo} and
+        (spi.sub_user_id=#{projectsInfoDto.userId} or spi.head=#{projectsInfoDto.userId} or spi.id in
+            (SELECT proj_id FROM srm_projects_info_member WHERE member = #{projectsInfoDto.userId})
+        )
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+        <if test="projectsInfoDto.startDate!=null and projectsInfoDto.startDate!=''">
+            and spi.sub_date &gt;= #{projectsInfoDto.startDate}
+        </if>
+        <if test="projectsInfoDto.endDate!=null and projectsInfoDto.endDate!=''">
+            and spi.sub_date &lt;= #{projectsInfoDto.endDate}
+        </if>
+        <if test="projectsInfoDto.projType!=null and projectsInfoDto.projType!=''">
+            and spi.proj_type = #{projectsInfoDto.projType}
+        </if>
+        <if test="projectsInfoDto.head!=null and projectsInfoDto.head!=''">
+            and spi.head = #{projectsInfoDto.head}
+        </if>
+        <if test="projectsInfoDto.dataStatus!=null">
+            and spi.data_status = #{projectsInfoDto.dataStatus}
+        </if>
+
+        <if test="projectsInfoDto.deptId!=null and projectsInfoDto.deptId!=''">
+            and spi.dept_id = #{projectsInfoDto.deptId}
+        </if>
+        order by spi.id desc
+    </select>
+    <select id="listAuditVerticalProject" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,cuser.id as creator,cuser.name as creatorName,spi.create_time as createTime,
+               huser.name as headName,sdept.name as deptName,spi.sub_no as subNo,
+               spi.issued_date as issuedDate,spi.start_date as startDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate,suser.name as subUserName
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                 left join ct_srm_user cuser on cuser.id=spi.creator
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+                left join ct_srm_user suser on suser.id=spi.sub_user_id
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spi.sys_no and eafrec.check_rec_id=spi.id
+        where
+            eafrec.step_no>1 and spi.sys_no=#{projectsInfoDto.sysNo}
+
+        <if test='projectsInfoDto.auditState==null or projectsInfoDto.auditState==""'>
+            and ((spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spi.sys_no=seafrec.sys_no and seafrec.check_rec_id=spi.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (spi.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%'))
+            )
+        </if>
+        <if test='projectsInfoDto.auditState=="0"'>
+            and spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+        <if test='projectsInfoDto.auditState=="1"'>
+            and spi.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+        <if test='projectsInfoDto.auditState=="2"'>
+            and spi.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+        <if test="projectsInfoDto.startDate!=null and projectsInfoDto.startDate!=''">
+            and spi.sub_date &gt;= #{projectsInfoDto.startDate}
+        </if>
+        <if test="projectsInfoDto.endDate!=null and projectsInfoDto.endDate!=''">
+            and spi.sub_date &lt;= #{projectsInfoDto.endDate}
+        </if>
+        <if test="projectsInfoDto.projType!=null and projectsInfoDto.projType!=''">
+            and spi.proj_type = #{projectsInfoDto.projType}
+        </if>
+        <if test="projectsInfoDto.head!=null and projectsInfoDto.head!=''">
+            and spi.head = #{projectsInfoDto.head}
+        </if>
+        <if test="projectsInfoDto.projType!=null and projectsInfoDto.projType!=''">
+            and spi.proj_type = #{projectsInfoDto.projType}
+        </if>
+        <if test="projectsInfoDto.deptId!=null and projectsInfoDto.deptId!=''">
+            and spi.dept_id = #{projectsInfoDto.deptId}
+        </if>
+        order by spi.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_projects_info
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="resStatus != null">
+                res_audit = #{resStatus},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+
+    <!--下面后是横向项目-->
+    <select id="getHroProjectDetail" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,spi.year as "year.id",csy.name as "year.name",
+               spi.head as "head.id",huser.name as "head.name",
+               spi.dept_id as "deptId.id",sdept.name as "deptId.name",
+               spi.head_type_code as "headTypeCode.id",ccspt.name as "headTypeCode.name",
+               spi.classCode as classCode,spi.proj_class as projClass,
+               spi.proj_level as "projLevel.id",cspl.name as "projLevel.name",
+               spi.proj_type as "projType.id",cspt.name as "projType.name",
+                spi.authorize_fee_amt as authorizeFeeAmt,
+                csps.code as "projStatSourceCode.id",csps.name as "projStatSourceCode.name",
+                spi.topic_type as topicType,spi.is_chief_scientist as isChiefScientist,spi.research_type as researchType,
+                spi.prj_fund_matched as prjFundMatched,spi.fund_account as fundAccount,spi.self_raised_funds as selfRaisedFunds,
+                spi.self_financing_account as selfFinancingAccount,spi.enterprise_account as enterpriseAccount,
+                spi.approval_number as approvalNumber,proj_orgnize_unit as projOrgnizeUnit,spi.surplus_account as surplusAccount,
+                spi.remark as remark,
+                spi.tel as tel,spi.partner_name as partnerName,
+                csptn.code as "partnerTypeCode.id",csptn.name as "partnerTypeCode.name",
+                spi.partner_address as partnerAddress,spi.partner_area as partnerArea,spi.partner_zip_code as partnerZipCode,
+                spi.partner_tel as partnerTel,spi.partner_representative as partnerRepresentative,
+                spi.is_transform_contract as isTransformContract,
+                csnei1.code as "nationalEconomyIndustry.id",csnei1.name as "nationalEconomyIndustry.name",
+                csnei2.code as "nationalEconomyIndustryMiddle.id",csnei2.name as "nationalEconomyIndustryMiddle.name",
+                csnei3.code as "nationalEconomyIndustrySmall.id",csnei3.name as "nationalEconomyIndustrySmall.name",
+                cspcf.code as "projCooperateCode.id",cspcf.name as "projCooperateCode.name",
+                csseo.code as "socioEconomicObjCode.id",csseo.name as "socioEconomicObjCode.name",
+                cspof.code as "projOrgformCode.id",cspof.name as "projOrgformCode.name",
+                fdiscipline.code as "discipline.id",fdiscipline.name as "discipline.name",
+                 csct.code as "contractTypeCode.id",csct.name as "contractTypeCode.name",
+                cscr.code as "contractRole.id",cscr.name as "contractRole.name",
+               spi.sub_no as subNo,spi.file_number as fileNumber,spi.start_date as startDate,spi.appraisal_date as appraisalDate,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                 left join ct_srm_partner_type csptn on csptn.code=spi.partner_type_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+                left join ct_srm_proj_stat_source csps on csps.code=spi.proj_stat_source_code
+                left join ct_srm_national_economy_industry csnei1 on csnei1.code=  spi.national_economy_industry
+                left join ct_srm_national_economy_industry csnei2 on csnei2.code=  spi.national_economyIndustry_middle
+                left join ct_srm_national_economy_industry csnei3 on csnei3.code=  spi.national_economyIndustry_small
+                left join ct_srm_project_cooperation_form  cspcf on  cspcf.code=spi.proj_cooperate_code
+                left join ct_srm_soc_economic_obj csseo on csseo.code=spi.socio_economic_obj_code
+                left join ct_srm_project_org_form cspof on  cspof.code=spi.proj_orgform_code
+                left join ct_srm_contract_type csct on  csct.code=spi.contract_type_code
+                left join ct_srm_contract_role cscr on  cscr.code=spi.contract_role
+        where spi.id=#{rowId}
+    </select>
+    <select id="listHroProject" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,cuser.id as creator,cuser.name as creatorName,spi.create_time as createTime,
+               huser.name as headName,sdept.name as deptName,spi.sub_no as subNo,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate,suser.name as subUserName
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+        left join ct_srm_user suser on suser.id=spi.sub_user_id
+        left join ct_srm_user cuser on cuser.id=spi.creator
+        where spi.sys_no=#{projectsInfoDto.sysNo} and
+        (spi.sub_user_id=#{projectsInfoDto.userId} or spi.head=#{projectsInfoDto.userId} or  spi.id in
+        (SELECT proj_id FROM srm_projects_info_member WHERE member = #{projectsInfoDto.userId})
+        )
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+        <if test="projectsInfoDto.startDate!=null and projectsInfoDto.startDate!=''">
+            and spi.sub_date &gt;= #{projectsInfoDto.startDate}
+        </if>
+        <if test="projectsInfoDto.endDate!=null and projectsInfoDto.endDate!=''">
+            and spi.sub_date &lt;= #{projectsInfoDto.endDate}
+        </if>
+        <if test="projectsInfoDto.projType!=null and projectsInfoDto.projType!=''">
+            and spi.proj_type = #{projectsInfoDto.projType}
+        </if>
+        <if test="projectsInfoDto.head!=null and projectsInfoDto.head!=''">
+            and spi.head = #{projectsInfoDto.head}
+        </if>
+        <if test="projectsInfoDto.dataStatus!=null">
+            and spi.data_status = #{projectsInfoDto.dataStatus}
+        </if>
+        order by spi.id desc
+    </select>
+    <select id="listAuditHroProject" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,
+               huser.name as headName,sdept.name as deptName,spi.sub_no as subNo,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+        left join ct_srm_user suser on suser.id=spi.sub_user_id
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spi.sys_no and eafrec.check_rec_id=spi.id
+        where
+            eafrec.step_no>1 and spi.sys_no=#{projectsInfoDto.sysNo}
+        <if test='projectsInfoDto.auditState==null or projectsInfoDto.auditState==""'>
+            and ((spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spi.sys_no=seafrec.sys_no and seafrec.check_rec_id=spi.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (spi.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%'))
+            )
+        </if>
+        <if test='projectsInfoDto.auditState=="0"'>
+            and spi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+        <if test='projectsInfoDto.auditState=="1"'>
+            and spi.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+        <if test='projectsInfoDto.auditState=="2"'>
+            and spi.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoDto.userId}, '|%')
+        </if>
+
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+        <if test="projectsInfoDto.startDate!=null and projectsInfoDto.startDate!=''">
+            and spi.sub_date &gt;= #{projectsInfoDto.startDate}
+        </if>
+        <if test="projectsInfoDto.endDate!=null and projectsInfoDto.endDate!=''">
+            and spi.sub_date &lt;= #{projectsInfoDto.endDate}
+        </if>
+    </select>
+    <select id="getProjectsInfo" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select distinct  spi.id as id,spi.name as name from srm_projects_info spi
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spi.sys_no and eafrec.check_rec_id=spi.id
+        where 1=1
+        and "2" = (select check_result from cf_srm_eaf_rec seafrec where spi.sys_no=seafrec.sys_no and seafrec.check_rec_id=spi.id order by step_no desc limit 1)
+        <if test="projectsInfoDto.sysNo!=null and projectsInfoDto.sysNo!=''">
+           and spi.sys_no=#{projectsInfoDto.sysNo}
+        </if>
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+    </select>
+    <select id="getProject" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select id,name from srm_projects_info spi  where proj_status in ('2','3','7')
+    </select>
+
+    <select id="getProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select distinct  sps.id as id,sps.title as name from srm_project_solicit sps
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=sps.sys_no and eafrec.check_rec_id=sps.id
+        where
+        "2" = (select check_result from cf_srm_eaf_rec seafrec where sps.sys_no=seafrec.sys_no and seafrec.check_rec_id=sps.id order by step_no desc limit 1)
+
+    </select>
+</mapper>

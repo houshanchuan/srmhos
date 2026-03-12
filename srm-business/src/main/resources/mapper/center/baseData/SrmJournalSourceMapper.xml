@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmJournalSourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmJournalSource">
+        <id column="id" property="id" />
+        <result column="journal_type" property="journalType" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="start_year" property="startYear" />
+        <result column="end_year" property="endYear" />
+        <result column="note" property="note" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, journal_type, code, name, start_year, end_year, note, is_valid
+    </sql>
+    <select id="listJournalSource" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.JournalSourceDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.JournalSourceVo">
+        select csjs.id as rowId,csjs.code,csjs.name,csjs.is_valid as isValid,journal_type as journalType,start_year as startYear ,end_year as endYear,csjs.note,csjt.name as journalTypeName
+        from ct_srm_journal_source csjs
+                 left join ct_srm_journal_type csjt on csjs.journal_type=csjt.code
+
+    </select>
+</mapper>

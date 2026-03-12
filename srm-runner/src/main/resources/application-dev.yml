@@ -1,0 +1,355 @@
+spring:
+  servlet:
+    multipart:
+      max-file-size: 2000MB
+      max-request-size: 2500MB
+  elasticsearch:
+     rest:
+       uris:
+         - http://127.0.0.1:9200
+       # 3. Spring Data Elasticsearch 配置（索引自动创建、仓库扫描等）
+       data:
+         elasticsearch:
+           repositories:
+             enabled: true  # 启用 Elasticsearch 仓库（默认 true，显式配置更清晰）
+           # 索引自动创建关键配置（SDE 4.0+ 需显式开启）
+           properties:
+             index:
+               auto: create  # 允许通过 @Document 注解自动创建索引（create：不存在则创建；none：关闭自动创建）
+             # 全局默认分词器（可选，若实体类未指定 analyzer 则使用此配置）
+  redis:
+    password: hck14yC1Md9
+    database: 0
+    timeout: 5000
+    # host: 114.251.235.61
+    host: 114.251.235.60
+    port: 32543
+    #cluster:
+    #  nodes: 114.251.235.6:32543
+  jackson:
+    time-zone: GMT+8
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # url: jdbc:mysql://127.0.0.1:3306/srm?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      # username: root
+      # password: root
+      # driver-class-name: com.mysql.cj.jdbc.Driver
+
+      url: jdbc:mysql://47.92.241.34:3306/srm?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      username: srm
+      password: srm
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+      # url: jdbc:mysql://47.92.241.34:3306/srm?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      # username: srm
+      # password: srm
+      # driver-class-name: com.mysql.cj.jdbc.Driver
+      # url: jdbc:mysql://47.92.241.34:3306/srm?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      # username: srm
+      # password: srm
+      # driver-class-name: com.mysql.cj.jdbc.Driver
+
+      #     url: jdbc:mysql://58.56.200.231:3306/srm?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      #     username: root
+      #     password: CSSDmysql@6789
+      #     driver-class-name: com.mysql.cj.jdbc.Driver
+
+      #      url: jdbc:mysql://114.251.235.6:32391/hos_app_dev_2.5.0?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&rewriteBatchedStatements=true
+      #      username: admin
+      #      password: 66aJz1giwD
+      #      driver-class-name: com.mysql.cj.jdbc.Driver
+
+      #      url: jdbc:oracle:thin:@114.242.246.250:8521/XE
+      #      username: HOS_APP_2_DEV
+      #      password: wvB271Mdkw
+      #      driver-class-name: oracle.jdbc.driver.OracleDriver
+      web-stat-filter:
+        enabled: true #默认为false，表示不使用WebStatFilter配置，就是属性名去短线
+        url-pattern: /* #拦截该项目下的一切请求
+        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico  #对这些请求放行
+        session-stat-enable: true
+        principal-session-name: session_name
+        principal-cookie-name: cookie_name
+
+      filter:
+        wall:
+          enabled: false
+        stat:
+          slow-sql-millis: 1000
+          log-slow-sql: true
+
+
+      stat-view-servlet: # StatViewServlet配置
+        enabled: true #默认为false，表示不使用StatViewServlet配置，就是属性名去短线
+        url-pattern: /druid/*  #配置DruidStatViewServlet的访问地址。后台监控页面的访问地址
+        reset-enable: false #禁用HTML页面上的“重置”功能，会把所有监控的数据全部清空，一般不使用
+        login-username: admin #监控页面登录的用户名
+        login-password: 123456 #监控页面登录的密码
+        allow: 223.71.143.178 #白名单中需要添加访问浏览器的外网ip
+#安全攻击防护相关配置
+framework:
+  multi-tenant:
+    enable: false
+    #动态数据源开关，默认关闭
+    dynamic-datasource: false
+    ignore-table:
+      - hos_tenant_package
+      - hos_tenant
+      - hos_datasource
+      - hos_tenant_package_resource
+  hoscache:
+    ##使用的缓存类型，目前支持 redis ehcache，如果使用redis还需要单独设置redis的连接信息
+    type: ehcache
+    ehcachePath: /temp
+    prev: hos-base-
+
+
+  interface-encryption:
+    #是否全局进行接口签名验证,开启之后对全局的数据进行解密加密
+    isGlobal: false
+    #全局下的加密方式，以及单个接口的默认加密方式，支持的方式有 AES、RSA、国密（SM4）
+    decryptType: SM4
+    #是否对接口的入参进行解密,全局模式下使用
+    isDecrypt: false
+    #对body里面的数据单个解密，还是作为一个整体解密
+    decryptAll:
+      # RequestParam（param参数）的参数进行全参数解密
+      params: false
+      # RequestBody（body参数）的参数进行全参数解密
+      body: false
+    # 解密的参数配置，isGlobal为ture(全局解密)，encrypAll为false的情况下，只对单个参数进行解密
+    decryptParam:
+      # 对请求RequestParam（param参数）中附加的参数进行解密
+      params:
+        - password
+      # 对RequestBody（body参数）里面的参数进行解密,只支持键值对的JSON
+      body:
+        - password
+    #是否对接口返回的结果进行加密，默认情况只加密data字段的数据
+    isEncrypt: false
+    # RSA公钥,用于加密解密
+    publicKey:
+    # RSA私钥,用于加密解密
+    privateKey:
+    # 秘钥，用于接口数据加解密
+    secret: 1234567890123456
+    # 全局情况下，排除的请求
+    excludeUrl:
+      - /ceshipost001/*
+  security:
+    license:
+      enable: false
+      production:
+        name: HOSBase
+        version: V2.0.5
+    #防xss攻击，默认关闭
+    xss:
+      enable: false
+    #防csrf攻击，默认关闭。此处需要注意：csrf开关开启后，除"GET", "HEAD", "TRACE", "OPTIONS"四类请求可以直接通过外，其他请求都会拦截
+    #由于防csrf采用了token机制，所以要求前端页面传入csrfToken，传入方式有两种：
+    #方式一：隐藏域  <input type='hidden' name='${_csrf.parameterName}' value='${_csrf.token}'>写法固定；
+    #方式二：header中传入，如果token保存在session中（默认），则header-name为 X-CSRF-TOKEN,header-value为token具体值;
+    #如果token保存在cookie中，则header-name为 X-XSRF-TOKEN,header-value为token具体值
+    csrf:
+      enable: false
+    #跨域，默认关闭
+    cors:
+      enable: true
+      #allowed:
+      #跨域允许来源，可配置多个，在framework.security.cors.enable=true时有效，不配置默认允许所有来源
+      #origins: https://www.baidu.com,https://www.taobao.com
+      #跨域允许方法，可配置多个，在framework.security.cors.enable=true时有效，不配置默认允许所有方法
+      #methods: GET,POST,PUT,DELETE
+
+  # 操作日志输出位置：logFile,database 二者可以同时存在，默认为logFile
+  # logFile表示输出到log文件，database表示输出数据库中的sys_oper_log表中
+  # 该配置只对OperLog注解生效，与其他日志输出无关
+  oper-log:
+    out: database
+
+  job:
+    admin:
+      ### 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+      addresses: http://127.0.0.1:8080/hos-job-admin
+    ### 执行器通讯TOKEN [选填]：非空时启用；
+    accessToken:
+    ### 执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+    executor:
+      appname: hos-job-executor-sample
+      ### 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
+      ### 执行器单独启用端口与调度中心做交互，和web端口不相同
+      address:
+      ### 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+      ip:
+      ### 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+      port: 9999
+      ### 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+      logpath: /data/applogs/hos-job/jobhandler
+      ### 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
+      logretentiondays: 30
+
+####jwt 相关
+jwt:
+  # 令牌内容前缀，此处必须修改为自己的
+  prefix: mediway_
+  # 签名密钥，必须是32位的长度，为了安全，最好设置成自己的，否则会使用默认的
+  signKey: mediwaysapowerfulmicroservicearchitectureupgradedandoptimizedfromacommercialproject
+
+
+#第三方登陆--hos统一认证
+social:
+  hos:
+    codeUrl: ${social.hos.serverUrl}:8329/oauth/authorize
+    tokenUrl: ${social.hos.serverUrl}:8369/api/oauth/token
+    userUrl: ${social.hos.serverUrl}:8369/api/oauth/resource/getUserInfo
+    serverUrl: http://114.251.235.9
+  enabled: true
+  userControl: false
+  domain: http://127.0.0.1:8080
+  #  domain: http://114.251.235.9:8327
+  oauth:
+    HOS:
+      client-id: 165588O9fa05
+      client-secret: 6CDM376v2kOoam86
+      redirect-uri: ${social.domain}/oauth/redirect/hos
+
+
+server:
+  port: 8367
+  tomcat:
+    relaxed-query-chars: <,>,[,]
+
+auth:
+  password:
+    encode:
+      loginPasswordEncode: BCRYPT
+      #给下游应用系统同步密码的加密配置，支持SM4;同步账号时用到与开放平台的需要保持一直
+      appPasswordEncode: BCRYPT
+      #SM4密钥
+      appPasswordSecret: 1234567891234567
+    user:
+      userInfos:
+        - loginName: admin
+          name: 管理员
+          password: $2a$10$BTmUjsvO434oino1eNWehuPOJLzK3qrHyWANE14AQOmW8I9rRr1TK
+          id: 2
+        - loginName: erpeng
+          name: 二碰
+          password: $2a$10$BTmUjsvO434oino1eNWehuPOJLzK3qrHyWANE14AQOmW8I9rRr1TK
+          id: eca13971fb627b2f75c79475e34ecf07
+
+smscaptcha:
+  templateId: 1
+  smsSp: rly
+  validField: 1
+  timeField: 2
+pulling:
+  config:
+    orgsyn:
+      interfaceType: restful
+      restfulUrl: http://10.1.20.150:8367/api/openApi/sync/getOrgData
+      webserviceUrl: http://10.80.99.222/imedical/web/web.SLYTLCPF.HOS.Soap.GetView.CLS
+      webserviceMethod: GetView
+# 禁止Actuator监控Redis连接
+management:
+  health:
+    redis:
+      enabled: false
+hos-security:
+  platform: platform
+  front-url: http://114.251.235.9:8328                  #应用前端页面地址
+  authentication-uri: http://114.251.235.9:8345             #统一认证地址
+  login:                                                #登录相关配置
+    captcha:                                            #图形验证码配置
+      captcha-type: line
+      captcha-length: 5
+    password:                                           #密码相关配置
+      login-password-encode: BCRYPT                     #数据库中密码加密方式
+      login-password-secret: 1234567890123456           #前后端密码传输SM4加密秘钥
+    token:                                              #token相关配置
+      access-token-expires-in: 1200                      #token过期时间，单位：秒
+      refresh-token-expires-in: 7200                    #刷新token过期时间，单位：秒
+      enable-refresh-token: true                        #是否开启刷新token
+      sign-key: 123123                                  #生成jwt token 签名key
+      access-token-key: access_token                    #保存token缓存的前缀
+      refresh-token-key: refresh_token                  #保存刷新token缓存的前缀
+    log-table-name: hos_sys_log_login                   #登录日志保存表名称
+    white-list:                                         #认证白名单
+      - /openApi/**
+      - /druid/**
+      - /license/*
+      - /loginPageData/*
+      - /property/is-enable-tenant
+      - /tenant/select-tenant-by-domain
+      - /tenant/select-tenant
+      - /core/system/files/other/**
+      - /core/system/files/image/**
+      - /websocket/**
+      - /favicon.ico
+      - /v2/api-docs
+      - /swagger-resources
+      - /acm/accountAndPWD/validateAccount
+      - /doc
+      - /**/*.css
+      - /**/*.js
+      - /**/*.png
+      - /**/*.jpg
+      - /**/*.jpeg
+      - /**/*.html
+      - /**/*.ico
+      - /**/*.properties
+      - /**/*.woff
+      - /**/*.woff2
+      - /**/*.ttf
+      - /hos-job-admin/api/registry
+      - /i18n/language/list-select
+      - /i18n/element/get-loginPageElements
+      - /i18n/config/is-open
+      - /i18n/static-translation/transByCode
+      - /poserver.zz
+      - /posetup.exe
+      - /sealsetup.exe
+      - /poserver.zz
+      - /sys/config/is-open-download-browser
+      - /test/test
+      - /srm/SrmApp/upload
+      - /srm/SrmApp/srmDownload
+      - /srm/wx/*
+  oauth2:                                               #统一认证oauth2登录配置
+    enable: false                                        #是否开启统一认证登录
+    state-expire-in: 600                                #oauth2登录中state的有效时间，单位：秒
+    client:                                             #统一认证登录配置
+      registration:
+        messaging-client-oidc:
+          provider: spring                              #对应下边 provider 的配置，不需要修改
+          client-id: messaging-client                   #统一用户平台中创建应用的id
+          client-secret: secret                         #统一用户平台中创建应用的秘钥
+          authorization-grant-type: authorization_code  #认证类型，不要修改
+          redirect-uri: ${hos-security.front-url}/api/security/login/oauth2/code/messaging-client-oidc  #回调地址，不要修改
+          scope: all                                #统一用户平台中创建应用的作用域
+          client-name: hos-app                          #该客户端名称
+      provider:
+        spring:
+          issuer-uri: ${hos-security.authentication-uri}/api                      #发行地址
+          authorization-uri: ${hos-security.authentication-uri}/oauth/authorize   #获取授权码页面
+hos:
+  i18n:
+    baiduAppId:
+    baiduSecurityKey:
+    isOpen: true
+    isShowSource: true
+
+posyspath: C:\
+qwen:
+  api:
+    url: https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
+    key: sk-d8ca501bdf894ccb80aa3efa373fe6e9
+# 企业微信配置
+qywechat:
+  corpid: ww5e8f9a58d8145b4d  # 替换为你的企业corpid
+  corpsecret: xoqFdoaJo2WZIYjgeAoiAUgjMOc3R6_88TVaLP-zhQA  # 替换为你的应用corpsecret
+  # 企业微信接口地址（固定）
+  access-token-url: https://qyapi.weixin.qq.com/cgi-bin/gettoken
+  user-info-url: https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo
+  user-detail-url: https://qyapi.weixin.qq.com/cgi-bin/user/get

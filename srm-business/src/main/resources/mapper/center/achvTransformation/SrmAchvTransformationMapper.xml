@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.achvTransformation.SrmAchvTransformationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.achvTransformation.SrmAchvTransformation">
+        <id column="id" property="id" />
+        <result column="transform_no" property="transformNo" />
+        <result column="transform_desc" property="transformDesc" />
+        <result column="sys_no" property="sysNo" />
+        <result column="dept_id" property="deptId" />
+        <result column="year" property="year" />
+        <result column="achievement" property="achievement" />
+        <result column="source_proj" property="sourceProj" />
+        <result column="source_proj_name" property="sourceProjName" />
+        <result column="source_patent" property="sourcePatent" />
+        <result column="source_patent_name" property="sourcePatentName" />
+        <result column="transform_type" property="transformType" />
+        <result column="agr_type" property="agrType" />
+        <result column="agr_no" property="agrNo" />
+        <result column="agr_date" property="agrDate" />
+        <result column="agr_start_date" property="agrStartDate" />
+        <result column="agr_end_date" property="agrEndDate" />
+        <result column="fee_amt" property="feeAmt" />
+        <result column="pay_mode" property="payMode" />
+        <result column="achv_unit_prop" property="achvUnitProp" />
+        <result column="partner_unit_prop" property="partnerUnitProp" />
+        <result column="transformants" property="transformants" />
+        <result column="achv_unit" property="achvUnit" />
+        <result column="achv_addr" property="achvAddr" />
+        <result column="achv_post_code" property="achvPostCode" />
+        <result column="achv_head" property="achvHead" />
+        <result column="achv_headtel" property="achvHeadtel" />
+        <result column="partner_unit" property="partnerUnit" />
+        <result column="partner_unit_addr" property="partnerUnitAddr" />
+        <result column="partner_unit_postcode" property="partnerUnitPostcode" />
+        <result column="partner_unit_tel" property="partnerUnitTel" />
+        <result column="agent_name" property="agentName" />
+        <result column="agent_unit" property="agentUnit" />
+        <result column="agent_unit_tel" property="agentUnitTel" />
+        <result column="agent_unit_addr" property="agentUnitAddr" />
+        <result column="agent_unit_postcode" property="agentUnitPostcode" />
+        <result column="create_date" property="createDate" />
+        <result column="create_time" property="createTime" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="data_status" property="dataStatus" />
+        <result column="chk_status" property="chkStatus" />
+        <result column="chk_user_id" property="chkUserId" />
+        <result column="chk_date" property="chkDate" />
+        <result column="chk_time" property="chkTime" />
+        <result column="chk_desc" property="chkDesc" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, transform_no, transform_desc, sys_no, dept_id, year, achievement, source_proj, source_proj_name, source_patent, source_patent_name, transform_type, agr_type, agr_no, agr_date, agr_start_date, agr_end_date, fee_amt, pay_mode, achv_unit_prop, partner_unit_prop, transformants, achv_unit, achv_addr, achv_post_code, achv_head, achv_headtel, partner_unit, partner_unit_addr, partner_unit_postcode, partner_unit_tel, agent_name, agent_unit, agent_unit_tel, agent_unit_addr, agent_unit_postcode, create_date, create_time, create_user_id, sub_user_id, sub_date, sub_time, data_status, chk_status, chk_user_id, chk_date, chk_time, chk_desc, remark
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.achvTransformation.AchvTransformationVo">
+        select satm.id as rowId,satm.transform_no as transformNo,satm.transform_desc as transformDesc,satm.data_status as dataStatus
+        ,satm.achv_headtel as achvHeadtel,huser.id as "achvHead.id",huser.name as "achvHead.name",
+        csy.code as "year.id",csy.name as "year.name",fdept.id as "deptId.id",fdept.name as "deptId.name",
+        csat.code as "transformType.id",csat.name as "transformType.name",csata.code as "agrType.id",csata.name as "agrType.name",
+        spi.id as "sourcePatent.id",spi.name as "sourcePatent.name",spji.id as "sourceProj.id",spji.name as "sourceProj.name",
+        satm.remark as remark,satm.create_date as createDate,cuser.name as createUserName,satm.agr_no as agrNo,
+        satm.fee_amt as feeAmt,satm.partner_unit_prop as partnerUnitProp,satm.achv_unit_prop as achvUnitProp,
+        satm.agr_date as agrDate,satm.agr_start_date as agrStartDate,satm.agr_end_date as agrEndDate,satm.partner_unit as partnerUnit,
+        satm.partner_unit_addr as partnerUnitAddr,
+        satm.partner_unit_postcode as partnerUnitPostcode,satm.partner_unit_tel as partnerUnitTel,
+        satm.achv_unit as achvUnit,satm.achv_addr as achvAddr,satm.achv_post_code as achvPostCode
+        from srm_achv_transformation satm
+        left join ct_srm_year csy on csy.code=satm.year
+        left join ct_srm_dept fdept on fdept.id=satm.dept_id
+        left join ct_srm_user cuser on cuser.id=satm.create_user_id
+        left join ct_srm_user huser on huser.id=satm.achv_head
+        left join ct_srm_achv_transformants_type csat on csat.code=satm.transform_type
+        left join ct_srm_achv_trans_agreement_type csata on csata.code=satm.agr_type
+        left join ct_srm_pay_mode cspt on cspt.code=satm.pay_mode
+
+        left join srm_patent_info spi on spi.id=satm.source_patent
+        left join srm_projects_info spji on spji.id=satm.source_proj
+        where satm.id=#{rowId}
+
+    </select>
+    <select id="listAchvTransformation" resultType="com.mediway.hos.srm.business.center.model.vo.achvTransformation.AchvTransformationVo">
+        select satm.id as rowId,satm.transform_no as transformNo,satm.transform_desc as transformDesc,satm.data_status as dataStatus,
+        satm.achv_headtel as achvHeadtel,huser.name as achvHeadName,
+        csy.name as yearName,fdept.name as deptName,
+        csat.name as transformTypeName,csata.name as agrTypeName,
+        spi.name as sourcePatentName,spji.name as sourceProjName,
+        satm.remark as remark,satm.create_date as createDate,cuser.name as createUserName,satm.agr_no as agrNo,
+        satm.fee_amt as feeAmt,satm.partner_unit_prop as partnerUnitProp,satm.achv_unit_prop as achvUnitProp,
+        satm.agr_date as agrDate,satm.agr_start_date as agrStartDate,satm.agr_end_date as agrEndDate,satm.partner_unit as partnerUnit,
+        satm.partner_unit_addr as partnerUnitAddr,
+        satm.partner_unit_postcode as partnerUnitPostcode,satm.partner_unit_tel as partnerUnitTel,
+        satm.achv_unit as achvUnit,satm.achv_addr as achvAddr,satm.achv_post_code as achvPostCode
+        from srm_achv_transformation satm
+        left join ct_srm_year csy on csy.code=satm.year
+        left join ct_srm_dept fdept on fdept.id=satm.dept_id
+        left join ct_srm_user cuser on cuser.id=satm.create_user_id
+        left join ct_srm_user huser on huser.id=satm.achv_head
+        left join ct_srm_achv_transfer_type csat on csat.code=satm.transform_type
+        left join ct_srm_achv_trans_agreement_type csata on csata.code=satm.agr_type
+        left join ct_srm_pay_mode cspt on cspt.code=satm.pay_mode
+
+        left join srm_patent_info spi on spi.id=satm.source_patent
+        left join srm_projects_info spji on spji.id=satm.source_proj
+        where (satm.create_user_id=#{achvTransformationDto.userId} or satm.sub_user_id= #{achvTransformationDto.userId})
+        order by satm.id desc
+    </select>
+    <select id="listAuditAchvTransformation" resultType="com.mediway.hos.srm.business.center.model.vo.achvTransformation.AchvTransformationVo">
+        select satm.id as rowId,satm.transform_no as transformNo,satm.transform_desc as transformDesc,satm.data_status as dataStatus,
+        satm.achv_headtel as achvHeadtel,huser.name as achvHeadName,
+        csy.name as yearName,fdept.name as deptName,
+        csat.name as transformTypeName,csata.name as agrTypeName,
+        spi.name as sourcePatentName,spji.name as sourceProjName,
+        satm.remark as remark,satm.create_date as createDate,cuser.name as createUserName,satm.agr_no as agrNo,
+        satm.fee_amt as feeAmt,satm.partner_unit_prop as partnerUnitProp,satm.achv_unit_prop as achvUnitProp,
+        satm.agr_date as agrDate,satm.agr_start_date as agrStartDate,satm.agr_end_date as agrEndDate,satm.partner_unit as partnerUnit,
+        satm.partner_unit_addr as partnerUnitAddr,
+        satm.partner_unit_postcode as partnerUnitPostcode,satm.partner_unit_tel as partnerUnitTel,
+        satm.achv_unit as achvUnit,satm.achv_addr as achvAddr,satm.achv_post_code as achvPostCode
+        from srm_achv_transformation satm
+        left join ct_srm_year csy on csy.code=satm.year
+        left join ct_srm_dept fdept on fdept.id=satm.dept_id
+        left join ct_srm_user cuser on cuser.id=satm.create_user_id
+        left join ct_srm_user huser on huser.id=satm.achv_head
+        left join ct_srm_achv_transfer_type csat on csat.code=satm.transform_type
+        left join ct_srm_achv_trans_agreement_type csata on csata.code=satm.agr_type
+        left join ct_srm_pay_mode cspt on cspt.code=satm.pay_mode
+
+        left join srm_patent_info spi on spi.id=satm.source_patent
+        left join srm_projects_info spji on spji.id=satm.source_proj
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=satm.sys_no and eafrec.check_rec_id=satm.id
+        where
+        eafrec.step_no>1
+        <if test='achvTransformationDto.auditState==null or achvTransformationDto.auditState==""'>
+            and (
+            (satm.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where satm.sys_no=seafrec.sys_no and seafrec.check_rec_id=satm.id) and eafrec.checker_string  LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (satm.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%'))
+            )
+        </if>
+        <if test='achvTransformationDto.auditState=="0"'>
+            and satm.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%')
+        </if>
+        <if test='achvTransformationDto.auditState=="1"'>
+            and satm.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%')
+        </if>
+        <if test='achvTransformationDto.auditState=="2"'>
+            and satm.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{achvTransformationDto.userId}, '|%')
+        </if>
+
+
+    </select>
+    <update id="updateStatus">
+        update srm_achv_transformation
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="transformNo != null">
+                transform_no = #{transformNo},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+</mapper>

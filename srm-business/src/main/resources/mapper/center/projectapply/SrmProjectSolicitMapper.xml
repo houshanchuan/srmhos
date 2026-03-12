@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectSolicitMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectSolicit">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="proj_type" property="projType" />
+        <result column="title" property="title" />
+        <result column="is_ethic" property="isEthic" />
+        <result column="expert_list" property="expertList" />
+        <result column="ethic_expert_list" property="ethicExpertList" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="check_result" property="checkResult" />
+        <result column="audit_date" property="auditDate" />
+        <result column="check_desc" property="checkDesc" />
+        <result column="sys_no" property="sysNo" />
+        <result column="out_expert_result" property="outExpertResult" />
+        <result column="ethic_result" property="ethicResult" />
+        <result column="pre_auditor" property="preAuditor" />
+        <result column="pre_audit_state" property="preAuditState" />
+        <result column="pre_audit_desc" property="preAuditDesc" />
+        <result column="pre_audit_date" property="preAuditDate" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="is_human_genetic_res_required" property="isHumanGeneticResRequired" />
+        <result column="head" property="head" />
+        <result column="contacts" property="contacts" />
+        <result column="resch_category" property="reschCategory" />
+        <result column="indic_range" property="indicRange" />
+        <result column="participation_type" property="participationType" />
+        <result column="sub_dept" property="subDept" />
+        <result column="leader_dept" property="leaderDept" />
+        <result column="involved_dept" property="involvedDept" />
+        <result column="funds" property="funds" />
+        <result column="discipline" property="discipline" />
+        <result column="research_field" property="researchField" />
+        <result column="fina_chk_result" property="finaChkResult" />
+        <result column="fina_chk_desc" property="finaChkDesc" />
+        <result column="fina_chk_user_id" property="finaChkUserId" />
+        <result column="fina_chk_date_time" property="finaChkDateTime" />
+        <result column="project_apply_info" property="projectApplyInfo" />
+        <result column="division" property="division" />
+        <result column="project_class" property="projectClass" />
+        <result column="creator_name" property="creatorName" />
+        <result column="applier_edu_level" property="applierEduLevel" />
+        <result column="applier_title" property="applierTitle" />
+        <result column="planed_end_date" property="planedEndDate" />
+        <result column="early_research_info" property="earlyResearchInfo" />
+        <result column="approval_status" property="approvalStatus" />
+        <result column="project_source_unit" property="projectSourceUnit" />
+        <result column="project_keyword" property="projectKeyword" />
+        <result column="project_apply_type" property="projectApplyType" />
+        <result column="first_unit_type" property="firstUnitType" />
+        <result column="file_ids" property="fileIds" />
+        <result column="avg_score" property="avgScore" />
+        <result column="agree_count" property="agreeCount" />
+        <result column="avg_score2" property="avgScore2" />
+        <result column="agree_count2" property="agreeCount2" />
+        <result column="apply_book_type" property="applyBookType" />
+        <result column="classCode" property="classCode" />
+        <result column="subuser_name" property="subuserName" />
+        <result column="creator" property="creator" />
+        <result column="create_time" property="createTime" />
+        <result column="apply_id" property="applyId" />
+        <result column="note" property="note" />
+        <result column="progrp" property="progrp" />
+        <result column="ranking" property="ranking" />
+        <result column="type" property="type" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, proj_type, title, is_ethic, expert_list, ethic_expert_list, sub_user_id, sub_date, data_status, audit_status, check_result, audit_date, check_desc, sys_no, out_expert_result, ethic_result, pre_auditor, pre_audit_state, pre_audit_desc, pre_audit_date, phone, email, is_human_genetic_res_required, head, contacts, resch_category, indic_range, participation_type, sub_dept, leader_dept, involved_dept, funds, discipline, research_field, fina_chk_result, fina_chk_desc, fina_chk_user_id, fina_chk_date_time, project_apply_info, division, project_class, creator_name, applier_edu_level, applier_title, planed_end_date_, early_research_info, approval_status, project_source_unit, project_keyword, project_apply_type, first_unit_type, file_ids, avg_score, agree_count, avg_score2, agree_count2, apply_book_type, class, subuser_name, creator, create_time, apply_id, note, progrp, ranking, type
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitVo">
+        select spst.id as rowId,spst.title as title,spst.project_apply_info as projectApplyInfo,spai.name as projectApplyInfoName,
+               cspabt.code as "applyBookType.id",cspabt.name as "applyBookType.name",cspabt.name as applyBookTypeName,
+               cspt.code as "projType.id",cspt.name as "projType.name",cspt.name as projTypeName,
+               spst.classCode as classCode,spst.first_unit_type as firstUnitType,
+               csy.code as "year.id" ,csy.name as "year.name",csy.name as yearName,
+               huser.id as "head.id",huser.name as "head.name",huser.name as headName,
+               spst.project_apply_type,sdept.id as "subDept.id",sdept.name as "subDept.name",sdept.name as subDeptName,
+               spst.is_ethic as isEthic,spst.phone as phone,spst.project_keyword as projectKeyword,spst.email as email,
+               spst.sub_date as subDate,spst.project_source_unit as projectSourceUnit,spst.planed_end_date as planedEndDate,
+               spst.contacts as contacts,fdiscipline.code as "discipline.id",fdiscipline.name as "discipline.name",fdiscipline.name as disciplineName,
+               spst.funds as funds,spst.research_field as researchField,spst.early_research_info as earlyResearchInfo,
+               spst.note as note,spst.data_status as dataStatus, spst.header_audit_status as headerAuditStatus,
+               spst.pre_audit_state as preAuditState,spst.audit_status as auditStatus,spst.project_apply_info as projectApplyInfo,
+                csrf.code as "researchField.id",csrf.name as "researchField.name",csrf.name as researchFieldName
+
+        from srm_project_solicit  spst
+        left join ct_srm_project_apply_book_type cspabt on cspabt.code=spst.apply_book_type
+        left join ct_srm_proj_type cspt on cspt.code=spst.proj_type
+        left join ct_srm_year csy on csy.code=spst.year
+        left join ct_srm_dept sdept on sdept.id=spst.sub_dept
+        left join ct_srm_user huser on huser.id=spst.head
+        left join srm_project_apply_info spai on spai.id=spst.project_apply_info
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spst.discipline
+        left join ct_srm_research_field csrf on csrf.code=spst.research_field
+        where spst.id=#{rowId}
+    </select>
+
+    <select id="listProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitVo">
+        select distinct spst.id as rowId,spst.title as title,cuser.id as creator,cuser.name as creatorName,spst.create_time as createTime,
+               cspabt.name as applyBookTypeName,
+               cspt.name as projTypeName,
+               spst.classCode as classCode,spst.first_unit_type as firstUnitType,
+               csy.name as yearName,
+               huser.name as headName,spst.header_audit_status as headerAuditStatus,
+               spst.pre_audit_state as preAuditState,
+               spst.audit_status as auditStatus,
+               spst.project_apply_type,sdept.name as subDeptName,
+               spst.is_ethic as isEthic,spst.phone as phone,spst.project_keyword as projectKeyword,spst.email as email,
+               spst.sub_date as subDate,spst.project_source_unit as projectSourceUnit,spst.planed_end_date as planedEndDate,
+               spst.contacts as contacts,fdiscipline.name as disciplineName,
+               spst.funds as funds,spst.research_field as researchField,spst.early_research_info as earlyResearchInfo,
+               spst.note as note,spst.data_status as dataStatus,csrf.name as researchFieldName,suser.name as subUserName
+        from srm_project_solicit  spst
+                 left join ct_srm_project_apply_book_type cspabt on cspabt.code=spst.apply_book_type
+                 left join ct_srm_proj_type cspt on cspt.code=spst.proj_type
+                 left join ct_srm_year csy on csy.code=spst.year
+                 left join ct_srm_dept sdept on sdept.id=spst.sub_dept
+                 left join ct_srm_user huser on huser.id=spst.head
+                 left join ct_srm_user suser on suser.id=spst.sub_user_id
+                 left join ct_srm_user cuser on cuser.id=spst.creator
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spst.discipline
+                left join ct_srm_research_field csrf on csrf.code=spst.research_field
+        where 1=1
+        <if test="projectSolicitDto.userId!=null and projectSolicitDto.userId!=''">
+            and (spst.sub_user_id=#{projectSolicitDto.userId} or spst.creator=#{projectSolicitDto.userId} or spst.id in
+            (SELECT soli_proj_id FROM srm_project_solicit_member WHERE member_id = #{projectSolicitDto.userId})
+            )
+        </if>
+        <if test="projectSolicitDto.projectApplyInfo!=null and projectSolicitDto.projectApplyInfo!=''">
+            and spst.project_apply_info=#{projectSolicitDto.projectApplyInfo}
+        </if>
+        <if test="projectSolicitDto.isEthic!=null and projectSolicitDto.isEthic!=''">
+            and spst.is_ethic=#{projectSolicitDto.isEthic}
+        </if>
+        <if test="projectSolicitDto.title != null and projectSolicitDto.title != ''">
+            and spst.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+        </if>
+        <if test="projectSolicitDto.startDate != null and projectSolicitDto.startDate != ''">
+            and spst.sub_date &gt;= #{projectSolicitDto.startDate}
+        </if>
+
+        <if test="projectSolicitDto.endDate != null and projectSolicitDto.endDate != ''">
+            and spst.sub_date &lt;= #{projectSolicitDto.endDate}
+        </if>
+        <if test="projectSolicitDto.year!=null and projectSolicitDto.year!=''">
+            and spst.year=#{projectSolicitDto.year}
+        </if>
+
+        <if test='projectSolicitDto.preAuditState == "1"'>
+            and spst.pre_audit_state!="2" and spst.pre_audit_state!="3"
+        </if>
+        <if test='projectSolicitDto.preAuditState == "2"'>
+            and spst.pre_audit_state="2"
+        </if>
+        <if test='projectSolicitDto.preAuditState == "3"'>
+            and spst.pre_audit_state="3"
+        </if>
+
+        <if test='projectSolicitDto.headerAuditStatus == "1"'>
+            and spst.header_audit_status!="2" and spst.header_audit_status!="3"
+        </if>
+        <if test='projectSolicitDto.headerAuditStatus == "2"'>
+            and spst.header_audit_status=#{projectSolicitDto.headerAuditStatus}
+        </if>
+        <if test='projectSolicitDto.headerAuditStatus == "3"'>
+            and spst.header_audit_status=#{projectSolicitDto.headerAuditStatus}
+        </if>
+        <if test="projectSolicitDto.dataStatus!=null">
+            and spst.data_status = #{projectSolicitDto.dataStatus}
+        </if>
+        order by spst.id desc
+    </select>
+
+
+    <update id="updateStatus">
+        update srm_project_solicit
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="auditStatus != null">
+                audit_status = #{auditStatus},
+            </if>
+            <if test="preAuditState != null">
+                pre_audit_state = #{preAuditState},
+            </if>
+            <if test="headerAuditStatus != null">
+                header_audit_status = #{headerAuditStatus},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listHeadAuditProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitVo">
+        select distinct spst.id as rowId,spst.title as title,cuser.id as creator,cuser.name as creatorName,spst.create_time as createTime,
+        cspabt.name as applyBookTypeName,
+        cspt.name as projTypeName,
+        spst.classCode as classCode,spst.first_unit_type as firstUnitType,
+        csy.name as yearName,
+        huser.name as headName,
+        spst.header_audit_status as headerAuditStatus,
+        spst.pre_audit_state as preAuditState,
+        spst.project_apply_type,sdept.name as subDeptName,
+        spst.is_ethic as isEthic,spst.phone as phone,spst.project_keyword as projectKeyword,spst.email as email,
+        spst.sub_date as subDate,spst.project_source_unit as projectSourceUnit,spst.planed_end_date as planedEndDate,
+        spst.contacts as contacts,fdiscipline.name as disciplineName,
+        spst.funds as funds,spst.research_field as researchField,spst.early_research_info as earlyResearchInfo,
+        spst.note as note,spst.data_status as dataStatus,suser.name as subUserName,eafrec.id
+        from srm_project_solicit  spst
+        left join ct_srm_project_apply_book_type cspabt on cspabt.code=spst.apply_book_type
+        left join ct_srm_proj_type cspt on cspt.code=spst.proj_type
+        left join ct_srm_year csy on csy.code=spst.year
+        left join ct_srm_dept sdept on sdept.id=spst.sub_dept
+        left join ct_srm_user huser on huser.id=spst.head
+        left join ct_srm_user suser on suser.id=spst.sub_user_id
+        left join ct_srm_user cuser on cuser.id=spst.creator
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spst.discipline
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spst.sys_no and eafrec.check_rec_id=spst.id
+        where
+            eafrec.step_no>1
+            and (
+            (spst.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spst.sys_no=seafrec.sys_no and seafrec.check_rec_id=spst.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (spst.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+            )
+
+            <if test='projectSolicitDto.headerAuditStatus == "1"'>
+                and spst.header_audit_status="0"
+            </if>
+            <if test='projectSolicitDto.headerAuditStatus == "2"'>
+                and spst.header_audit_status="2"
+            </if>
+            <if test='projectSolicitDto.headerAuditStatus == "3"'>
+                and spst.header_audit_status="3"
+            </if>
+            <if test='projectSolicitDto.title != null and projectSolicitDto.title != ""'>
+                and spst.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+            </if>
+            <if test='projectSolicitDto.startDate != null and projectSolicitDto.startDate != ""'>
+                and spst.sub_date &gt;= #{projectSolicitDto.startDate}
+            </if>
+
+            <if test='projectSolicitDto.endDate != null and projectSolicitDto.endDate != ""'>
+                and spst.sub_date &lt;= #{projectSolicitDto.endDate}
+            </if>
+            <if test='projectSolicitDto.year!=null and projectSolicitDto.year!=""'>
+                and spst.year=#{projectSolicitDto.year}
+            </if>
+            <if test='projectSolicitDto.projType!=null and projectSolicitDto.projType!=""'>
+                and spst.proj_type=#{projectSolicitDto.projType}
+            </if>
+            order by eafrec.id desc
+    </select>
+
+    <select id="listAuditProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitVo">
+        select distinct spst.id as rowId,spst.title as title,cuser.id as creator,cuser.name as creatorName,spst.create_time as createTime,
+               cspabt.name as applyBookTypeName,
+               cspt.name as projTypeName,
+               spst.classCode as classCode,spst.first_unit_type as firstUnitType,
+               csy.name as yearName,
+               huser.name as headName,
+               spst.header_audit_status as headerAuditStatus,
+               spst.pre_audit_state as preAuditState,spst.audit_status as auditStatus,
+               spst.project_apply_type,sdept.name as subDeptName,
+               spst.is_ethic as isEthic,spst.phone as phone,spst.project_keyword as projectKeyword,spst.email as email,
+               spst.sub_date as subDate,spst.project_source_unit as projectSourceUnit,spst.planed_end_date as planedEndDate,
+               spst.contacts as contacts,fdiscipline.name as disciplineName,
+               spst.funds as funds,spst.research_field as researchField,spst.early_research_info as earlyResearchInfo,
+               spst.note as note,spst.data_status as dataStatus,suser.name as subUserName
+        from srm_project_solicit  spst
+                 left join ct_srm_project_apply_book_type cspabt on cspabt.code=spst.apply_book_type
+                 left join ct_srm_proj_type cspt on cspt.code=spst.proj_type
+                 left join ct_srm_year csy on csy.code=spst.year
+                 left join ct_srm_dept sdept on sdept.id=spst.sub_dept
+                 left join ct_srm_user huser on huser.id=spst.head
+                left join ct_srm_user suser on suser.id=spst.sub_user_id
+                    left join ct_srm_user cuser on cuser.id=spst.creator
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spst.discipline
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spst.sys_no and eafrec.check_rec_id=spst.id
+        where
+            eafrec.step_no>1 and header_audit_status=2
+
+          and (
+            (spst.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+                or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spst.sys_no=seafrec.sys_no and seafrec.check_rec_id=spst.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%') and eafrec.check_datetime is not null)
+                or (spst.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+            )
+            <if test='projectSolicitDto.preAuditState!=null and projectSolicitDto.preAuditState!=""'>
+                and spst.pre_audit_state=#{projectSolicitDto.preAuditState}
+            </if>
+
+            <if test='projectSolicitDto.title != null and projectSolicitDto.title != ""'>
+                and spst.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+            </if>
+            <if test='projectSolicitDto.startDate != null and projectSolicitDto.startDate != ""'>
+                and spst.sub_date &gt;= #{projectSolicitDto.startDate}
+            </if>
+
+            <if test='projectSolicitDto.endDate != null and projectSolicitDto.endDate != ""'>
+                and spst.sub_date &lt;= #{projectSolicitDto.endDate}
+            </if>
+    </select>
+    <select id="listAuditProjectSolicitNew" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitVo">
+        select distinct spst.id as rowId,spst.title as title,cuser.id as creator,cuser.name as creatorName,spst.create_time as createTime,
+        cspabt.name as applyBookTypeName,
+        cspt.name as projTypeName,
+        spst.classCode as classCode,spst.first_unit_type as firstUnitType,
+        csy.name as yearName,
+        huser.name as headName,
+        spst.header_audit_status as headerAuditStatus,
+        spst.pre_audit_state as preAuditState,spst.audit_status as auditStatus,
+        spst.project_apply_type,sdept.name as subDeptName,
+        spst.is_ethic as isEthic,spst.phone as phone,spst.project_keyword as projectKeyword,spst.email as email,
+        spst.sub_date as subDate,spst.project_source_unit as projectSourceUnit,spst.planed_end_date as planedEndDate,
+        spst.contacts as contacts,fdiscipline.name as disciplineName,
+        spst.funds as funds,spst.research_field as researchField,spst.early_research_info as earlyResearchInfo,
+        spst.note as note,spst.data_status as dataStatus,suser.name as subUserName
+        from srm_project_solicit  spst
+        left join ct_srm_project_apply_book_type cspabt on cspabt.code=spst.apply_book_type
+        left join ct_srm_proj_type cspt on cspt.code=spst.proj_type
+        left join ct_srm_year csy on csy.code=spst.year
+        left join ct_srm_dept sdept on sdept.id=spst.sub_dept
+        left join ct_srm_user huser on huser.id=spst.head
+        left join ct_srm_user suser on suser.id=spst.sub_user_id
+        left join ct_srm_user cuser on cuser.id=spst.creator
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spst.discipline
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spst.sys_no and eafrec.check_rec_id=spst.id
+        where
+        eafrec.step_no>1 and (header_audit_status=2 or pre_audit_state=3 or audit_status=3)
+
+        and (
+        (spst.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+        or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spst.sys_no=seafrec.sys_no and seafrec.check_rec_id=spst.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%') and eafrec.check_datetime is not null)
+        or (spst.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectSolicitDto.userId}, '|%'))
+        )
+        <if test='projectSolicitDto.preAuditState!=null and projectSolicitDto.preAuditState!=""'>
+            and spst.pre_audit_state=#{projectSolicitDto.preAuditState}
+        </if>
+        <if test='projectSolicitDto.auditStatus!=null and projectSolicitDto.auditStatus!=""'>
+            and spst.audit_status=#{projectSolicitDto.auditStatus}
+        </if>
+
+        <if test='projectSolicitDto.title != null and projectSolicitDto.title != ""'>
+            and spst.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+        </if>
+        <if test='projectSolicitDto.startDate != null and projectSolicitDto.startDate != ""'>
+            and spst.sub_date &gt;= #{projectSolicitDto.startDate}
+        </if>
+
+        <if test='projectSolicitDto.endDate != null and projectSolicitDto.endDate != ""'>
+            and spst.sub_date &lt;= #{projectSolicitDto.endDate}
+        </if>
+        <if test='projectSolicitDto.isEthic != null'>
+            and spst.is_ethic = #{projectSolicitDto.isEthic}
+        </if>
+
+    </select>
+</mapper>

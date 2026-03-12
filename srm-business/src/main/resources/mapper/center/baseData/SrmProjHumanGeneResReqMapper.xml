@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjHumanGeneResReqMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjHumanGeneResReq">
+        <id column="id" property="id" />
+        <result column="req_no" property="reqNo" />
+        <result column="sys_no" property="sysNo" />
+        <result column="req_date" property="reqDate" />
+        <result column="req_time" property="reqTime" />
+        <result column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="proj_flag" property="projFlag" />
+        <result column="proj_id" property="projId" />
+        <result column="proj_name" property="projName" />
+        <result column="head" property="head" />
+        <result column="tel" property="tel" />
+        <result column="email" property="email" />
+        <result column="sample_type" property="sampleType" />
+        <result column="req_type" property="reqType" />
+        <result column="coll_mode" property="collMode" />
+        <result column="coll_m" property="collM" />
+        <result column="coll_number_of_case" property="collNumberOfCase" />
+        <result column="coll_purpose" property="collPurpose" />
+        <result column="coll_disease_type" property="collDiseaseType" />
+        <result column="coll_util" property="collUtil" />
+        <result column="store_mode" property="storeMode" />
+        <result column="store_con" property="storeCon" />
+        <result column="store_con_other" property="storeConOther" />
+        <result column="store_number_of_case" property="storeNumberOfCase" />
+        <result column="store_addr_type" property="storeAddrType" />
+        <result column="store_address" property="storeAddress" />
+        <result column="store_addr_serv_unit" property="storeAddrServUnit" />
+        <result column="genetic_family_size" property="geneticFamilySize" />
+        <result column="genetic_family_generation" property="geneticFamilyGeneration" />
+        <result column="is_genetic_family_vip" property="isGeneticFamilyVip" />
+        <result column="year" property="year" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="chk_status" property="chkStatus" />
+        <result column="chk_user_id" property="chkUserId" />
+        <result column="chk_date" property="chkDate" />
+        <result column="chk_time" property="chkTime" />
+        <result column="chk_desc" property="chkDesc" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, req_no, sys_no, req_date, req_time, user_id, dept_id, proj_flag, proj_id, proj_name, head, tel, email, sample_type, req_type, coll_mode, coll_m, coll_number_of_case, coll_purpose, coll_disease_type, coll_util, store_mode, store_con, store_con_other, store_number_of_case, store_addr_type, store_address, store_addr_serv_unit, genetic_family_size, genetic_family_generation, is_genetic_family_vip, year, data_status, sub_user_id, sub_date, sub_time, chk_status, chk_user_id, chk_date, chk_time, chk_desc
+    </sql>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmSoftwareCopyrightAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmSoftwareCopyrightAuthor">
+        <id column="id" property="id" />
+        <result column="software_cprt" property="softwareCprt" />
+        <result column="author_id" property="authorId" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_name" property="authorName" />
+        <result column="author_type" property="authorType" />
+        <result column="unit" property="unit" />
+        <result column="unit_name" property="unitName" />
+        <result column="division_code" property="divisionCode" />
+        <result column="ranking" property="ranking" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="note" property="note" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="sex" property="sex" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="title" property="title" />
+        <result column="dept_id" property="deptId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, software_cprt, author_id, author_code, author_name, author_type, unit, unit_name, division_code, ranking, work_ratio, note, edu_degree, sex, edu_level, title, dept_id
+    </sql>
+
+</mapper>

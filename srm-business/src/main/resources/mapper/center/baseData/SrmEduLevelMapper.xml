@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmEduLevelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmEduLevel">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+
+    <select id="listEduLevel" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.EduLevelDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.EduLevelVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_edu_level
+    </select>
+    <select id="getEduLevel" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from ct_srm_edu_level csel where is_valid =1
+        <if test="eduLevelDto.name!=null and eduLevelDto.name!=''">
+            and name LIKE CONCAT('%', #{eduLevelDto.name}, '%')
+        </if>
+    </select>
+</mapper>

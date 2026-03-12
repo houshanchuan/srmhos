@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundBudgetItemMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundBudgetItem">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="up_code" property="upCode" />
+        <result column="name" property="name" />
+        <result column="name_all" property="nameAll" />
+        <result column="level" property="level" />
+        <result column="item_type" property="itemType" />
+        <result column="spell" property="spell" />
+        <result column="direction" property="direction" />
+        <result column="is_last" property="isLast" />
+        <result column="is_special" property="isSpecial" />
+        <result column="is_cash" property="isCash" />
+        <result column="is_result" property="isResult" />
+        <result column="cal_unit_code" property="calUnitCode" />
+        <result column="dept_duty" property="deptDuty" />
+        <result column="au_dept_first" property="auDeptFirst" />
+        <result column="au_dept_second" property="auDeptSecond" />
+        <result column="is_gov_buy" property="isGovBuy" />
+        <result column="note" property="note" />
+        <result column="item_order" property="itemOrder" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, up_code, name, name_all, level, item_type, spell, direction, is_last, is_special, is_cash, is_result, cal_unit_code, dept_duty, au_dept_first, au_dept_second, is_gov_buy, note, item_order
+    </sql>
+
+    <select id="listFundBudgetItem" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundBudgetItemDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundBudgetItemVo">
+        select id as rowId,code,up_code as upCode ,name as name ,name_all as nameAll ,level ,item_type as itemType ,spell ,
+        direction ,is_last as isLast ,is_special as isSpecial ,is_cash as isCash ,is_result as isResult ,cal_unit_code as calUnitCode ,
+        dept_duty as deptDuty ,au_dept_first as auDeptFirst ,au_dept_second as auDeptSecond, is_gov_buy as isGovBuy ,note,item_order as itemOrder
+        from  ct_fund_budget_item cfbi
+    </select>
+    <select id="getItemCode" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from ct_fund_budget_item
+    </select>
+
+</mapper>

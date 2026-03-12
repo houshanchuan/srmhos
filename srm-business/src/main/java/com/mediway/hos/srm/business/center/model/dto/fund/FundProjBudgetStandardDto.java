@@ -1,0 +1,16 @@
+package com.mediway.hos.srm.business.center.model.dto.fund;
+
+
+import lombok.Data;
+import com.mediway.hos.srm.business.base.model.entity.BasePO;
+
+@Data
+public class FundProjBudgetStandardDto extends BasePO {
+    private Long rowId;
+    private String code;
+    private String name;
+    private Integer isValid;
+    private String projType;
+    private String startYear;
+    private String endYear;
+}

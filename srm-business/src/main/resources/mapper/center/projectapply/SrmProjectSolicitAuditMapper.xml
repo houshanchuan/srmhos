@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectSolicitAuditMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectSolicitAudit">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="soli_project_id" property="soliProjectId" />
+        <result column="expert_list" property="expertList" />
+        <result column="ethic_expert_list" property="ethicExpertList" />
+        <result column="proj_type" property="projType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, soli_project_id, expert_list, ethic_expert_list, proj_type,type,allot_count
+    </sql>
+    <select id="getMainInfo" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitAuditVo">
+        select id as rowId,expert_list as expertList,ethic_expert_list as ethicExpertList from srm_project_solicit_audit
+        where is_cancel=0
+        <if test="projectSolicitAuditDto.sysNo!=null and projectSolicitAuditDto.sysNo!=''">
+            and sys_no=#{projectSolicitAuditDto.sysNo}
+        </if>
+        <if test="projectSolicitAuditDto.ywRowId!=null and projectSolicitAuditDto.ywRowId!=''">
+            and soli_project_id=#{projectSolicitAuditDto.ywRowId}
+        </if>
+        <if test="projectSolicitAuditDto.type!=null and projectSolicitAuditDto.type!=''">
+            and type=#{projectSolicitAuditDto.type}
+        </if>
+        <if test="projectSolicitAuditDto.allotCount!=null and projectSolicitAuditDto.allotCount!=''">
+            and allot_count=#{projectSolicitAuditDto.allotCount}
+        </if>
+    </select>
+    <select id="getRowId" resultType="String">
+        select id from srm_project_solicit_audit 
+        where 1=1
+        <if test="projectSolicitAuditDto.sysNo!=null and projectSolicitAuditDto.sysNo!=''">
+            and sys_no=#{projectSolicitAuditDto.sysNo}
+        </if>
+        <if test="projectSolicitAuditDto.ywRowId!=null and projectSolicitAuditDto.ywRowId!=''">
+            and soli_project_id=#{projectSolicitAuditDto.ywRowId}
+        </if>
+        <if test="projectSolicitAuditDto.type!=null and projectSolicitAuditDto.type!=''">
+            and type=#{projectSolicitAuditDto.type}
+        </if>
+        <if test="projectSolicitAuditDto.allotCount!=null and projectSolicitAuditDto.allotCount!=''">
+            and allot_count=#{projectSolicitAuditDto.allotCount}
+        </if>
+    </select>
+    <select id="getCurExpertList" resultType="String">
+        select expert_list from srm_project_solicit_audit where sys_no=#{sysNo} and soli_project_id=#{rowId}
+    </select>
+    <select id="getCurEthicExpertList" resultType="String">
+        select ethic_expert_list from srm_project_solicit_audit where sys_no=#{sysNo} and soli_project_id=#{rowId}
+    </select>
+    <select id="getNoAllotExpert" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitAuditExpertVo">
+        select csu.id as rowId,csu.account as account,csu.name as name
+        from ct_srm_user csu
+        where is_expert=1
+    </select>
+    <select id="getNoEthicAllotExpert" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitAuditExpertVo">
+        select csu.id as rowId,csu.account as account,csu.name as name
+        from ct_srm_user csu
+        where is_ethical_expert=1
+    </select>
+    <update id="updateProjectSolicitAudit">
+        update srm_project_solicit_audit
+        set expert_list=#{expertList},
+            ethic_expert_list=#{ethicExpertList}
+        where 1=1
+        <if test="sysNo!=null and sysNo!=''">
+           and sys_no=#{sysNo}
+        </if>
+        <if test="ywRowId!=null and ywRowId!=''">
+            and soli_project_id=#{ywRowId}
+        </if>
+        <if test="type!=null and type!=''">
+            and type=#{type}
+        </if>
+        <if test="allotCount!=null and allotCount!=''">
+            and allot_count=#{allotCount}
+        </if>
+
+    </update>
+    <update id="updateCancel" >
+        update srm_project_solicit_audit set is_cancel=1 where  sys_no=#{sysNo}  and soli_project_id=#{ywRowId}
+    </update>
+</mapper>

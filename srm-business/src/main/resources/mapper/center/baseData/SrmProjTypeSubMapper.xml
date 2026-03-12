@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjTypeSubMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjTypeSub">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="parref_type" property="parrefType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid, parref_type
+    </sql>
+
+    <select id="listProjTypeSub" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ProjTypeSubVo">
+        select cspts.id as rowId,cspts.code,cspts.name,cspts.is_valid as isValid,parref_type as parrefType,cspt.name  as parrefTypeName
+        from ct_srm_proj_type_sub cspts
+        left join ct_srm_proj_type cspt on  cspts.parref_type =cspt.code
+        where parref_type=#{projTypeId}
+    </select>
+</mapper>

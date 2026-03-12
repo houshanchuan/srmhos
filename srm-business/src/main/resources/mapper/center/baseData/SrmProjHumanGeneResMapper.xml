@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjHumanGeneResMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjHumanGeneRes">
+        <id column="id" property="id" />
+        <result column="soli_proj_id" property="soliProjId" />
+        <result column="rela_frn_comp_flag" property="relaFrnCompFlag" />
+        <result column="rela_frn_comp_name" property="relaFrnCompName" />
+        <result column="rela_frn_comp_nation" property="relaFrnCompNation" />
+        <result column="is_rela_frn_person" property="isRelaFrnPerson" />
+        <result column="rela_frn_person_info" property="relaFrnPersonInfo" />
+        <result column="apply_reason" property="applyReason" />
+        <result column="apply_acct_comp" property="applyAcctComp" />
+        <result column="apply_main_comp" property="applyMainComp" />
+        <result column="sample_exit_flag" property="sampleExitFlag" />
+        <result column="sample_exit_type" property="sampleExitType" />
+        <result column="sample_exit_place" property="sampleExitPlace" />
+        <result column="sample_exit_dept_name" property="sampleExitDeptName" />
+        <result column="is_data_exit" property="isDataExit" />
+        <result column="data_exit_place" property="dataExitPlace" />
+        <result column="data_exit_dept_name" property="dataExitDeptName" />
+        <result column="no_audit_flag" property="noAuditFlag" />
+        <result column="contact_person" property="contactPerson" />
+        <result column="contact_tel" property="contactTel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, soli_proj_id, rela_frn_comp_flag, rela_frn_comp_name, rela_frn_comp_nation, is_rela_frn_person, rela_frn_person_info, apply_reason, apply_acct_comp, apply_main_comp, sample_exit_flag, sample_exit_type, sample_exit_place, sample_exit_dept_name, is_data_exit, data_exit_place, data_exit_dept_name, no_audit_flag, contact_person, contact_tel
+    </sql>
+
+</mapper>

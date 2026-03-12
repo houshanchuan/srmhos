@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.award.SrmAwardApplyInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.award.SrmAwardApplyInfo">
+        <id column="id" property="id" />
+        <result column="apply_name" property="applyName" />
+        <result column="award_name" property="awardName" />
+        <result column="award_level" property="awardLevel" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="state" property="state" />
+        <result column="creator_code" property="creatorCode" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="operate_time" property="operateTime" />
+        <result column="note" property="note" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, apply_name, award_name, award_level, start_date, end_date, state, creator_code, creator_name, create_time, operate_time, note
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyInfoVo">
+        select saai.id as rowId,saai.apply_name as applyName,saai.award_name as awardName,
+        csal.code as "awardLevel.id",csal.name as "awardLevel.name",
+        saai.start_date as startDate, saai.end_date as endDate,saai.note,
+        cspais.code as "state.id",cspais.name as "state.name"
+        from srm_award_apply_info saai
+        left join ct_srm_award_level csal on csal.code=saai.award_level
+        left join ct_srm_project_apply_info_state cspais  on cspais.code=saai.state
+        where saai.id=#{rowId}
+    </select>
+    <select id="listAwardApplyInfo" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyInfoVo">
+        select saai.id as rowId,saai.apply_name as applyName,saai.award_name as awardName,
+               csal.name as awardLevelName,
+                saai.start_date as startDate, saai.end_date as endDate,saai.note,
+               cspais.name as stateName
+        from srm_award_apply_info saai
+                 left join ct_srm_award_level csal on csal.code=saai.award_level
+                 left join ct_srm_project_apply_info_state cspais  on cspais.code=saai.state
+        where 1=1
+       
+        <if test="awardApplyInfoDto.applyName!=null and awardApplyInfoDto.applyName!=''">
+            and saai.apply_name=#{awardApplyInfoDto.applyName}
+        </if>
+        order by saai.id desc
+    </select>
+
+</mapper>

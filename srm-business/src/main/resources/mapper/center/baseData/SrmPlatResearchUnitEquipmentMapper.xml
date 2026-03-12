@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmPlatResearchUnitEquipmentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmPlatResearchUnitEquipment">
+        <id column="id" property="id" />
+        <result column="res_unit_code" property="resUnitCode" />
+        <result column="equipment_code" property="equipmentCode" />
+        <result column="equipment_name" property="equipmentName" />
+        <result column="authorize_unit" property="authorizeUnit" />
+        <result column="authorize_date" property="authorizeDate" />
+        <result column="discipline_one" property="disciplineOne" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="equipment_model" property="equipmentModel" />
+        <result column="check_status" property="checkStatus" />
+        <result column="note" property="note" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="dept_id" property="deptId" />
+        <result column="division" property="division" />
+        <result column="counts" property="counts" />
+        <result column="english_name" property="englishName" />
+        <result column="country" property="country" />
+        <result column="manf_name" property="manfName" />
+        <result column="equip_status" property="equipStatus" />
+        <result column="buy_date" property="buyDate" />
+        <result column="start_date" property="startDate" />
+        <result column="days_used" property="daysUsed" />
+        <result column="standard_days" property="standardDays" />
+        <result column="exp_date" property="expDate" />
+        <result column="environmental_requirements" property="environmentalRequirements" />
+        <result column="function_desc" property="functionDesc" />
+        <result column="accessary_desc" property="accessaryDesc" />
+        <result column="is_expensive" property="isExpensive" />
+        <result column="charge_mode" property="chargeMode" />
+        <result column="charge_unit" property="chargeUnit" />
+        <result column="charge_unit_fee_amt" property="chargeUnitFeeAmt" />
+        <result column="address" property="address" />
+        <result column="room_no" property="roomNo" />
+        <result column="location" property="location" />
+        <result column="contact_person" property="contactPerson" />
+        <result column="email" property="email" />
+        <result column="tel" property="tel" />
+        <result column="open_week_day" property="openWeekDay" />
+        <result column="open_time_from" property="openTimeFrom" />
+        <result column="open_time_to" property="openTimeTo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, res_unit_code, equipment_code, equipment_name, authorize_unit, authorize_date, discipline_one, discipline_two, equipment_model, check_status, note, creator, creator_name, create_time, dept_id, division, counts, english_name, country, manf_name, equip_status, buy_date, start_date, days_used, standard_days, exp_date, environmental_requirements, function_desc, accessary_desc, is_expensive, charge_mode, charge_unit, charge_unit_fee_amt, address, room_no, location, contact_person, email, tel, open_week_day, open_time_from, open_time_to
+    </sql>
+
+</mapper>

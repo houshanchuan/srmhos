@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmCheckRecMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmCheckRec">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="rec_id" property="recId" />
+        <result column="user_code" property="userCode" />
+        <result column="user_name" property="userName" />
+        <result column="check_date" property="checkDate" />
+        <result column="check_time" property="checkTime" />
+        <result column="check_status" property="checkStatus" />
+        <result column="check_info" property="checkInfo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, rec_id, user_code, user_name, check_date, check_time, check_status, check_info
+    </sql>
+
+</mapper>

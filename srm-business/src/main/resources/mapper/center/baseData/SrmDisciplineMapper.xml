@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmDisciplineMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmDiscipline">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="class_code" property="classCode" />
+        <result column="up_code" property="upCode" />
+        <result column="category_name" property="categoryName" />
+        <result column="note" property="note" />
+        <result column="level" property="level" />
+        <result column="alias" property="alias" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid, class_code, up_code, category_name, note, level, alias
+    </sql>
+    <select id="getDiscipline" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+            code id, name
+        FROM
+            ct_srm_discipline
+        where is_valid=1
+        <if test="upCode != null and upCode != ''">
+            and up_code = #{upCode}
+        </if>
+        <if test="classcode != null and classcode != ''">
+            and class_code = #{classcode}
+        </if>
+    </select>
+    <select id="listDiscipline" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.DisciplineDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.DisciplineVo">
+        select csd.id as rowId, csd.code ,csd.name ,csd.is_valid as isValid ,csd.class_code as classCode ,csc.name  as className,
+               csd.up_code as upCode,csdx.name as upName,csd.category_name as  categoryName,csd.note ,csd.level,csd.alias,csd.level
+        from  ct_srm_discipline csd left join ct_srm_class csc on csd.class_code=csc.code
+                                        left join ct_srm_discipline csdx on csd.up_code=csdx.code
+    </select>
+    <select id="getDisciplineNew" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+        code id, name
+        FROM
+        ct_srm_discipline
+        where is_valid=1
+        <if test="disciplineDto.upCode != null and disciplineDto.upCode != ''">
+            and up_code = #{disciplineDto.upCode}
+        </if>
+        <if test="disciplineDto.classCode != null and disciplineDto.classCode != ''">
+            and class_code = #{disciplineDto.classCode}
+        </if>
+        <if test="disciplineDto.name!=null and disciplineDto.name!=''">
+            and name LIKE CONCAT('%', #{disciplineDto.name}, '%')
+        </if>
+    </select>
+</mapper>

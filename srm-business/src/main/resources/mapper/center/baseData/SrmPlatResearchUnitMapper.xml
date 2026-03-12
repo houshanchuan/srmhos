@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmPlatResearchUnitMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmPlatResearchUnit">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="dept_code" property="deptCode" />
+        <result column="charger_code" property="chargerCode" />
+        <result column="class" property="class" />
+        <result column="discipline" property="discipline" />
+        <result column="res_unit_type" property="resUnitType" />
+        <result column="res_unit_level" property="resUnitLevel" />
+        <result column="is_stat" property="isStat" />
+        <result column="secretary" property="secretary" />
+        <result column="tel" property="tel" />
+        <result column="fax" property="fax" />
+        <result column="addr" property="addr" />
+        <result column="postcode" property="postcode" />
+        <result column="email" property="email" />
+        <result column="website" property="website" />
+        <result column="intro" property="intro" />
+        <result column="kind" property="kind" />
+        <result column="form" property="form" />
+        <result column="is_entity" property="isEntity" />
+        <result column="file_ids" property="fileIds" />
+        <result column="soc_resch_unit_type" property="socReschUnitType" />
+        <result column="operate_time" property="operateTime" />
+        <result column="org_form" property="orgForm" />
+        <result column="na_ec_industry" property="naEcIndustry" />
+        <result column="na_ec_industry_mid" property="naEcIndustryMid" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_date" property="createDate" />
+        <result column="sponsor_unit" property="sponsorUnit" />
+        <result column="approval_no" property="approvalNo" />
+        <result column="approval_unit" property="approvalUnit" />
+        <result column="approver_name" property="approverName" />
+        <result column="approval_date" property="approvalDate" />
+        <result column="_status" property="status" />
+        <result column="fund_source" property="fundSource" />
+        <result column="kpi_date" property="kpiDate" />
+        <result column="kpi_period" property="kpiPeriod" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, dept_code, charger_code, class, discipline, res_unit_type, res_unit_level, is_stat, secretary, tel, fax, addr, postcode, email, website, intro, kind, form, is_entity, file_ids, soc_resch_unit_type, operate_time, org_form, na_ec_industry, na_ec_industry_mid, discipline_two, creator, creator_name, create_date, sponsor_unit, approval_no, approval_unit, approver_name, approval_date, _status, fund_source, kpi_date, kpi_period
+    </sql>
+
+</mapper>

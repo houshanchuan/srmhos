@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectsInfoMemberMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectsInfoMember">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="member" property="member" />
+        <result column="member_name" property="memberName" />
+        <result column="member_code" property="memberCode" />
+        <result column="dept_code" property="deptCode" />
+        <result column="unit_name" property="unitName" />
+        <result column="discipline" property="discipline" />
+        <result column="title_code" property="titleCode" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="work_time" property="workTime" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="ranking" property="ranking" />
+        <result column="note" property="note" />
+        <result column="sex" property="sex" />
+        <result column="author_type_code" property="authorTypeCode" />
+        <result column="memberrole_code" property="memberroleCode" />
+        <result column="secret_level" property="secretLevel" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, member, member_name, member_code, dept_code, unit_name, discipline, title_code, edu_level, work_time, work_ratio, ranking, note, sex, author_type_code, memberrole_code, secret_level
+    </sql>
+    <select id="listProjectInfoAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoMemberVo">
+        select spia.id as rowId,
+               spia.member as member,
+               puser.name as memberName,
+               puser.code as authorTypeCode,
+               ccspt.name as authorTypeName,
+               spia.member_code as memberCode,
+               spia.edu_level as eduLevel,csel.name as eduLevelName,
+               sauthororder.code as ranking,sauthororder.name as rankingName,
+               spia.title_code as title,ccsti.name as titleName,puser.account as account,spia.work_time as workTime
+
+                ,spia.work_ratio as workRatio
+        from srm_projects_info_member spia
+                 left join ct_srm_user puser on puser.id=spia.member
+                 left join ct_srm_person_type ccspt  on ccspt.code=spia.author_type_code
+                 left join ct_srm_title_info ccsti  on ccsti.code=spia.title_code
+                 left join ct_srm_edu_level csel  on csel.code=spia.edu_level
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=spia.ranking
+        where spia.proj_id=#{parentId}
+    </select>
+
+    <delete id="deleteAuthorByParent">
+        delete from srm_projects_info_member where proj_id=#{parentId}
+    </delete>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectsInfoChangeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectsInfoChange">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="init_proj_name" property="initProjName" />
+        <result column="init_head_name" property="initHeadName" />
+        <result column="init_proj_status" property="initProjStatus" />
+        <result column="changeitem" property="changeitem" />
+        <result column="old_value" property="oldValue" />
+        <result column="new_value" property="newValue" />
+        <result column="reason" property="reason" />
+        <result column="intro" property="intro" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="check_status" property="checkStatus" />
+        <result column="check_user_id" property="checkUserId" />
+        <result column="check_date" property="checkDate" />
+        <result column="serial_no" property="serialNo" />
+        <result column="creator" property="creator" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="operate_time" property="operateTime" />
+        <result column="sys_no" property="sysNo" />
+        <result column="note" property="note" />
+        <result column="old_value_desc" property="oldValueDesc" />
+        <result column="new_value_desc" property="newValueDesc" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, init_proj_name, init_head_name, init_proj_status, changeitem, old_value, new_value, reason, intro, data_status, sub_user_id, sub_date, check_status, check_user_id, check_date, serial_no, creator, creator_name, create_time, operate_time, sys_no, note, old_value_desc, new_value_desc
+    </sql>
+    <select id="listProjectsInfoChange" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoChangeVo">
+        select spic.id as rowId, spic.proj_id as initProjId, spin.name as initProjName,
+        spic.changeitem as "changeitem.id",cspci.name as "changeitem.name",
+        cspci.name as changeitemName, spic.old_value as oldValue,
+        spic.new_value as newValue,spin.sub_no as subNo,luser.name as headName,
+        cspcr.name as reasonName, spic.intro as intro, spic.data_status as dataStatus,
+        suser.name as subUserName, spic.sub_date as subDate,
+        spic.check_status as checkStatus,
+        spic.serial_no as serialNo, spic.sys_no as sysNo, spic.note as note,
+        spic.old_value_desc as oldValueDesc, spic.new_value_desc as newValueDesc
+        from srm_projects_info_change spic
+        left join srm_projects_info spin on spin.id=spic.proj_id
+        left join ct_srm_project_change_item cspci on cspci.code=spic.changeitem
+        left join ct_srm_user huser on huser.id=spic.creator
+        left join ct_srm_user luser on luser.id=spin.head
+        left join ct_srm_user suser on suser.id=spic.sub_user_id
+        left join ct_srm_project_change_reason cspcr on cspcr.code=spic.reason
+        where 1=1
+        <if test="projectsInfoChangeDto.prjSysNo!=null and projectsInfoChangeDto.prjSysNo!=''">
+            and spin.sys_no=#{projectsInfoChangeDto.prjSysNo}
+        </if>
+        <if test="projectsInfoChangeDto.sysNo!=null and projectsInfoChangeDto.sysNo!=''">
+            and spic.sys_no=#{projectsInfoChangeDto.sysNo}
+        </if>
+        order by spic.id desc
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoChangeVo">
+        select spic.id as rowId, spic.proj_id as "projId.id", spin.name as "projId.name",
+        spic.changeitem as "changeitem.id",cspci.name as "changeitem.name", spic.old_value as oldValue,
+        spic.new_value as newValue,spic.reason as "reason.id",cspcr.name as "reason.name",
+        spic.intro as intro, spic.data_status as dataStatus, suser.name as subUserName, spic.sub_date as subDate,
+        spic.check_status as checkStatus,
+        spic.serial_no as serialNo, spic.sys_no as sysNo, spic.note as note,
+        spic.old_value_desc as oldValueDesc, spic.new_value_desc as newValueDesc
+        from srm_projects_info_change spic
+        left join srm_projects_info spin on spin.id=spic.proj_id
+        left join ct_srm_project_change_item cspci on cspci.code=spic.changeitem
+        left join ct_srm_user huser on huser.id=spic.creator
+        left join ct_srm_user suser on suser.id=spic.sub_user_id
+        left join ct_srm_project_change_reason cspcr on cspcr.code=spic.reason
+
+        where spic.id=#{rowId}
+
+    </select>
+    <update id="updateStatus">
+        update srm_projects_info_change
+        <set>
+            <if test="dataStatus != null">
+                data_status = #{dataStatus},
+            </if>
+            <if test="auditStatus != null">
+                check_status = #{auditStatus},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+
+    <select id="listAuditProjectsInfoChange" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoChangeVo">
+        select spic.id as rowId, spic.proj_id as initProjId, spin.name as initProjName, cspci.name as changeitemName,
+        spic.old_value as oldValue,spin.sub_no as subNo,luser.name as headName,
+        spic.new_value as newValue,spic.changeitem as "changeitem.id",cspci.name as "changeitem.name",
+        cspcr.name as reasonName, spic.intro as intro, spic.data_status as dataStatus, suser.name as subUserName, spic.sub_date as subDate,
+        spic.check_status as checkStatus,
+        spic.serial_no as serialNo, spic.sys_no as sysNo, spic.note as note, spic.old_value_desc as oldValueDesc, spic.new_value_desc as newValueDesc
+        from srm_projects_info_change spic
+        left join srm_projects_info spin on spin.id=spic.proj_id
+        left join ct_srm_project_change_item cspci on cspci.code=spic.changeitem
+        left join ct_srm_user huser on huser.id=spic.creator
+        left join ct_srm_user suser on suser.id=spic.sub_user_id
+        left join ct_srm_user luser on luser.id=spin.head
+        left join ct_srm_project_change_reason cspcr on cspcr.code=spic.reason
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spic.sys_no and eafrec.check_rec_id=spic.id
+        where
+        eafrec.step_no>1 and spic.sys_no=#{projectsInfoChangeDto.sysNo} and spin.sys_no=#{projectsInfoChangeDto.prjSysNo}
+        and (
+        (spic.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoChangeDto.userId}, '|%'))
+        or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spic.sys_no=seafrec.sys_no and seafrec.check_rec_id=spic.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoChangeDto.userId}, '|%') and eafrec.check_datetime is not null)
+        or (spic.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectsInfoChangeDto.userId}, '|%'))
+        )
+        <if test="projectsInfoChangeDto.auditState!=null and projectsInfoChangeDto.auditState!=''">
+            and eafrec.check_result=#{projectsInfoChangeDto.auditState}
+        </if>
+
+    </select>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectSolicitGradeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectSolicitGrade">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="project_id" property="projectId" />
+        <result column="data_status" property="dataStatus" />
+        <result column="audit_date" property="auditDate" />
+        <result column="index1" property="index1" />
+        <result column="index1score" property="index1score" />
+        <result column="index2" property="index2" />
+        <result column="index2score" property="index2score" />
+        <result column="index3" property="index3" />
+        <result column="index3score" property="index3score" />
+        <result column="index4" property="index4" />
+        <result column="index4score" property="index4score" />
+        <result column="index5" property="index5" />
+        <result column="index5score" property="index5score" />
+        <result column="index6" property="index6" />
+        <result column="index6score" property="index6score" />
+        <result column="index7" property="index7" />
+        <result column="index7score" property="index7score" />
+        <result column="index8" property="index8" />
+        <result column="index8score" property="index8score" />
+        <result column="index9" property="index9" />
+        <result column="index9score" property="index9score" />
+        <result column="index10" property="index10" />
+        <result column="index10score" property="index10score" />
+        <result column="index11" property="index11" />
+        <result column="index11score" property="index11score" />
+        <result column="index12" property="index12" />
+        <result column="index12score" property="index12score" />
+        <result column="expert" property="expert" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="note" property="note" />
+        <result column="prj_type" property="prjType" />
+        <result column="mod_number" property="modNumber" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, project_id, data_status, audit_date, index1, index1score, index2, index2score, index3, index3score, index4, index4score, index5, index5score, index6, index6score, index7, index7score, index8, index8score, index9, index9score, index10, index10score, index11, index11score, index12, index12score, expert, audit_status, note, prj_type, mod_number
+    </sql>
+    <select id="listProjectSolicitGrade" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitAuditExpertVo">
+        select spsg.id as rowId,csu.account as account,csu.name as name,csu.id as expert
+        from srm_project_solicit_grade spsg
+        left join ct_srm_user csu on csu.id=spsg.expert
+        where is_cancel=0
+        <if test="projectSolicitGradeDto.sysNo!=null and projectSolicitGradeDto.sysNo!=''">
+            and spsg.sys_no=#{projectSolicitGradeDto.sysNo}
+        </if>
+        <if test="projectSolicitGradeDto.projectId!=null and projectSolicitGradeDto.projectId!=''">
+            and spsg.project_id=#{projectSolicitGradeDto.projectId}
+        </if>
+        <if test="projectSolicitGradeDto.prjType!=null and projectSolicitGradeDto.prjType!=''">
+            and spsg.prj_type=#{projectSolicitGradeDto.prjType}
+        </if>
+        <if test="projectSolicitGradeDto.allotCount!=null and projectSolicitGradeDto.allotCount!=''">
+            and spsg.allot_count=#{projectSolicitGradeDto.allotCount}
+        </if>
+
+    </select>
+
+    <select id="listAuditProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitGradeVo">
+        select spsg.id as rowId,csy.name as yearName, spst.proj_type, spst.title as projectName,spsg.project_id as projectId,
+               csu.name as applyUserName, spst.sub_date as subDate,spsg.note as note,
+               spsg.audit_status as auditStatus,spsg.data_status as dataStatus
+        from srm_project_solicit_grade spsg,srm_project_solicit spst
+        left join ct_srm_user csu on csu.id=spst.sub_user_id
+        left join ct_srm_year csy on csy.code=spst.year
+        where is_cancel=0 and spsg.expert=#{projectSolicitDto.userId} and spsg.sys_no=#{projectSolicitDto.sysNo} and spst.id=spsg.project_id
+        <if test='projectSolicitDto.title != null and projectSolicitDto.title != ""'>
+            and spst.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+        </if>
+        <if test="projectSolicitDto.year!=null and projectSolicitDto.year!=''">
+            and spst.year=#{projectSolicitDto.year}
+        </if>
+        <if test='projectSolicitDto.startDate != null and projectSolicitDto.startDate != ""'>
+            and spst.sub_date &gt;= #{projectSolicitDto.startDate}
+        </if>
+
+        <if test='projectSolicitDto.endDate != null and projectSolicitDto.endDate != ""'>
+            and spst.sub_date &lt;= #{projectSolicitDto.endDate}
+        </if>
+        <if test='projectSolicitDto.auditStatus != null and projectSolicitDto.auditStatus != ""'>
+            and spsg.audit_status=#{projectSolicitDto.auditStatus}
+        </if>
+        <if test='projectSolicitDto.dataStatus != null'>
+            and spsg.data_status=#{projectSolicitDto.dataStatus}
+        </if>
+
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitGradeVo">
+        select
+            id as rowId, sys_no as sysNo, project_id as projectId, data_status as dataStatus, audit_date as auditDate,
+            index1, index1score, index2, index2score,
+            index3, index3score, index4, index4score, index5, index5score, index6, index6score, index7,
+            index7score, index8, index8score, index9, index9score, index10, index10score, index11,allot_count as allotCount,
+            index11score, index12, index12score, expert, audit_status as auditStatus, note, prj_type as prjType, mod_number
+        from srm_project_solicit_grade
+        where id=#{rowId}
+    </select>
+    <update id="updateGradeState">
+        update srm_project_solicit_grade
+        <set>
+            <if test="projectSolicitGradeDto.dataStatus != null">
+                data_status = #{projectSolicitGradeDto.dataStatus},
+            </if>
+            <if test="projectSolicitGradeDto.auditStatus != null">
+                audit_status = #{projectSolicitGradeDto.auditStatus},
+            </if>
+        </set>
+        where id=#{projectSolicitGradeDto.rowId}
+    </update>
+
+    <update id="updateCancel" >
+        update srm_project_solicit_grade set is_cancel=1 where  sys_no=#{sysNo}   and project_id=#{ywRowId}
+    </update>
+</mapper>

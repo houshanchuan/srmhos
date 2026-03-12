@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.common.SrmGridcolsetMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.common.SrmGridcolset">
+        <id column="id" property="id" />
+        <result column="type" property="type" />
+        <result column="gridurl" property="gridurl" />
+        <result column="gridId" property="gridId" />
+        <result column="reference" property="reference" />
+        <result column="colId" property="colId" />
+        <result column="colName" property="colName" />
+        <result column="colHeader" property="colHeader" />
+        <result column="colAlign" property="colAlign" />
+        <result column="colOrder" property="colOrder" />
+        <result column="colWidth" property="colWidth" />
+        <result column="colEnterOrder" property="colEnterOrder" />
+        <result column="is_hidden" property="isHidden" />
+        <result column="is_necessary" property="isNecessary" />
+        <result column="is_export" property="isExport" />
+        <result column="is_sortable" property="isSortable" />
+        <result column="is_print" property="isPrint" />
+        <result column="is_copy" property="isCopy" />
+        <result column="is_frozen" property="isFrozen" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, type, gridurl, gridId, colId, colName, colHeader, colAlign, colOrder, colWidth, colEnterOrder, is_hidden, is_necessary, is_export, is_sortable, is_print, is_copy, is_frozen
+    </sql>
+    <select id="ifGridColSetExist" resultType="String">
+        select colset.type from cf_srm_gridcolset colset
+        where gridurl=#{gridColSetMainDto.gridUrl} and gridId=#{gridColSetMainDto.gridId}
+        <if test="gridColSetMainDto.moduleType=='SSUser' and gridColSetMainDto.userCode!=null and gridColSetMainDto.userCode!=''">
+            and reference=#{gridColSetMainDto.userCode} and colset.type="SSUser"
+        </if>
+        <if test="gridColSetMainDto.moduleType=='SSGroup' and gridColSetMainDto.groupId!=null and gridColSetMainDto.groupId!=''">
+            and reference=#{gridColSetMainDto.groupId} and colset.type="SSGroup"
+        </if>
+        <if test="gridColSetMainDto.moduleType=='SITE' and gridColSetMainDto.hospId!=null and gridColSetMainDto.hospId!=''">
+            and reference=#{gridColSetMainDto.hospId} and colset.type="SITE"
+        </if>
+        group by colset.type
+    </select>
+    <select id="getGridColSet" resultType="com.mediway.hos.srm.business.center.model.vo.common.GridColSetRowVo">
+        select id as rowId,colName as name,colHeader as header
+             ,colAlign as align,colWidth as width, colEnterOrder as enterSort, is_hidden as hidden,
+              is_necessary as necessary, is_export, is_sortable, is_print, is_copy, is_frozen as frozen
+        from cf_srm_gridcolset
+        where gridurl=#{gridColSetMainDto.gridUrl} and gridId=#{gridColSetMainDto.gridId}
+        <if test="gridColSetMainDto.moduleType=='SSUser'">
+            and reference=#{gridColSetMainDto.userCode} and type="SSUser"
+        </if>
+        <if test="gridColSetMainDto.moduleType=='SSGroup'">
+            and reference=#{gridColSetMainDto.groupId} and type="SSGroup"
+        </if>
+        <if test="gridColSetMainDto.moduleType=='SITE'">
+            and reference=#{gridColSetMainDto.hospId} and type="SITE"
+        </if>
+        order by colOrder
+    </select>
+    <delete id="retSetGridCol">
+        delete from cf_srm_gridcolset where gridurl=#{gridColSetMainDto.gridUrl} and type=#{gridColSetMainDto.moduleType} and gridId=#{gridColSetMainDto.gridId}
+    </delete>
+</mapper>

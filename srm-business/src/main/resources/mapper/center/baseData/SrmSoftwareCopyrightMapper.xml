@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmSoftwareCopyrightMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmSoftwareCopyright">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="dept_id" property="deptId" />
+        <result column="copyright_owner" property="copyrightOwner" />
+        <result column="first_pub_date" property="firstPubDate" />
+        <result column="complete_date" property="completeDate" />
+        <result column="register_no" property="registerNo" />
+        <result column="issue_date" property="issueDate" />
+        <result column="acqui_mode" property="acquiMode" />
+        <result column="scope" property="scope" />
+        <result column="certificate_no" property="certificateNo" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="year" property="year" />
+        <result column="biz_type" property="bizType" />
+        <result column="remark" property="remark" />
+        <result column="reward_date" property="rewardDate" />
+        <result column="reward_amount" property="rewardAmount" />
+        <result column="currency" property="currency" />
+        <result column="chk_status" property="chkStatus" />
+        <result column="chk_user_id" property="chkUserId" />
+        <result column="chk_date" property="chkDate" />
+        <result column="chk_time" property="chkTime" />
+        <result column="proj_id" property="projId" />
+        <result column="our_ranking" property="ourRanking" />
+        <result column="copyright_no" property="copyrightNo" />
+        <result column="division_code" property="divisionCode" />
+        <result column="class" property="class" />
+        <result column="discipline" property="discipline" />
+        <result column="school_sign" property="schoolSign" />
+        <result column="copyright_type" property="copyrightType" />
+        <result column="author_num" property="authorNum" />
+        <result column="subuser_code" property="subuserCode" />
+        <result column="subuser_name" property="subuserName" />
+        <result column="operate_time" property="operateTime" />
+        <result column="in_fauthor_id" property="inFauthorId" />
+        <result column="in_fauthor_code" property="inFauthorCode" />
+        <result column="fauthor_type" property="fauthorType" />
+        <result column="fauthor_name" property="fauthorName" />
+        <result column="out_id" property="outId" />
+        <result column="file_ids" property="fileIds" />
+        <result column="create_time" property="createTime" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="discipline_three" property="disciplineThree" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, dept_id, copyright_owner, first_pub_date, complete_date, register_no, issue_date, acqui_mode, scope, certificate_no, sub_user_id, sub_date, data_status, sys_no, year, biz_type, remark, reward_date, reward_amount, currency, chk_status, chk_user_id, chk_date, chk_time, proj_id, our_ranking, copyright_no, division_code, class, discipline, school_sign, copyright_type, author_num, subuser_code, subuser_name, operate_time, in_fauthor_id, in_fauthor_code, fauthor_type, fauthor_name, out_id, file_ids, create_time, discipline_two, discipline_three
+    </sql>
+
+</mapper>

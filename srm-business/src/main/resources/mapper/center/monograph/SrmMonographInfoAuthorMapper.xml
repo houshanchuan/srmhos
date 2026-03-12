@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.monograph.SrmMonographInfoAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.monograph.SrmMonographInfoAuthor">
+        <id column="id" property="id" />
+        <result column="monograph_id" property="monographId" />
+        <result column="author_id" property="authorId" />
+        <result column="author_name" property="authorName" />
+        <result column="editor_type" property="editorType" />
+        <result column="ranking" property="ranking" />
+        <result column="identity" property="identity" />
+        <result column="dept_id" property="deptId" />
+        <result column="dept_name" property="deptName" />
+        <result column="unit_id" property="unitId" />
+        <result column="in_out" property="inOut" />
+        <result column="division_code" property="divisionCode" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_type" property="authorType" />
+        <result column="sex" property="sex" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="words_num" property="wordsNum" />
+        <result column="note" property="note" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="title" property="title" />
+        <result column="is_first" property="isFirst" />
+        <result column="is_hosp_member" property="isHospMember" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, monograph_id, author_id, author_name, editor_type, ranking, identity, dept_id, dept_name, unit_id, in_out, division_code, author_code, author_type, sex, work_ratio, words_num, note, edu_degree, edu_level, title, is_first, is_hosp_member
+    </sql>
+    <select id="ListMonographAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.monograph.MonographAuthorVo">
+        SELECT
+            smonauthor.id RowId,author_id authorrowid
+            ,author_name authorname, editor_type isthehosrowid,seditortype.name isthehos,ranking rangerowid,sauthororder.name rangename,
+            smonauthor.identity, dept_id, dept_name, unit_id,
+            in_out, division_code, author_code, author_type typerowid,susertype.name typename,
+            smonauthor.sex,
+            case
+            when smonauthor.sex=0 then '女'
+            when smonauthor.sex=1 then '男'
+            else ''
+            END as sexName,
+            work_ratio as workRatio, words_num as wordsNum, smonauthor.note as note,
+            smonauthor.edu_degree, smonauthor.edu_level, smonauthor.title, smonauthor.is_first, smonauthor.is_hosp_member
+        FROM
+            srm_monograph_info_author smonauthor
+        left join ct_srm_user suser on suser.id=smonauthor.author_id
+        left join ct_srm_person_type susertype on susertype.code=smonauthor.author_type
+        left join ct_srm_paper_author_order sauthororder on sauthororder.code=smonauthor.ranking
+        left join ct_srm_editor_type seditortype on seditortype.code=smonauthor.editor_type
+        where monograph_id=#{monographId}
+    </select>
+    <delete id="deleteAuthorByMon">
+        delete from srm_monograph_info_author where monograph_id=#{monographId}
+    </delete>
+    <select id="getIdByMon" resultType="Long">
+        select id from srm_monograph_info_author mon where monograph_id=#{parref}
+    </select>
+
+</mapper>

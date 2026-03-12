@@ -1,0 +1,101 @@
+package com.mediway.hos.srm.business.center.model.entity.award;
+
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.mediway.hos.srm.business.base.model.entity.BasePO;
+import com.baomidou.mybatisplus.annotation.TableField;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+/**
+ * <p>
+ * 获奖成果作者表
+ * </p>
+ *
+ * @author 代码生成器
+ * @since 2024-09-25
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
+@ApiModel(value="SrmAchievementAuthor对象", description="获奖成果作者表")
+@TableName("srm_achievement_author")
+public class SrmAchievementAuthor extends BasePO {
+
+    private static final long serialVersionUID = 1L;
+
+    @ApiModelProperty(value = "ROWID")
+    @TableId(value = "ID", type = IdType.AUTO)
+    private Long id;
+
+    @ApiModelProperty(value = "获奖编号")
+    @TableField("achievement_id")
+    private Long achievementId;
+
+    @ApiModelProperty(value = "作者编号")
+    @TableField("author_id")
+    private String authorId;
+
+    @ApiModelProperty(value = "作者工号")
+    @TableField("author_code")
+    private String authorCode;
+
+    @ApiModelProperty(value = "作者名称")
+    @TableField("author_name")
+    private String authorName;
+
+    @ApiModelProperty(value = "作者类型")
+    @TableField("author_type")
+    private String authorType;
+
+    @ApiModelProperty(value = "作者单位")
+    @TableField("author_unit_name")
+    private String authorUnitName;
+
+    @ApiModelProperty(value = "排序号")
+    @TableField("author_ranking")
+    private String authorRanking;
+
+    @ApiModelProperty(value = "贡献率")
+    @TableField("work_ratio")
+    private BigDecimal workRatio;
+
+    @ApiModelProperty(value = "第一作者标志")
+    @TableField("is_first")
+    private Integer isFirst;
+
+    @ApiModelProperty(value = "所在单位")
+    @TableField("author_unit_id")
+    private String authorUnitId;
+
+    @ApiModelProperty(value = "教研室")
+    @TableField("authordivision_id")
+    private String authordivisionId;
+
+    @ApiModelProperty(value = "性别")
+    @TableField("sex")
+    private String sex;
+
+    @ApiModelProperty(value = "最后学历")
+    @TableField("edu_level")
+    private String eduLevel;
+
+    @ApiModelProperty(value = "最后学位")
+    @TableField("edu_degree")
+    private String eduDegree;
+
+    @ApiModelProperty(value = "职称")
+    @TableField("title")
+    private String title;
+
+    @ApiModelProperty(value = "备注")
+    @TableField("note")
+    private String note;
+
+
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.award.SrmAwardApplyAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.award.SrmAwardApplyAuthor">
+        <id column="id" property="id" />
+        <result column="award_apply_id" property="awardApplyId" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_name" property="authorName" />
+        <result column="author_type" property="authorType" />
+        <result column="author_unit" property="authorUnit" />
+        <result column="author_division" property="authorDivision" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="title" property="title" />
+        <result column="sex" property="sex" />
+        <result column="author_ranking" property="authorRanking" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="note" property="note" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, award_apply_id, author_code, author_name, author_type, author_unit, author_division,
+          edu_degree, edu_level, title, sex, author_ranking, work_ratio, note
+    </sql>
+    <select id="listAwardApplyAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.award.AwardApplyAuthorVo">
+        select spaa.id as rowId,
+               spaa.author_id as authorId,
+               puser.name as authorName,
+               spaa.author_type as authorType,
+               ccspt.name as authorTypeName,
+                spaa.sex as sex,
+                case
+                when spaa.sex=0 then '女'
+                when spaa.sex=1 then '男'
+                else ''
+                END as sexName,
+               spaa.author_code as authorCode,
+               spaa.sex,spaa.edu_degree as eduDegree,csed.name as eduDegreeName,
+               spaa.edu_level as eduLevel,csel.name as eduLevelName,
+               spaa.title as title,ccsti.name as titleName,
+               sauthororder.code as authorRanking,sauthororder.name as authorRankingName,
+               spaa.work_ratio as workRatio
+
+        from srm_award_apply_author spaa
+                 left join ct_srm_user puser on puser.id=spaa.author_id
+                 left join ct_srm_person_type ccspt  on ccspt.code=spaa.author_type
+                 left join ct_srm_title_info ccsti  on ccsti.code=spaa.title
+                 left join ct_srm_edu_degree csed  on csed.code=spaa.edu_degree
+                 left join ct_srm_edu_level csel  on csel.code=spaa.edu_level
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=spaa.author_ranking
+        where spaa.award_apply_id=#{awardApplyId}
+    </select>
+    <delete id="deleteAuthorByApplyId">
+        delete from srm_award_apply_author where award_apply_id=#{awardApplyId}
+    </delete>
+</mapper>

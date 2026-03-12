@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.patent.SrmPatentApplyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.patent.SrmPatentApply">
+        <id column="id" property="id" />
+        <result column="apply_info_id" property="applyInfoId" />
+        <result column="name" property="name" />
+        <result column="patent_type" property="patentType" />
+        <result column="dept_id" property="deptId" />
+        <result column="year" property="year" />
+        <result column="patentee" property="patentee" />
+        <result column="app_date" property="appDate" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_user_dept_id" property="subUserDeptId" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="is_approved" property="isApproved" />
+        <result column="approved_date" property="approvedDate" />
+        <result column="tech_fields" property="techFields" />
+        <result column="rela_item_name" property="relaItemName" />
+        <result column="tech_based" property="techBased" />
+        <result column="purpose" property="purpose" />
+        <result column="content" property="content" />
+        <result column="effect" property="effect" />
+        <result column="digest" property="digest" />
+        <result column="is_registered" property="isRegistered" />
+        <result column="apply_code" property="applyCode" />
+        <result column="patent_state" property="patentState" />
+        <result column="patent_id" property="patentId" />
+        <result column="file_ids" property="fileIds" />
+        <result column="note" property="note" />
+        <result column="unit_ranking" property="unitRanking" />
+        <result column="fauthor_name" property="fauthorName" />
+        <result column="fauthor_title" property="fauthorTitle" />
+        <result column="fauthor_type" property="fauthorType" />
+        <result column="fauthor_sex" property="fauthorSex" />
+        <result column="fauthor_edu_level" property="fauthorEduLevel" />
+        <result column="fauthor_edu_degree" property="fauthorEduDegree" />
+        <result column="fauthor_code" property="fauthorCode" />
+        <result column="check_status" property="checkStatus" />
+        <result column="in_fauthor_code" property="inFauthorCode" />
+        <result column="creator_name" property="creatorName" />
+        <result column="operate_time" property="operateTime" />
+        <result column="agency_unit" property="agencyUnit" />
+        <result column="agency_fee_source" property="agencyFeeSource" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, apply_info_id, name, patent_type, dept_id, year, patentee, app_date, sub_date, sub_time, data_status, sys_no, sub_user_id, sub_user_dept_id, phone, email, is_approved, approved_date, tech_fields, rela_item_name, tech_based, purpose, content, effect, digest, is_registered, apply_code, patent_state, patent_id, file_ids, note, unit_ranking, fauthor_name, fauthor_title, fauthor_type, fauthor_sex, fauthor_edu_level, fauthor_edu_degree, fauthor_code, check_status, in_fauthor_code, creator_name, operate_time, agency_unit, agency_fee_source
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentApplyVo">
+        select spa.name as name,spa.app_date as appDate,spa.digest as digest,
+                spa.note as note,spa.phone as phone,spa.email as email,
+               cspt.code as "patentType.id",cspt.name as "patentType.name",cspt.name as patentTypeName,
+                fdept.id as "deptId.id",fdept.name as "deptId.name",fdept.name as deptName,
+                suser.id as subUserId,suser.name as subUserName,
+                spaf.code as "agencyFeeSource.id",spaf.name as "agencyFeeSource.name",spaf.name as agencyFeeSourceName,
+                csru.code as "agencyUnit.id",csru.name as "agencyUnit.name",csru.name as agencyUnitName,
+                spa.data_status as dataStatus,spa.app_date as appDate
+        from srm_patent_apply spa
+            left join ct_srm_patent_type cspt on cspt.code=spa.patent_type
+            left join ct_srm_dept fdept on fdept.id=spa.dept_id
+            left join ct_srm_user suser on suser.id=spa.sub_user_id
+            left join ct_srm_patent_agency_fee_source spaf on spaf.code=spa.agency_fee_source
+            left join ct_srm_rely_unit csru on csru.code=spa.agency_unit
+        where spa.id=#{rowId}
+    </select>
+    <select id="listPatentApply" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentApplyVo">
+        select spa.id as rowId,spa.name as name,spa.app_date as appDate,spa.digest as digest,
+               spa.note as note,spa.phone as phone,spa.email as email,spa.sub_date as subDate,
+                cspt.name as patentTypeName,
+               fdept.name as deptName,
+               suser.name as subUserName,
+               spaf.name as agencyFeeSourceName,
+               spa.data_status as dataStatus
+        from srm_patent_apply spa
+                 left join ct_srm_patent_type cspt on cspt.code=spa.patent_type
+                 left join ct_srm_dept fdept on fdept.id=spa.dept_id
+                 left join ct_srm_user suser on suser.id=spa.sub_user_id
+                 left join ct_srm_patent_agency_fee_source spaf on spaf.code=spa.agency_fee_source
+        where
+        (spa.sub_user_id=#{patentApplyDto.userId} or spa.creator=#{patentApplyDto.userId} or spa.id in
+        (SELECT apply_patent_id FROM srm_patent_apply_author WHERE author_id = #{patentApplyDto.userId})
+        )
+        <if test="patentApplyDto.applyInfoId!=null and patentApplyDto.applyInfoId!=''">
+            and spa.apply_info_id=#{patentApplyDto.applyInfoId}
+        </if>
+        <if test="patentApplyDto.name!=null and patentApplyDto.name!=''">
+            and spa.name LIKE CONCAT('%', #{patentApplyDto.name}, '%')
+        </if>
+        <if test="patentApplyDto.patentType!=null and patentApplyDto.patentType!=''">
+            and spa.patent_type =#{patentApplyDto.patentType}
+        </if>
+        <if test="patentApplyDto.dataStatus!=null">
+            and spa.data_status = #{patentApplyDto.dataStatus}
+        </if>
+        order by spa.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_patent_apply
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditPatentApply" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentApplyVo">
+        select spa.id as rowId,spa.name as name,spa.app_date as appDate,spa.digest as digest,
+               spa.note as note,spa.phone as phone,spa.email as email,spa.sub_date as subDate,
+               cspt.name as patentTypeName,
+               fdept.name as deptName,
+               suser.name as subUserName,
+               spaf.name as agencyFeeSourceName,
+               spa.data_status as dataStatus
+        from srm_patent_apply spa
+                 left join ct_srm_patent_type cspt on cspt.code=spa.patent_type
+                 left join ct_srm_dept fdept on fdept.id=spa.dept_id
+                 left join ct_srm_user suser on suser.id=spa.sub_user_id
+                 left join ct_srm_patent_agency_fee_source spaf on spaf.code=spa.agency_fee_source
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spa.sys_no and eafrec.check_rec_id=spa.id
+        where eafrec.step_no>1
+            <if test="patentApplyDto.auditState== null and patentApplyDto.auditState == ''">
+                and (
+                (spa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%'))
+                or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spa.sys_no=seafrec.sys_no and seafrec.check_rec_id=spa.id) and eafrec.checker_string  LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%') and eafrec.check_datetime is not null)
+                or (spa.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%'))
+                )
+            </if>
+            <if test='patentApplyDto.auditState=="0"'>
+                and spa.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%')
+            </if>
+            <if test='patentApplyDto.auditState=="1"'>
+                and spa.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%')
+            </if>
+            <if test='patentApplyDto.auditState=="2"'>
+                and spa.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{patentApplyDto.userId}, '|%')
+            </if>
+            <if test="patentApplyDto.name!=null and patentApplyDto.name!=''">
+                and spa.name LIKE CONCAT('%', #{patentApplyDto.name}, '%')
+            </if>
+            <if test="patentApplyDto.patentType!=null and patentApplyDto.patentType!=''">
+                and spa.patent_type =#{patentApplyDto.patentType}
+            </if>
+            <if test="patentApplyDto.startDate != null and patentApplyDto.startDate != ''">
+                and spa.sub_date &gt;= #{patentApplyDto.startDate}
+            </if>
+
+            <if test="patentApplyDto.endDate != null and patentApplyDto.endDate != ''">
+                and spa.sub_date &lt;= #{patentApplyDto.endDate}
+            </if>
+            order by eafrec.id desc
+    </select>
+    <select id="listExpertAuditPatentApply" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionExpertAuditVo">
+        select spsg.id as rowId,spsg.app_rowId as appRowId,spsg.note as note,
+        csu.name as subUserName, spa.sub_date as subDate ,
+        spsg.audit_status as auditStatus,spsg.data_status as dataStatus,
+        spa.name as name,spa.data_status as dataStatus,cspt.name as patentTypeName,fdept.name as deptName
+        from srm_paper_submission_grade spsg
+        left join srm_patent_apply spa on spa.id=spsg.app_rowId
+        left join ct_srm_user csu on csu.id=spa.sub_user_id
+        left join ct_srm_patent_type cspt on cspt.code=spa.patent_type
+        left join ct_srm_dept fdept on fdept.id=spa.dept_id
+        where spsg.expert=#{paperSubmissionExpertAuditDto.userId} and spsg.sys_no=#{paperSubmissionExpertAuditDto.sysNo}
+        <if test="paperSubmissionExpertAuditDto.title!=null and paperSubmissionExpertAuditDto.title!=''">
+            and spa.name LIKE CONCAT('%', #{paperSubmissionExpertAuditDto.title}, '%')
+        </if>
+
+    </select>
+</mapper>

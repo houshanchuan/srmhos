@@ -1,0 +1,96 @@
+package com.mediway.hos.srm.business.center.model.vo.paper;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.mediway.hos.srm.business.center.model.vo.baseData.CombVo;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+public class PaperSubmissionApplyVo {
+    private Long rowId;
+    private String sysNo;
+    private String bizType;
+    private String title;
+    private CombVo dept;
+    private String deptName;
+    private CombVo journalType;
+    private String journalTypeName;
+    private CombVo journal;
+    private String journalName;
+    private String scopeType;
+    private String subUserId;
+    private String subUserCode;
+    private String subUserName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date subDate;
+    private String subTime;
+    private Integer dataStatus;
+    private String checkStatus;
+    private String operateTime;
+    private String content;
+    private Integer isMultiContribution;
+    private Integer isKeepSecret;
+    private String projId;
+    private String press;
+    private String seriousNo;
+    private CombVo thesisType;
+    private String thesisTypeName;
+    private CombVo language;
+    private String languageName;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date sendDate;
+    private String classCode;
+    private String discipline;
+    private String researchField;
+    private String pubUnitName;
+    private String allCode;
+    private CombVo firstAuthor;
+    private String firstAuthorName;
+    private String firstAuthorCode;
+    private CombVo firstAuthorDept;
+    private String firstAuthorDeptName;
+    private CombVo firstAuthorType;
+    private String firstAuthorTypeName;
+    private CombVo firstAuthorPosition;
+    private String firstAuthorPositionName;
+    private String personSerialno;
+    private Integer isGraduate;
+    private String mentor1;
+    private Integer isInTwoYears;
+    private String mentor2;
+    private String tfauthor;
+    private String tfauthorDeptId;
+    private CombVo corrAuthor;
+    private String corrAuthorName;
+    private String corrAuthorCode;
+    private CombVo corrAuthorType;
+    private String corrAuthorTypeName;
+    private CombVo corrAuthorPosition;
+    private String corrAuthorPositionName;
+    private CombVo corrAuthorDept;
+    private String corrAuthorDeptName;
+    private String tcauthor;
+    private String tcauthorDeptId;
+    private Integer isContributed;
+    private String regPaperId;
+    private Integer jackFreeFlag;
+    private CombVo reimburseWay;
+    private String reimburseWayName;
+    private String projNo;
+    private String encouragetype;
+    private String personCode;
+    private String personIdentify;
+    private String personBankNo;
+    private String personBankAccount;
+    private String personTel;
+    private String fileIds;
+    private String remark;
+    private CombVo leadUser;
+    private String leadUserName;
+    private String chkResultlist;
+    private String isAllot;
+    private String creator;
+    private String creatorName;
+    private String createTime;
+}

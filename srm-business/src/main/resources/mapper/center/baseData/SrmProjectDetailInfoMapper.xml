@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjectDetailInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjectDetailInfo">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="contract_no" property="contractNo" />
+        <result column="destination" property="destination" />
+        <result column="research_content" property="researchContent" />
+        <result column="check_index" property="checkIndex" />
+        <result column="store_type" property="storeType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, contract_no, destination, research_content, check_index, store_type
+    </sql>
+
+</mapper>

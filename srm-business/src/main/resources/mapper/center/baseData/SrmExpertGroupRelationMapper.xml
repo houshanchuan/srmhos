@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmExpertGroupRelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmExpertGroupRelation">
+        <id column="id" property="id" />
+        <result column="group_id" property="groupId" />
+        <result column="user" property="user" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, group_id, user
+    </sql>
+    <select id="listSrmExpertGroupRelation" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.ExpertGroupRelationDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ExpertGroupRelationVo">
+        select csegr.id as rowId,csegr.group_id as groupId,cseg.name as groupName,user_id as userId,csu.name  as userName
+        from ct_srm_expert_group_relation csegr
+        left join ct_srm_expert_group cseg on csegr.group_id =cseg.code
+        left join ct_srm_user csu on csegr.user_id=csu.code
+        where 1=1
+        <if test="expertGroupRelationDto.groupId!=null and expertGroupRelationDto.groupId!=''">
+            and csegr.group_id=#{expertGroupRelationDto.groupId}
+        </if>
+    </select>
+
+</mapper>

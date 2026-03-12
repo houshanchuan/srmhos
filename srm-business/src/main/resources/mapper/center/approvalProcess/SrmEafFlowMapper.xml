@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.approvalProcess.SrmEafFlowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.approvalProcess.SrmEafFlow">
+        <id column="id" property="id" />
+        <result column="sys_type" property="sysType" />
+        <result column="sys_module_id" property="sysModuleId" />
+        <result column="eaf_main_id" property="eafMainId" />
+        <result column="serial_no" property="serialNo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_type, sys_module_id, eaf_main_id, serial_no
+    </sql>
+
+    <select id="listEafFlow" resultType="com.mediway.hos.srm.business.center.model.vo.approvalProcess.EafFlowVo">
+        select seaf.id as id, seaf.id as rowId,
+               seaf.sys_type as sysType,
+               case
+                   when seaf.sys_type=1 then '科研'
+                   when seaf.sys_type=2 then '教学'
+                   else ''
+                   END as sysTypeName,
+               seaf.sys_module_id as sysModuleId,
+               smodule.name as sysModuleName,
+               seaf.eaf_main_id as eafMainId,
+               seafmain.name as eafMainName
+        from cf_srm_eaf_flow seaf
+        left join ct_srm_system_module smodule on smodule.code=seaf.sys_module_id
+        left join cf_srm_eaf_main seafmain on seafmain.id=seaf.eaf_main_id
+    </select>
+    <select id="getEafFlow" resultType="String">
+        select eaf_main_id
+        from cf_srm_eaf_flow seaf
+        where sys_module_id=#{sysNo} and sys_type=#{typeId}
+    </select>
+</mapper>

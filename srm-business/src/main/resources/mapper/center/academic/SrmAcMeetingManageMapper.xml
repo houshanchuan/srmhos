@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.academic.SrmAcMeetingManageMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.academic.SrmAcMeetingManage">
+        <id column="id" property="id" />
+        <result column="meeting_code" property="meetingCode" />
+        <result column="meeting_name" property="meetingName" />
+        <result column="meeting_date" property="meetingDate" />
+        <result column="meeting_place" property="meetingPlace" />
+        <result column="participants" property="participants" />
+        <result column="is_speech" property="isSpeech" />
+        <result column="meeting_phone" property="meetingPhone" />
+        <result column="meeting_email" property="meetingEmail" />
+        <result column="dept_id" property="deptId" />
+        <result column="note" property="note" />
+        <result column="proj_id" property="projId" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="chk_result" property="chkResult" />
+        <result column="chk_user_id" property="chkUserId" />
+        <result column="chk_date" property="chkDate" />
+        <result column="chk_time" property="chkTime" />
+        <result column="chk_view" property="chkView" />
+        <result column="speech_topic" property="speechTopic" />
+        <result column="reason_for_no_speech" property="reasonForNoSpeech" />
+        <result column="office_rec_leave" property="officeRecLeave" />
+        <result column="hr_audit_leave" property="hrAuditLeave" />
+        <result column="is_offic_ticket" property="isOfficTicket" />
+        <result column="sys_no" property="sysNo" />
+        <result column="meeting_end_date" property="meetingEndDate" />
+        <result column="rely_unit" property="relyUnit" />
+        <result column="meeting_type" property="meetingType" />
+        <result column="create_user_id" property="createUserId" />
+        <result column="create_date" property="createDate" />
+        <result column="division_code" property="divisionCode" />
+        <result column="classCode" property="classCode" />
+        <result column="paper_name" property="paperName" />
+        <result column="report_name" property="reportName" />
+        <result column="intro" property="intro" />
+        <result column="operate_time" property="operateTime" />
+        <result column="file_ids" property="fileIds" />
+        <result column="times_this_year" property="timesThisYear" />
+        <result column="account_code" property="accountCode" />
+        <result column="title" property="title" />
+        <result column="duty_desc" property="dutyDesc" />
+        <result column="parttime_desc" property="parttimeDesc" />
+        <result column="attendance_status" property="attendanceStatus" />
+        <result column="expected_begin_date" property="expectedBeginDate" />
+        <result column="expected_end_date" property="expectedEndDate" />
+        <result column="trvl_begin_date" property="trvlBeginDate" />
+        <result column="trvl_end_date" property="trvlEndDate" />
+        <result column="other_position_desc" property="otherPositionDesc" />
+        <result column="meeting_fee_amt" property="meetingFeeAmt" />
+        <result column="materials_fee_amt" property="materialsFeeAmt" />
+        <result column="hotel_fee_amt" property="hotelFeeAmt" />
+        <result column="traffic_fee_amt" property="trafficFeeAmt" />
+        <result column="other_fee_amt" property="otherFeeAmt" />
+        <result column="fund_account" property="fundAccount" />
+        <result column="creator_name" property="creatorName" />
+        <result column="check_status" property="checkStatus" />
+        <result column="rely_unit_name" property="relyUnitName" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, meeting_code, meeting_name, meeting_date, meeting_place, participants, is_speech, meeting_phone, meeting_email, dept_id, note, proj_id, sub_user_id, sub_date, data_status, chk_result, chk_user_id, chk_date, chk_time, chk_view, speech_topic, reason_for_no_speech, office_rec_leave, hr_audit_leave, is_offic_ticket, sys_no, meeting_end_date, rely_unit, meeting_type, create_user_id, create_date, division_code, class, paper_name, report_name, intro, operate_time, file_ids, times_this_year, account_code, title, duty_desc, parttime_desc, expected_begin_date, expected_end_date, trvl_begin_date, trvl_end_date, other_position_desc, meeting_fee_amt, materials_fee_amt, hotel_fee_amt, traffic_fee_amt, other_fee_amt, fund_account, creator_name, check_status, rely_unit_name
+    </sql>
+    <select id="listAcMeetingManage" parameterType="com.mediway.hos.srm.business.center.model.dto.academic.AcMeetingManageDto" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcMeetingManageVo">
+        select samm.id as rowId,samm.meeting_code as meetingCode, samm.meeting_name as meetingName,samm.meeting_date as meetingDate,
+        samm.meeting_end_date as meetingEndDate,csu.name as participantsName,samm.speech_topic as speechTopic,
+        samm.meeting_place as meetingPlace,samm.participants,samm.is_speech as isSpeech,samm.meeting_phone as meetingPhone,samm.meeting_email as meetingEmail
+        ,samm.dept_id as deptId,csd.name as deptName
+        ,samm.proj_id as projId,spi.name as projName
+        ,samm.note,samm.data_status as dataStatus,samm.sys_no as sysNo,samm.trvl_begin_date as trvlBeginDate,samm.trvl_end_date as trvlEndDate
+        ,samm.meeting_type,csct.name as meetingTypeName,samm.expected_begin_date as expectedBeginDate
+        ,samm.create_date,csu1.name as creatorName,csu2.name as subUserName,samm.sub_date
+        from srm_ac_meeting_manage samm
+        left join srm_projects_info spi on samm.proj_id=spi.id
+        left join ct_srm_dept csd on samm.dept_id=csd.id
+        left join ct_srm_conference_type csct on samm.meeting_type =csct.code
+        left join ct_srm_user csu on samm.participants=csu.id
+        left join ct_srm_user csu1 on samm.create_user_id=csu1.id
+        left join ct_srm_user csu2 on samm.sub_user_id=csu2.id
+        <where>
+            <if test="acMeetingManageDto.dataStatus!=null">
+                and samm.data_status=#{acMeetingManageDto.dataStatus}
+            </if>
+            <if test="acMeetingManageDto.meetingName!=null and acMeetingManageDto.meetingName!=''">
+                and (samm.meeting_name LIKE CONCAT('%', #{acMeetingManageDto.meetingName}, '%') or samm.meeting_place LIKE CONCAT('%', #{acMeetingManageDto.meetingName}, '%'))
+            </if>
+            <if test="acMeetingManageDto.meetingDate != null and acMeetingManageDto.meetingDate != ''">
+                and samm.meeting_date = #{acMeetingManageDto.meetingDate}
+            </if>
+        </where>
+        order by samm.id desc
+    </select>
+    <select id="ifAllowSubmit" parameterType="Long" resultType="String">
+
+    </select>
+
+    <update id="updateStatus">
+        update  srm_ac_meeting_manage
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                chk_result = #{checkStatus},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="getDetailAcMeetingManage" parameterType="Long" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcMeetingManageVo">
+        SELECT samm.id as rowId, meeting_code as meetingCode, meeting_name as meetingName, meeting_date as meetingDate, meeting_place as meetingPlace,
+        participants , is_speech as isSpeech, meeting_phone as meetingPhone, meeting_email as meetingEmail, dept_id as deptId, samm.note,
+        proj_id as projId, sub_user_id as subUserId, sub_date as subDate, data_status as dataStatus, chk_result as chkResult,
+        chk_user_id as chkUserId, chk_date as chkDate, chk_time as chkTime, chk_view as chkView, speech_topic as speechTopic,
+        reason_for_no_speech as reasonForNoSpeech, office_rec_leave as officeRecLeave, hr_audit_leave as hrAuditLeave,
+        is_offic_ticket as isOfficTicket, sys_no as sysNo, meeting_end_date as meetingEndDate, rely_unit as relyUnit,
+        meeting_type as meetingType, create_user_id as createUserId, create_date as createDate, suser.name as creatorName,
+        division_code as divisionCode, classCode,
+        paper_name as paperName, report_name as reportName, intro, samm.operate_time as operateTime, file_ids as fileIds,
+        times_this_year as timesThisYear, account_code as accountCode, samm.title, duty_desc as dutyDesc, parttime_desc as parttimeDesc,
+        expected_begin_date as expectedBeginDate, expected_end_date as expectedEndDate,
+        trvl_begin_date as trvlBeginDate, trvl_end_date as trvlEndDate, other_position_desc as otherPositionDesc,meeting_position as meetingPositionName,
+        meeting_fee_amt as meetingFeeAmt, materials_fee_amt as materialsFeeAmt, hotel_fee_amt as hotelFeeAmt,
+        traffic_fee_amt as trafficFeeAmt, other_fee_amt as otherFeeAmt, fund_account as fundAccount,
+        samm.check_status as checkStatus, rely_unit_name as relyUnitName,
+        csct.name as meetingTypeName,sclass.name as className
+        FROM srm_ac_meeting_manage samm
+        left join ct_srm_conference_type csct on is_valid=1 and samm.meeting_type =csct.code
+        left join ct_srm_class sclass on sclass.code=samm.classCode
+        left join ct_srm_user suser on suser.id=samm.create_user_id
+        WHERE samm.id=#{RowId}
+    </select>
+
+     <select id="listAcMeetingManageForAudit" parameterType="com.mediway.hos.srm.business.center.model.dto.academic.AcMeetingManageDto" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcMeetingManageVo">
+        select samm.id as rowId,samm.meeting_code as meetingCode, meeting_name as meetingName,meeting_date as meetingDate,
+        meeting_place as meetingPlace,participants,is_speech as isSpeech,meeting_phone as meetingPhone,meeting_email as meetingEmail
+        ,samm.dept_id as deptId,csd.name as deptName
+        ,samm.proj_id as projId,spi.name as projName
+        ,samm.note,samm.data_status as dataStatus,samm.sys_no as sysNo,samm.trvl_begin_date as trvlBeginDate,samm.trvl_end_date as trvlEndDate
+        ,samm.meeting_type,csct.name as meetingTypeName,samm.expected_begin_date as expectedBeginDate
+        from srm_ac_meeting_manage samm
+        left join srm_projects_info spi on samm.proj_id=spi.id
+        left join ct_srm_dept csd on samm.dept_id=csd.id
+        left join ct_srm_conference_type csct on samm.meeting_type =csct.code
+        where samm.data_status=1
+    </select>
+</mapper>

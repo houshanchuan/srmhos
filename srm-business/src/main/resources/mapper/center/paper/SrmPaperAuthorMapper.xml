@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.paper.SrmPaperAuthorMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.paper.SrmPaperAuthor">
+        <id column="id" property="id" />
+        <result column="paper_id" property="paperId" />
+        <result column="in_out" property="inOut" />
+        <result column="author" property="author" />
+        <result column="author_name" property="authorName" />
+        <result column="author_unit" property="authorUnit" />
+        <result column="author_code" property="authorCode" />
+        <result column="author_type" property="authorType" />
+        <result column="author_dept_id" property="authorDeptId" />
+        <result column="author_account" property="authorAccount" />
+        <result column="author_unit_name" property="authorUnitName" />
+        <result column="author_division" property="authorDivision" />
+        <result column="sex" property="sex" />
+        <result column="ranking" property="ranking" />
+        <result column="is_corr_author" property="isCorrAuthor" />
+        <result column="edu_degree" property="eduDegree" />
+        <result column="edu_level" property="eduLevel" />
+        <result column="title" property="title" />
+        <result column="work_ratio" property="workRatio" />
+        <result column="note" property="note" />
+        <result column="is_student" property="isStudent" />
+        <result column="id_no" property="idNo" />
+        <result column="bank" property="bank" />
+        <result column="bank_account" property="bankAccount" />
+        <result column="contact_tel" property="contactTel" />
+        <result column="is_tied_corr_author" property="isTiedCorrAuthor" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, paper_id, in_out, author, author_name, author_unit, author_code, author_type, author_dept_id, author_account, author_unit_name, author_division, sex, ranking, is_corr_author, edu_degree, edu_level, title, work_ratio, note, is_student, id_no, bank, bank_account, contact_tel, is_tied_corr_author
+    </sql>
+    <select id="getPaperAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperAuthorVo">
+        select spa.author as rowId,spa.author_name as authorName,spa.author_type as authorType,
+        spa.author_code as authorCode,
+        spa.sex,spa.edu_degree as eduDegree,spa.edu_level as eduLevel,spa.title as title
+        from srm_paper_author spa
+        where paper_id=#{paperId}
+        <if test="rankCode!=null and rankCode!=''">
+            ranking="01"
+        </if>
+        <if test="corrAuthorFlag!=null and corrAuthorFlag!=''">
+            is_corr_author=1
+        </if>
+        <if test="authorType!=null and authorType!=''">
+            author_type=1
+        </if>
+        order by ranking ASC
+        LIMIT 1
+    </select>
+    <select id="getAuthorCount" resultType="Integer">
+        select count(*) from srm_paper_author where paper_id=#{paperId}
+    </select>
+    <select id="listPaperAuthor" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperAuthorVo">
+        select spa.id as rowId,
+            spa.author as author,
+               puser.name as authorName,
+               spa.author_type as authorType,
+               ccspt.name as authorTypeName,
+               spa.author_code as authorCode,
+               spa.sex as sex,
+                case
+                when spa.sex=0 then '女'
+                when spa.sex=1 then '男'
+                else ''
+                END as sexName,
+                spa.edu_degree as eduDegree,csed.name as eduDegreeName,
+               spa.edu_level as eduLevel,csel.name as eduLevelName,
+               spa.title as title,ccsti.name as titleName,
+               sauthororder.code as ranking,sauthororder.name as rankingName,
+                spa.is_corr_author as isCorrAuthor,spa.work_ratio as workRatio
+        from srm_paper_author spa
+                 left join ct_srm_user puser on puser.id=spa.author
+                 left join ct_srm_dept fdept on fdept.id=spa.author_dept_id
+                 left join ct_srm_person_type ccspt  on ccspt.code=spa.author_type
+                 left join ct_srm_title_info ccsti  on ccsti.code=spa.title
+                 left join ct_srm_edu_degree csed  on csed.code=spa.edu_degree
+                 left join ct_srm_edu_level csel  on csel.code=spa.edu_level
+                 left join ct_srm_paper_author_order sauthororder on sauthororder.code=spa.ranking
+        where paper_id=#{paperId}
+    </select>
+    <delete id="deleteAuthorByPaper">
+        delete from srm_paper_author where paper_id=#{paperId}
+    </delete>
+
+
+</mapper>

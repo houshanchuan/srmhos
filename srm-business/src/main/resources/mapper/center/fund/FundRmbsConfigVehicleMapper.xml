@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundRmbsConfigVehicleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundRmbsConfigVehicle">
+        <id column="id" property="id" />
+        <result column="addr_start" property="addrStart" />
+        <result column="addr_end" property="addrEnd" />
+        <result column="travel_vehicle" property="travelVehicle" />
+        <result column="travel_fee" property="travelFee" />
+        <result column="category" property="category" />
+        <result column="hosp_code" property="hospCode" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, addr_start, addr_end, travel_vehicle, travel_fee, category, hosp_code, is_valid
+    </sql>
+    <select id="listFundRmbsConfigVehicle" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundRmbsConfigVehicleDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundRmbsConfigVehicleVo">
+        select cfrcv.id as rowId,cfrcv.addr_start as addrStart,cfrcv.addr_end as addrEnd,cfrcv.travel_vehicle as travelVehicle,cftv.name as travelVehicleName,
+        cfrcv.travel_fee as travelFee,
+        category,cfrcv.hosp_code as hospCode,csh.name , cfrcv.is_valid as isValid
+        from cf_fund_rmbs_config_vehicle cfrcv
+        left join ct_fund_travel_vehicle cftv on cfrcv.travel_vehicle =cftv.code
+        left join ct_srm_hospital csh on cfrcv.hosp_code=csh.code
+    </select>
+
+</mapper>

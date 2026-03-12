@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.monograph.SrmMonographInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.monograph.SrmMonographInfo">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="dept_id" property="deptId" />
+        <result column="total_words_num" property="totalWordsNum" />
+        <result column="our_unit_words_num" property="ourUnitWordsNum" />
+        <result column="press" property="press" />
+        <result column="publish_time" property="publishTime" />
+        <result column="print_time" property="printTime" />
+        <result column="isbn" property="isbn" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="year" property="year" />
+        <result column="publish_freq" property="publishFreq" />
+        <result column="work_type" property="workType" />
+        <result column="score" property="score" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="biz_type" property="bizType" />
+        <result column="research_field" property="researchField" />
+        <result column="cip" property="cip" />
+        <result column="disvision_code" property="disvisionCode" />
+        <result column="classcode" property="classCode" />
+        <result column="pub_unit_name" property="pubUnitName" />
+        <result column="pub_level" property="pubLevel" />
+        <result column="pub_address_type" property="pubAddressType" />
+        <result column="projsource_code" property="projsourceCode" />
+        <result column="discipline" property="discipline" />
+        <result column="discipline_two" property="disciplineTwo" />
+        <result column="discipline_three" property="disciplineThree" />
+        <result column="is_translated" property="isTranslated" />
+        <result column="language" property="language" />
+        <result column="author_num" property="authorNum" />
+        <result column="check_status" property="checkStatus" />
+        <result column="intro" property="intro" />
+        <result column="note" property="note" />
+        <result column="sub_time" property="subTime" />
+        <result column="subuser_name" property="subuserName" />
+        <result column="is_recension" property="isRecension" />
+        <result column="school_sign" property="schoolSign" />
+        <result column="is_first_author" property="isFirstAuthor" />
+        <result column="fauthor_name" property="fauthorName" />
+        <result column="fauthor_title" property="fauthorTitle" />
+        <result column="fauthor_sex" property="fauthorSex" />
+        <result column="infauthor_edu_level" property="infauthorEduLevel" />
+        <result column="infauthor_edu_degree" property="infauthorEduDegree" />
+        <result column="infauthor_code" property="infauthorCode" />
+        <result column="operate_time" property="operateTime" />
+        <result column="infauthor_id" property="infauthorId" />
+        <result column="fauthor_type" property="fauthorType" />
+        <result column="file_ids" property="fileIds" />
+        <result column="pub_yearmon" property="pubYearmon" />
+        <result column="reward_fee_amt" property="rewardFeeAmt" />
+        <result column="serial_no" property="serialNo" />
+        <result column="print_num" property="printNum" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, dept_id, total_words_num, our_unit_words_num, press, publish_time, print_time, isbn, sub_user_id, sub_date, data_status, sys_no, year, publish_freq, work_type, score, our_unit_ranking, biz_type, research_field, cip, disvision_code, classcode, pub_unit_name, pub_level, pub_address_type, projsource_code, discipline, discipline_two, discipline_three, is_translated, language, author_num, check_status, intro, note, sub_time, subuser_name, is_recension, school_sign, is_first_author, fauthor_name, fauthor_title, fauthor_sex, infauthor_edu_level, infauthor_edu_degree, infauthor_code, operate_time, infauthor_id, fauthor_type, file_ids, pub_yearmon, reward_fee_amt, serial_no, print_num
+    </sql>
+    <!-- 查询明细-->
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.monograph.MonographVo">
+        select mon.id rowId, mon.name nameField, sdept.id as "deptLocField.id",sdept.name as "deptLocField.name",
+                mon.total_words_num totalNum, mon.our_unit_words_num, spress.code as "pressField.id", spress.name as "pressField.name",
+                mon.publish_time pubTime, mon.print_time , mon.isbn isbn, mon.sub_user_id, mon.sub_date, mon.data_status dataStatus, mon.sys_no,mon.publish_freq publishFreqField,
+                sworktype.code as "unittypeField.id",sworktype.name as "unittypeField.name",mon.note as remarkField,
+                mon.score, mon.our_unit_ranking, mon.biz_type, mon.research_field, mon.cip cip, mon.disvision_code,
+                sclass.code as "subjectCatField.id",sclass.name as "subjectCatField.name",
+                mon.pub_unit_name, mon.pub_level pressField, mon.pub_address_type,
+                sprojectsource.code as "projectSource.id",sprojectsource.name as "projectSource.name",
+                fdiscipline.code as "firstSubjectField.id",fdiscipline.name as "firstSubjectField.name",
+                sdiscipline.code as "secSubjectField.id",sdiscipline.name as "secSubjectField.name",
+                tdiscipline.code as "thirdSubjectField.id",tdiscipline.name as "thirdSubjectField.name",
+                mon.is_translated as transferFlag, mon.author_num, mon.check_status, mon.intro, mon.sub_time,
+                mon.subuser_name, mon.is_recension, mon.school_sign as hospsignature, mon.is_first_author as completeUnit, mon.fauthor_name, mon.fauthor_title,
+                mon.fauthor_sex, mon.infauthor_edu_level, mon.infauthor_edu_degree, mon.infauthor_code, mon.operate_time,
+                mon.infauthor_id, mon.fauthor_type, mon.file_ids, mon.pub_yearmon, mon.reward_fee_amt, mon.serial_no, mon.print_num as printNum
+                ,syear.code as "yearField.id",syear.name as "yearField.name",
+                slanguage.code as "languageField.id",slanguage.name as "languageField.name"
+        from srm_monograph_info mon
+        left join ct_srm_year syear on syear.code=mon.year
+        left join ct_srm_dept sdept on sdept.id=mon.dept_id
+        left join ct_srm_press_info spress on spress.code=mon.press
+        left join ct_srm_work_type sworktype on sworktype.code=mon.work_type
+        left join ct_srm_class sclass on sclass.code=mon.classcode
+        left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=mon.projsource_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=mon.discipline
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=mon.discipline_two
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=mon.discipline_three
+        left join ct_srm_language slanguage on slanguage.code=mon.language
+
+        where mon.id=#{RowId}
+    </select>
+    <!--查询著作列表-->
+    <select id="listMonographInfo" parameterType="com.mediway.hos.srm.business.center.model.dto.monograph.MonographDetailDto" resultType="com.mediway.hos.srm.business.center.model.vo.monograph.MonographVo">
+        select mon.id rowId, mon.name nameField,sdept.name as deptLocName,
+               mon.total_words_num totalNum, mon.our_unit_words_num,spress.name as pressFieldName,
+               mon.publish_time pubTime, mon.print_time , mon.isbn isbn, mon.sub_user_id, mon.sub_date as subDate, mon.data_status, mon.sys_no,mon.publish_freq publishFreqField,
+               sworktype.code unitTypeId,sworktype.name unitTypeName,
+               mon.score, mon.our_unit_ranking, mon.biz_type, mon.research_field, mon.cip cip, mon.disvision_code,
+               sclass.code as "subjectCatField.id",sclass.name as "subjectCatField.name",
+               mon.pub_unit_name, mon.pub_level pressField, mon.pub_address_type,
+               sprojectsource.code as "projectSource.id",sprojectsource.name as "projectSource.name",
+               fdiscipline.code as "firstSubjectField.id",fdiscipline.name as "firstSubjectField.name",
+               sdiscipline.code as "secSubjectField.id",sdiscipline.name as "secSubjectField.name",
+               tdiscipline.code as "thirdSubjectField.id",tdiscipline.name as "thirdSubjectField.name",
+               mon.is_translated as transferFlag, mon.author_num, mon.check_status dataStatus, mon.intro, mon.note as remarkField, mon.sub_time,
+               mon.subuser_name, mon.is_recension, mon.school_sign as hospsignature, mon.is_first_author as completeUnit, mon.fauthor_name, mon.fauthor_title,
+               mon.fauthor_sex, mon.infauthor_edu_level, mon.infauthor_edu_degree, mon.infauthor_code, mon.operate_time,
+               mon.infauthor_id, mon.fauthor_type, mon.file_ids, mon.pub_yearmon, mon.reward_fee_amt, mon.serial_no, mon.print_num as printNum
+                ,syear.code as yearId,syear.name as yearName,
+               slanguage.code as "languageField.id",slanguage.name as "languageField.name"
+        from srm_monograph_info mon
+                 left join ct_srm_year syear on syear.code=mon.year
+                 left join ct_srm_dept sdept on sdept.id=mon.dept_id
+                 left join ct_srm_press_info spress on spress.code=mon.press
+                 left join ct_srm_work_type sworktype on sworktype.code=mon.work_type
+                 left join ct_srm_class sclass on sclass.code=mon.classcode
+                 left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=mon.projsource_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=mon.discipline
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=mon.discipline_two
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=mon.discipline_three
+                 left join ct_srm_language slanguage on slanguage.code=mon.language
+        where 1=1
+        <if test="monographDetailDto.userId != null and monographDetailDto.userId != ''">
+            and (mon.sub_user_id=#{monographDetailDto.userId} or mon.id in
+            (SELECT monograph_id
+            FROM srm_monograph_info_author
+            WHERE author_id = #{monographDetailDto.userId}))
+        </if>
+        <if test="monographDetailDto.nameField != null and monographDetailDto.nameField != ''">
+            and mon.name LIKE CONCAT('%', #{monographDetailDto.nameField}, '%')
+        </if>
+        <if test="monographDetailDto.startDate != null and monographDetailDto.startDate != ''">
+            and mon.sub_date &gt;= #{monographDetailDto.startDate}
+        </if>
+
+        <if test="monographDetailDto.endDate != null and monographDetailDto.endDate != ''">
+            and mon.sub_date &lt;= #{monographDetailDto.endDate}
+        </if>
+        <if test="monographDetailDto.isbn != null and monographDetailDto.isbn != ''">
+            and mon.isbn LIKE CONCAT('%', #{monographDetailDto.isbn}, '%')
+        </if>
+
+        <if test="monographDetailDto.editor != null and monographDetailDto.editor != ''">
+            and mon.id in
+            (SELECT monograph_id
+            FROM srm_monograph_info_author smonauthor
+            WHERE author_id = #{monographDetailDto.editor})
+        </if>
+        order by mon.id desc
+    </select>
+    <select id="getIdByName" resultType="Long">
+        select mon.id from srm_monograph_info mon where mon.name=#{name}
+    </select>
+    <update id="updateStatus">
+        update srm_monograph_info
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <!--查询审核著作列表-->
+    <select id="listAuditMonographInfo" parameterType="com.mediway.hos.srm.business.center.model.dto.monograph.MonographDetailDto" resultType="com.mediway.hos.srm.business.center.model.vo.monograph.MonographVo">
+        select mon.id rowId, mon.name nameField, sdept.id as "deptLocField.id",sdept.name as "deptLocField.name",
+        mon.total_words_num totalNum, mon.our_unit_words_num, spress.code as "pressField.id", spress.name as "pressField.name",
+        mon.publish_time pubTime, mon.print_time , mon.isbn isbn, mon.sub_user_id, mon.sub_date, mon.data_status, mon.sys_no,mon.publish_freq publishFreqField,
+        sworktype.code unitTypeId,sworktype.name unitTypeName,
+        mon.score, mon.our_unit_ranking, mon.biz_type, mon.research_field, mon.cip cip, mon.disvision_code,
+        sclass.code as "subjectCatField.id",sclass.name as "subjectCatField.name",
+        mon.pub_unit_name, mon.pub_level pressField, mon.pub_address_type,
+        sprojectsource.code as "projectSource.id",sprojectsource.name as "projectSource.name",
+        fdiscipline.code as "firstSubjectField.id",fdiscipline.name as "firstSubjectField.name",
+        sdiscipline.code as "secSubjectField.id",sdiscipline.name as "secSubjectField.name",
+        tdiscipline.code as "thirdSubjectField.id",tdiscipline.name as "thirdSubjectField.name",
+        mon.is_translated as transferFlag, mon.author_num, mon.check_status dataStatus, mon.intro, mon.note, mon.sub_time,
+        mon.subuser_name, mon.is_recension, mon.school_sign as hospsignature, mon.is_first_author as completeUnit, mon.fauthor_name, mon.fauthor_title,
+        mon.fauthor_sex, mon.infauthor_edu_level, mon.infauthor_edu_degree, mon.infauthor_code, mon.operate_time,
+        mon.infauthor_id, mon.fauthor_type, mon.file_ids, mon.pub_yearmon, mon.reward_fee_amt, mon.serial_no, mon.print_num as printNum
+        ,syear.code as yearId,syear.name as yearName,
+        slanguage.code as "languageField.id",slanguage.name as "languageField.name"
+        from srm_monograph_info mon
+        left join ct_srm_year syear on syear.code=mon.year
+        left join ct_srm_dept sdept on sdept.id=mon.dept_id
+        left join ct_srm_press_info spress on spress.code=mon.press
+        left join ct_srm_work_type sworktype on sworktype.code=mon.work_type
+        left join ct_srm_class sclass on sclass.code=mon.classcode
+        left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=mon.projsource_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=mon.discipline
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=mon.discipline_two
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=mon.discipline_three
+        left join ct_srm_language slanguage on slanguage.code=mon.language
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=mon.sys_no and eafrec.check_rec_id=mon.id
+        where
+        eafrec.step_no>1
+        <if test="monographDetailDto.nameField != null and monographDetailDto.nameField != ''">
+            and mon.name LIKE CONCAT('%', #{monographDetailDto.nameField}, '%')
+        </if>
+        <if test="monographDetailDto.startDate != null and monographDetailDto.startDate != ''">
+            and mon.sub_date &gt;= #{monographDetailDto.startDate}
+        </if>
+
+        <if test="monographDetailDto.endDate != null and monographDetailDto.endDate != ''">
+            and mon.sub_date &lt;= #{monographDetailDto.startDate}
+        </if>
+        <if test="monographDetailDto.isbn != null and monographDetailDto.isbn != ''">
+            and mon.isbn LIKE CONCAT('%', #{monographDetailDto.isbn}, '%')
+        </if>
+        <if test="monographDetailDto.editor != null and monographDetailDto.editor != ''">
+            and mon.id in
+            (SELECT monograph_id
+            FROM srm_monograph_info_author smonauthor
+            WHERE author_id = #{monographDetailDto.editor})
+        </if>
+        <if test="monographDetailDto.auditState== null and monographDetailDto.auditState == ''">
+            and (
+            (mon.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where mon.sys_no=seafrec.sys_no and seafrec.check_rec_id=mon.id) and eafrec.checker_string  LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (mon.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%'))
+            )
+        </if>
+        <if test='monographDetailDto.auditState=="0"'>
+            and mon.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%')
+        </if>
+        <if test='monographDetailDto.auditState=="1"'>
+            and mon.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%')
+        </if>
+        <if test='monographDetailDto.auditState=="2"'>
+            and mon.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{monographDetailDto.userId}, '|%')
+        </if>
+    </select>
+
+</mapper>

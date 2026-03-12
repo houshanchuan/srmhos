@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmGroupAuthConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmGroupAuthConfig">
+        <id column="id" property="id" />
+        <result column="group_id" property="groupId" />
+        <result column="maint_all_user" property="maintAllUser" />
+        <result column="data_modify" property="dataModify" />
+        <result column="workbench_permissions" property="workbenchPermissions" />
+        <result column="req_fields_setup" property="reqFieldsSetup" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, group_id, maint_all_user, data_modify, workbench_permissions, req_fields_setup
+    </sql>
+
+    <select id="listGroupAuthConfig" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.GroupAuthConfigDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.GroupAuthConfigVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_eaf_check_status
+    </select>
+    <select id="getGroup" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+
+    </select>
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjectOrgFormMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjectOrgForm">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+
+    <select id="listProjectOrgForm" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.ProjectOrgFormDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.ProjectOrgFormVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_project_org_form
+    </select>
+
+    <select id="getProjectOrgForm" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from ct_srm_project_org_form where is_valid=1
+        <if test="projectOrgFormDto.name!=null and projectOrgFormDto.name!=''">
+            and name LIKE CONCAT('%', #{projectOrgFormDto.name}, '%')
+        </if>
+    </select>
+</mapper>

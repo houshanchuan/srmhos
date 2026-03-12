@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundExpTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundExpType">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+
+    <select id="listFundType" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundTypeDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundTypeVo">
+        select  id as rowId,code,name,is_valid as isValid,hosp_code as hospCode from ct_fund_type cft
+    </select>
+
+    <select id="listFundExpType" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundExpTypeDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundExpTypeVo">
+        select id as rowId,code,name,is_valid as isValid from ct_fund_exp_type
+    </select>
+
+</mapper>

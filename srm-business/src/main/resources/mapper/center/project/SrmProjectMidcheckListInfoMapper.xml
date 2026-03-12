@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectMidcheckListInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectMidcheckListInfo">
+        <id column="id" property="id" />
+        <result column="proj_type_code" property="projTypeCode" />
+        <result column="midcheck_info" property="midcheckInfo" />
+        <result column="begin_date" property="beginDate" />
+        <result column="end_date" property="endDate" />
+        <result column="midcheck_state" property="midcheckState" />
+        <result column="note" property="note" />
+        <result column="file_id" property="fileId" />
+        <result column="notify_plan" property="notifyPlan" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_type_code, midcheck_info, begin_date, end_date, midcheck_state, note, file_id, notify_plan
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectMidcheckListInfoVo">
+        select spm.id as rowId, proj_type_code as "projTypeCode.id",cspt.name as "projTypeCode.name",
+               midcheck_info as midCheckInfo,
+               begin_date as beginDate, end_date as endDate, midcheck_state as midCheckState,
+        note, file_id as fileId, notify_plan as notifyPlan
+        from srm_project_midcheck_list_info spm
+            left join ct_srm_proj_type cspt on cspt.code=spm.proj_type_code
+        where spm.id=#{rowId}
+    </select>
+    <select id="listProjectMidCheckListInfo" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectMidcheckListInfoVo">
+        select spm.id as rowId, cspt.name as projTypeName,
+               midcheck_info as midCheckInfo,
+               begin_date as beginDate, end_date as endDate, midcheck_state as midCheckState,
+               note, file_id as fileId, notify_plan as notifyPlan
+        from srm_project_midcheck_list_info spm
+            left join ct_srm_proj_type cspt on cspt.code=spm.proj_type_code
+        where 1=1
+        <if test="projectMidcheckListInfoDto.midCheckInfo!=null and projectMidcheckListInfoDto.midCheckInfo!=''">
+            and spm.midcheck_info LIKE  CONCAT('%', #{projectMidcheckListInfoDto.midCheckInfo}, '%')
+        </if>
+        <if test="projectMidcheckListInfoDto.midCheckState!=null and projectMidcheckListInfoDto.midCheckState!=''">
+            and spm.midcheck_state =#{projectMidcheckListInfoDto.midCheckState}
+        </if>
+        <if test="projectMidcheckListInfoDto.beginDate!=null and projectMidcheckListInfoDto.beginDate!=''">
+            and spm.begin_date &gt;= #{projectMidcheckListInfoDto.beginDate}
+        </if>
+        <if test="projectMidcheckListInfoDto.endDate!=null and projectMidcheckListInfoDto.endDate!=''">
+            and spm.end_date &lt;= #{projectMidcheckListInfoDto.endDate}
+        </if>
+    </select>
+
+    <select id="getprojectMidcheckListInfo" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select id,midcheck_info as name from srm_project_midcheck_list_info
+        where midcheck_state=2
+        <if test="name!=null and name!=''">
+            and midcheck_info LIKE  CONCAT('%', #{name}, '%')
+        </if>
+    </select>
+</mapper>

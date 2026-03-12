@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundProjectInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundProjectInfo">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="hosp_code" property="hospCode" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="alias" property="alias" />
+        <result column="head_code" property="headCode" />
+        <result column="issued_date" property="issuedDate" />
+        <result column="dept_code" property="deptCode" />
+        <result column="state" property="state" />
+        <result column="category" property="category" />
+        <result column="is_gov_buy" property="isGovBuy" />
+        <result column="fund_gov" property="fundGov" />
+        <result column="fund_own" property="fundOwn" />
+        <result column="fund_total" property="fundTotal" />
+        <result column="budget_dept" property="budgetDept" />
+        <result column="budget_mode" property="budgetMode" />
+        <result column="chk_flow_id" property="chkFlowId" />
+        <result column="blance_type" property="blanceType" />
+        <result column="account_total" property="accountTotal" />
+        <result column="project_id" property="projectId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, hosp_code, code, name, alias, head_code, issued_date, dept_code, state, category, is_gov_buy, fund_gov, fund_own, fund_total, budget_dept, budget_mode, chk_flow_id, blance_type, account_total, project_id
+    </sql>
+    <select id="listFundProjectInfo" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundProjectInfoDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundProjectInfoVo">
+        select id as rowId, year, hosp_code as hospCode, code, name, alias,
+        head_code as headCode, issued_date as issuedDate, dept_code as deptCode, state, category, is_gov_buy isGovBuy,
+        fund_gov as fundGov, fund_own as fundOwn, fund_total as fundTotal, budget_dept as budgetDept,
+        budget_mode as budgetMode, chk_flow_id as chkFlowId, blance_type as blanceType,
+        account_total as accountTotal, project_id as srmProjectId
+        from srm_fund_project_info
+    </select>
+    <select id="getProject"  resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select id,name from srm_fund_project_info
+    </select>
+
+</mapper>

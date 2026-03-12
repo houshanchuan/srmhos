@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.academic.SrmAcLectureMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.academic.SrmAcLecture">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="dept_id" property="deptId" />
+        <result column="division" property="division" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="lec_type" property="lecType" />
+        <result column="lec_level" property="lecLevel" />
+        <result column="related_subject" property="relatedSubject" />
+        <result column="lecturer" property="lecturer" />
+        <result column="lecturer_name" property="lecturerName" />
+        <result column="lecturer_unit" property="lecturerUnit" />
+        <result column="lecturer_duty" property="lecturerDuty" />
+        <result column="lecturer_title" property="lecturerTitle" />
+        <result column="lecturer_info" property="lecturerInfo" />
+        <result column="lec_address" property="lecAddress" />
+        <result column="lecturer_listener" property="lecturerListener" />
+        <result column="listeners_num" property="listenersNum" />
+        <result column="compere" property="compere" />
+        <result column="commend" property="commend" />
+        <result column="check_status" property="checkStatus" />
+        <result column="intro" property="intro" />
+        <result column="operate_time" property="operateTime" />
+        <result column="creator_id" property="creatorId" />
+        <result column="create_time" property="createTime" />
+        <result column="sub_flag" property="subFlag" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, dept_id, division, start_date, end_date, lec_type, lec_level, related_subject, lecturer, lecturer_name, lecturer_unit, lecturer_duty, lecturer_title, lecturer_info, lec_address, lecturer_listener, listeners_num, compere, commend, check_status, intro, operate_time, creator_id, creator_name, create_time, sub_flag, sub_user_id, sub_date, sub_time
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcLectureVo">
+        select sale.id as rowId , sale.name as name,sale.sub_flag as subFlag,sale.start_date as startDate,
+        cslt.code as "lecType.id",cslt.name as "lecType.name",cslt.name as lecTypeName,csll.code as "lecLevel.id",csll.name as "lecLevel.name",csll.name as lecLevelName,
+        sdept.id as "deptId.id",sdept.name as "deptId.name",sdept.name as deptName,ddept.id as "division.id",ddept.name as "division.name",
+        sale.lec_address as lecAddress,sale.intro as intro,sale.listeners_num as listenersNum,
+        luser.id as "lecturer.id",luser.name as "lecturer.name",luser.name as lecturerName,sale.check_status,
+        csru.code as "lecturerUnit.id",csru.name as "lecturerUnit.name",sale.lecturer_duty as lecturerDuty,
+        ccsti.code as "lecturerTitle.id",ccsti.name as "lecturerTitle.name",ccsti.name as lecturerTitleName,sale.lecturer_info as lecturerInfo,
+        fdiscipline.code as "relatedSubject.id",fdiscipline.name as "relatedSubject.name",fdiscipline.name as "relatedSubjectName",
+        sale.compere as compere,sale.commend as commend,sale.create_time,luser1.name as creatorName,sale.operate_time
+
+        from srm_ac_lecture sale
+        left join ct_srm_lecture_level csll on csll.code=sale.lec_level
+        left join ct_srm_lecture_type cslt on cslt.code=sale.lec_type
+        left join ct_srm_dept sdept on sdept.id=sale.dept_id
+        left join ct_srm_dept ddept on ddept.id=sale.division
+        left join ct_srm_user luser on luser.id=sale.lecturer
+        left join ct_srm_user luser1 on luser1.id=sale.creator_id
+        left join ct_srm_rely_unit csru on csru.code=sale.lecturer_unit
+        left join ct_srm_title_info ccsti  on ccsti.code=sale.lecturer_title
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sale.related_subject
+        where sale.id=#{rowId}
+    </select>
+    <select id="listAcLecture" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcLectureVo">
+
+        select sale.id as rowId , sale.name as name,sale.sub_flag as subFlag,sale.start_date as startDate,
+        cslt.name as lecTypeName,csll.name as lecLevelName,
+        sdept.name as deptName,ddept.name as divisionName,
+        sale.lec_address as lecAddress,sale.intro as intro,sale.listeners_num as listenersNum,
+        luser.name as lecturerName,
+        csru.name as lecturerUnitName,sale.lecturer_duty as lecturerDuty,
+        ccsti.name as lecturerTitleName,sale.lecturer_info as lecturerInfo,
+        fdiscipline.name as relatedSubjectName,sale.compere as compere,sale.commend as commend,
+        luser1.name as creatorName,luser2.name as subUserName,sale.create_time,sale.sub_date
+        from srm_ac_lecture sale
+        left join ct_srm_lecture_level csll on csll.code=sale.lec_level
+        left join ct_srm_lecture_type cslt on cslt.code=sale.lec_type
+        left join ct_srm_dept sdept on sdept.id=sale.dept_id
+        left join ct_srm_dept ddept on ddept.id=sale.division
+        left join ct_srm_user luser on luser.id=sale.lecturer
+        left join ct_srm_user luser1 on luser1.id=sale.creator_id
+        left join ct_srm_user luser2 on luser2.id=sale.sub_user_id
+        left join ct_srm_rely_unit csru on csru.code=sale.lecturer_unit
+        left join ct_srm_title_info ccsti  on ccsti.code=sale.lecturer_title
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sale.related_subject
+
+        where (sale.sub_user_id=#{acLectureDto.userId} or sale.creator_id=#{acLectureDto.userId} or sale.lecturer=#{acLectureDto.userId})
+        <if test="acLectureDto.subFlag != null and acLectureDto.subFlag != ''">
+            and sale.sub_flag =#{acLectureDto.subFlag}
+        </if>
+        <if test="acLectureDto.name!=null and acLectureDto.name!=''">
+            and sale.name LIKE CONCAT('%', #{acLectureDto.name}, '%')
+        </if>
+        <if test="acLectureDto.startDate != null and acLectureDto.startDate != ''">
+            and sale.sub_date &gt;= #{acLectureDto.startDate}
+        </if>
+
+        <if test="acLectureDto.endDate != null and acLectureDto.endDate != ''">
+            and sale.sub_date &lt;= #{acLectureDto.endDate}
+        </if>
+        <if test="acLectureDto.deptId != null and acLectureDto.deptId != ''">
+            and sale.dept_id =#{acLectureDto.deptId}
+        </if>
+
+        <if test="acLectureDto.lecType != null and acLectureDto.lecType != ''">
+            and sale.lec_type =#{acLectureDto.lecType}
+        </if>
+        <if test="acLectureDto.lecLevel != null and acLectureDto.lecLevel != ''">
+            and sale.lec_level =#{acLectureDto.lecLevel}
+        </if>
+        <if test="acLectureDto.lecAddress!=null and acLectureDto.lecAddress!=''">
+            and sale.lec_address LIKE CONCAT('%', #{acLectureDto.lecAddress}, '%')
+        </if>
+        <if test="acLectureDto.listenersNum != null and acLectureDto.listenersNum != ''">
+            and sale.listeners_num =#{acLectureDto.listenersNum}
+        </if>
+        order by sale.id desc
+    </select>
+    <update id="updateStatus">
+        update  srm_ac_lecture
+        <set>
+            <if test="status != null">
+                sub_flag = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAcLecture" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcLectureVo">
+        select sale.id as rowId , sale.name as name,sale.sub_flag as subFlag,sale.start_date as startDate,
+        cslt.name as lecTypeName,csll.name as lecLevelName,
+        sdept.name as deptIdName,ddept.name as divisionName,
+        sale.lec_address as lecAddress,sale.intro as intro,sale.listeners_num as listenersNum,
+        luser.name as lecturerName,sale.sub_date as subDate,auser.name as subUserName,
+        csru.name as lecturerUnitName,sale.lecturer_duty as lecturerDuty,
+        ccsti.name as lecturerTitleName,sale.lecturer_info as lecturerInfo,
+        fdiscipline.name as relatedSubjectName,sale.compere as compere,sale.commend as commend
+        from srm_ac_lecture sale
+        left join ct_srm_lecture_level csll on csll.code=sale.lec_level
+        left join ct_srm_lecture_type cslt on cslt.code=sale.lec_type
+        left join ct_srm_dept sdept on sdept.id=sale.dept_id
+        left join ct_srm_dept ddept on ddept.id=sale.division
+        left join ct_srm_user luser on luser.id=sale.lecturer
+        left join ct_srm_user auser on auser.id=sale.sub_user_id
+        left join ct_srm_rely_unit csru on csru.code=sale.lecturer_unit
+        left join ct_srm_title_info ccsti  on ccsti.code=sale.lecturer_title
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sale.related_subject
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no="P041" and eafrec.check_rec_id=sale.id
+        where
+        eafrec.step_no>1
+
+        <if test="acLectureDto.name!=null and acLectureDto.name!=''">
+            and sale.name LIKE CONCAT('%', #{acLectureDto.name}, '%')
+        </if>
+        <if test="acLectureDto.startDate != null and acLectureDto.startDate != ''">
+            and sale.sub_date &gt;= #{acLectureDto.startDate}
+        </if>
+
+        <if test="acLectureDto.endDate != null and acLectureDto.endDate != ''">
+            and sale.sub_date &lt;= #{acLectureDto.endDate}
+        </if>
+        <if test="acLectureDto.deptId != null and acLectureDto.deptId != ''">
+            and sale.dept_id =#{acLectureDto.deptId}
+        </if>
+
+        <if test="acLectureDto.lecType != null and acLectureDto.lecType != ''">
+            and sale.lec_type =#{acLectureDto.lecType}
+        </if>
+        <if test="acLectureDto.lecLevel != null and acLectureDto.lecLevel != ''">
+            and sale.lec_level =#{acLectureDto.lecLevel}
+        </if>
+        <if test="acLectureDto.lecAddress!=null and acLectureDto.lecAddress!=''">
+            and sale.lec_address LIKE CONCAT('%', #{acLectureDto.lecAddress}, '%')
+        </if>
+        <if test="acLectureDto.listenersNum != null and acLectureDto.listenersNum != ''">
+            and sale.listeners_num =#{acLectureDto.listenersNum}
+        </if>
+        <if test="acLectureDto.auditState== null and acLectureDto.auditState == ''">
+            and (
+            (sale.sub_flag=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{acLectureDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where seafrec.sys_no="P041" and seafrec.check_rec_id=sale.id) and eafrec.checker_string  LIKE CONCAT('%|', #{acLectureDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (sale.sub_flag=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{acLectureDto.userId}, '|%'))
+            )
+        </if>
+        <if test='acLectureDto.auditState=="0"'>
+            and sale.sub_flag=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{acLectureDto.userId}, '|%')
+        </if>
+        <if test='acLectureDto.auditState=="1"'>
+            and sale.sub_flag=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{acLectureDto.userId}, '|%')
+        </if>
+        <if test='acLectureDto.auditState=="2"'>
+            and sale.sub_flag=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{acLectureDto.userId}, '|%')
+        </if>
+
+    </select>
+</mapper>

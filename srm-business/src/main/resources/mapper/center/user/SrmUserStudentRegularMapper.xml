@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.user.SrmUserStudentRegularMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.user.SrmUserStudentRegular">
+        <id column="id" property="id" />
+        <result column="no" property="no" />
+        <result column="person_code" property="personCode" />
+        <result column="person_type_from" property="personTypeFrom" />
+        <result column="person_type_to" property="personTypeTo" />
+        <result column="dept_work" property="deptWork" />
+        <result column="job_type" property="jobType" />
+        <result column="account" property="account" />
+        <result column="data_status" property="dataStatus" />
+        <result column="check_status" property="checkStatus" />
+        <result column="operator_code" property="operatorCode" />
+        <result column="operate_date" property="operateDate" />
+        <result column="operate_time" property="operateTime" />
+        <result column="note" property="note" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, no, person_code, person_type_from, person_type_to, dept_work, job_type, account, data_status, check_status, operator_code, operate_date, operate_time, note
+    </sql>
+
+</mapper>

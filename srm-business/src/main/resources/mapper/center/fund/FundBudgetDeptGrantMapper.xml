@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundBudgetDeptGrantMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundBudgetDeptGrant">
+        <id column="id" property="id" />
+        <result column="dept_code" property="deptCode" />
+        <result column="user_code" property="userCode" />
+        <result column="hosp_code" property="hospCode" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, dept_code, user_code, hosp_code
+    </sql>
+    <select id="listFundBudgetDeptGrant" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundBudgetDeptGrantDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundBudgetDeptGrantVo">
+        select cfbdg.id as rowId,cfbdg.dept_code as deptCode,csd.name  as deptName,cfbdg.user_code as userCode ,csu.name as userName,
+        cfbdg.hosp_code as hospCode,csh.name as hospName
+        from cf_fund_budget_dept_grant cfbdg
+        left join ct_srm_user csu on cfbdg.user_code=csu.code
+        left join ct_srm_dept csd on cfbdg.dept_code =csd.code
+        left join ct_srm_hospital csh on cfbdg.hosp_code=csh.code
+    </select>
+
+</mapper>

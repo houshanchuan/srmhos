@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmUploadInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmUploadInfo">
+        <id column="id" property="id" />
+        <result column="rec_id" property="recId" />
+        <result column="sys_no" property="sysNo" />
+        <result column="file_name" property="fileName" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="file_url" property="fileUrl" />
+        <result column="appx_file_type" property="appxFileType" />
+        <result column="file_size" property="fileSize" />
+        <result column="file_type" property="fileType" />
+        <result column="serial_id" property="serialId" />
+        <result column="note" property="note" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, rec_id, sys_no, file_name, sub_user_id, sub_date, file_url, appx_file_type, file_size, file_type, serial_id, note
+    </sql>
+    <select id="listUploadInfo" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.UploadInfoVo">
+        select sui.id as rowId, sui.rec_id as recId, sui.sys_no as sysNo, sui.file_name as fileName,csa.name as appx_file_type,
+        sui.sub_date as subDate, sui.file_url as fileUrl,csu.name as subUserName,sui.file_type as fileType
+        from srm_upload_info sui
+        left join ct_srm_user csu on csu.id=sui.sub_user_id
+        left join cf_srm_appxfile_type csa on csa.id=sui.appx_file_type
+        where sui.rec_id=#{uploadInfoDto.recId} and sui.sys_no=#{uploadInfoDto.sysNo}
+    </select>
+</mapper>

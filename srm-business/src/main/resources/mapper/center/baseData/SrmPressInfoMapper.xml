@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmPressInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmPressInfo">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="level" property="level" />
+        <result column="is_valid" property="isValid" />
+        <result column="address" property="address" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, level, is_valid, address
+    </sql>
+    <select id="getPressInfo" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        SELECT
+            code id, name
+        FROM
+            ct_srm_press_info
+        where is_valid=1
+    </select>
+    <select id="listPressInfo" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.PressInfoDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.PressInfoVo">
+        select cspi.id as rowId,cspi.code,cspi.name,cspi.is_valid as isValid,cspi.level,cspi.address,cspl.name as levelName from ct_srm_press_info cspi
+     left join ct_srm_publish_level cspl on cspi.`level` =cspl.code
+    </select>
+</mapper>

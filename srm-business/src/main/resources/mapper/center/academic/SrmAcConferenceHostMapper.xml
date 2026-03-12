@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.academic.SrmAcConferenceHostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.academic.SrmAcConferenceHost">
+        <id column="id" property="id" />
+        <result column="no" property="no" />
+        <result column="conference_type" property="conferenceType" />
+        <result column="name" property="name" />
+        <result column="year" property="year" />
+        <result column="direction" property="direction" />
+        <result column="subject" property="subject" />
+        <result column="number_of_people" property="numberOfPeople" />
+        <result column="budget_funds_amt" property="budgetFundsAmt" />
+        <result column="conference_form" property="conferenceForm" />
+        <result column="online_url" property="onlineUrl" />
+        <result column="open_date" property="openDate" />
+        <result column="open_time" property="openTime" />
+        <result column="close_date" property="closeDate" />
+        <result column="close_time" property="closeTime" />
+        <result column="city" property="city" />
+        <result column="address" property="address" />
+        <result column="host_type" property="hostType" />
+        <result column="is_charge" property="isCharge" />
+        <result column="charge_manner" property="chargeManner" />
+        <result column="charge_bank" property="chargeBank" />
+        <result column="charge_account" property="chargeAccount" />
+        <result column="charge_remark" property="chargeRemark" />
+        <result column="register_start_date" property="registerStartDate" />
+        <result column="register_end_date" property="registerEndDate" />
+        <result column="register_manner" property="registerManner" />
+        <result column="register_url" property="registerUrl" />
+        <result column="register_fee_amt" property="registerFeeAmt" />
+        <result column="reg_fee_remark" property="regFeeRemark" />
+        <result column="fapiao_supplied" property="fapiaoSupplied" />
+        <result column="contact_person" property="contactPerson" />
+        <result column="contact_address" property="contactAddress" />
+        <result column="contact_tel" property="contactTel" />
+        <result column="contact_email" property="contactEmail" />
+        <result column="contact_wechat" property="contactWechat" />
+        <result column="traffic_guide" property="trafficGuide" />
+        <result column="accom_guide" property="accomGuide" />
+        <result column="applicant" property="applicant" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_user_name" property="subUserName" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="audit_user_id" property="auditUserId" />
+        <result column="audit_date" property="auditDate" />
+        <result column="audit_time" property="auditTime" />
+        <result column="audit_desc" property="auditDesc" />
+        <result column="remark" property="remark" />
+        <result column="dept_code" property="deptCode" />
+        <result column="division_code" property="divisionCode" />
+        <result column="discipline_class" property="disciplineClass" />
+        <result column="discipline_code" property="disciplineCode" />
+        <result column="paper_num" property="paperNum" />
+        <result column="fund_source" property="fundSource" />
+        <result column="intro" property="intro" />
+        <result column="operate_time" property="operateTime" />
+        <result column="host_unit" property="hostUnit" />
+        <result column="assist_unit" property="assistUnit" />
+        <result column="conference_head" property="conferenceHead" />
+        <result column="board_fee_amt" property="boardFeeAmt" />
+        <result column="traffic_fee_amt" property="trafficFeeAmt" />
+        <result column="site_fee_amt" property="siteFeeAmt" />
+        <result column="book_fee_amt" property="bookFeeAmt" />
+        <result column="other_fee_amt" property="otherFeeAmt" />
+        <result column="accom_fee_amt" property="accomFeeAmt" />
+        <result column="conference_phone" property="conferencePhone" />
+        <result column="outnum_of_people" property="outnumOfPeople" />
+        <result column="travel_flag" property="travelFlag" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, no, conference_type, name, year, direction, subject, number_of_people, budget_funds_amt, conference_form, online_url, open_date, open_time, close_date, close_time, city, address, host_type, is_charge, charge_manner, charge_bank, charge_account, charge_remark, register_start_date, register_end_date, register_manner, register_url, register_fee_amt, reg_fee_remark, fapiao_supplied, contact_person, contact_address, contact_tel, contact_email, contact_wechat, traffic_guide, accom_guide, applicant, data_status, sub_user_id, sub_date, sub_time, audit_status, audit_user_id, audit_date, audit_time, audit_desc, remark, dept_code, division_code, discipline_class, discipline_code, paper_num, fund_source, intro, operate_time, host_unit, assist_unit, conference_head, board_fee_amt, traffic_fee_amt, site_fee_amt, book_fee_amt, other_fee_amt, accom_fee_amt, conference_phone, outnum_of_people, travel_flag
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcConferenceHostVo">
+        select sach.id as rowId , sach.name as name,sach.no as no, csct.code as "conferenceType.id",csct.name as "conferenceType.name",
+        sach.subject as  subject,csy.code as "year.id",csy.name as "year.name",csy.name as yearName,sach.direction as direction,csct.name as conferenceTypeName,
+        huser.id as "conferenceHead.id",huser.name as "conferenceHead.name",huser.name as conferenceHeadName,csl.code as "city.id",csl.name as "city.name",
+        sach.outnum_of_people as outnumOfPeople,sach.conference_phone,sach.contact_address as contactAddress,
+        sach.number_of_people as numberOfPeople,sach.open_date as openDate,sach.close_date as closeDate,sach.operate_time,
+        sach.travel_flag as travelFlag,sach.fapiao_supplied as fapiaoSupplied,sach.remark as remark,sach.intro as intro,
+        sdept.id as "deptCode.id",sdept.name as "deptCode.name",sdept.name as deptName,csru.code as "hostUnit.id",csru.name as "hostUnit.name",csru.name as hostUnitName,
+        csru2.code as "assistUnit.id",csru2.name as "assistUnit.name",csru2.name as assistUnitName,ddept.id as "divisionCode.id",ddept.name as "divisionCode.name",
+        sclass.code as "disciplineClass.id",sclass.name as "disciplineClass.name",sclass.name as disciplineClassName,
+        fdiscipline.code as "disciplineCode.id",fdiscipline.name as "disciplineCode.name",fdiscipline.name as disciplineName,
+        sach.register_fee_amt as registerFeeAmt,sach.budget_funds_amt as budgetFundsAmt,
+        sach.paper_num as paperNum,sach.register_start_date as registerStartDate,sach.register_end_date as registerEndDate,
+        sach.data_status as dataStatus,sach.create_time,suser.name as creatorName
+        from srm_ac_conference_host sach
+        left join ct_srm_conference_type csct on csct.code= sach.conference_type
+        left join ct_srm_year csy on csy.code=sach.year
+        left join ct_srm_user huser on huser.id=sach.conference_head
+        left join ct_srm_user suser on suser.id=sach.creator_id
+        left join ct_srm_location csl on csl.code=sach.city
+        left join ct_srm_dept sdept on sdept.id=sach.dept_code
+        left join ct_srm_rely_unit csru on csru.code=sach.host_unit
+        left join ct_srm_rely_unit csru2 on csru2.code=sach.assist_unit
+        left join ct_srm_dept ddept on ddept.id=sach.division_code
+        left join ct_srm_class sclass on sclass.code=sach.discipline_class
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sach.discipline_code
+        where sach.id=#{rowId}
+    </select>
+    <select id="listAcConferenceHost" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcConferenceHostVo">
+
+        select sach.id as rowId ,sach.no as no, sach.name as name, csct.name as conferenceTypeName,
+        sach.subject as  subject,csy.name as yearName,sach.direction as direction,
+        huser.name as conferenceHeadName,csl.name as cityName,
+        sach.outnum_of_people as outnumOfPeople,sach.conference_phone,sach.contact_address as contactAddress,
+        sach.number_of_people as numberOfPeople,sach.open_date as openDate,sach.close_date as closeDate,
+        sach.travel_flag as travelFlag,sach.fapiao_supplied as fapiaoSupplied,sach.remark as remark,sach.intro as intro,
+        sdept.name as deptName,csru.name as hostUnitName,
+        csru2.name as assistUnitName,ddept.name as divisionCodeName,
+        sclass.name as disciplineClassName,suser.name as subUserName,
+        sach.sub_date as subDate,
+        fdiscipline.name as disciplineCodeName,
+        sach.register_fee_amt as registerFeeAmt,sach.budget_funds_amt as budgetFundsAmt,
+        sach.paper_num as paperNum,sach.register_start_date as registerStartDate,sach.register_end_date as registerEndDate,
+        sach.data_status as dataStatus,sach.create_time,suser1.name as creatorName
+        from srm_ac_conference_host sach
+        left join ct_srm_conference_type csct on csct.code= sach.conference_type
+        left join ct_srm_year csy on csy.code=sach.year
+        left join ct_srm_user huser on huser.id=sach.conference_head
+        left join ct_srm_user suser on suser.id=sach.sub_user_id
+        left join ct_srm_user suser1 on suser1.id=sach.creator_id
+        left join ct_srm_location csl on csl.code=sach.city
+        left join ct_srm_dept sdept on sdept.id=sach.dept_code
+        left join ct_srm_rely_unit csru on csru.code=sach.host_unit
+        left join ct_srm_rely_unit csru2 on csru2.code=sach.assist_unit
+        left join ct_srm_dept ddept on ddept.id=sach.division_code
+        left join ct_srm_class sclass on sclass.code=sach.discipline_class
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sach.discipline_code
+        where
+            (sach.sub_user_id=#{acConferenceHostDto.userId} or sach.creator_id=#{acConferenceHostDto.userId} or sach.conference_head=#{acConferenceHostDto.userId})
+        <if test="acConferenceHostDto.dataStatus!=null">
+            and sach.data_status = #{acConferenceHostDto.dataStatus}
+        </if>
+        <if test="acConferenceHostDto.name!=null and acConferenceHostDto.name!=''">
+            and sach.name LIKE CONCAT('%', #{acConferenceHostDto.name}, '%')
+        </if>
+        <if test="acConferenceHostDto.startDate != null and acConferenceHostDto.startDate != ''">
+            and sach.sub_date &gt;= #{acConferenceHostDto.startDate}
+        </if>
+
+        <if test="acConferenceHostDto.endDate != null and acConferenceHostDto.endDate != ''">
+            and sach.sub_date &lt;= #{acConferenceHostDto.endDate}
+        </if>
+        <if test="acConferenceHostDto.no != null and acConferenceHostDto.no != ''">
+            and sach.no = #{acConferenceHostDto.no}
+        </if>
+        <if test="acConferenceHostDto.year != null and acConferenceHostDto.year != ''">
+            and sach.year = #{acConferenceHostDto.year}
+        </if>
+        order by sach.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_ac_conference_host
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                audit_status = #{checkStatus},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAcConferenceHost" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcConferenceHostVo">
+        select sach.id as rowId ,sach.no as no, sach.name as name,csct.name as conferenceTypeName,
+        sach.subject as  subject,csy.name as yearName,sach.direction as direction,sach.sub_date as subDate,csu.name as subUserName,
+        huser.name as conferenceHeadName,csl.name as cityName,
+        sach.outnum_of_people as outnumOfPeople,sach.conference_phone as conferencePhone,sach.contact_address as contactAddress,
+        sach.number_of_people as numberOfPeople,sach.open_date as openDate,sach.close_date as closeDate,
+        sach.travel_flag as travelFlag,sach.fapiao_supplied as fapiaoSupplied,sach.remark as remark,sach.intro as intro,
+        sdept.name as deptName,csru.name as hostUnitName,
+        csru2.name as assistUnitName,ddept.name as divisionCodeName,
+        sclass.name as disciplineClassName,
+        fdiscipline.name as disciplineCodeName,
+        sach.register_fee_amt as registerFeeAmt,sach.budget_funds_amt as budgetFundsAmt,
+        sach.paper_num as paperNum,sach.register_start_date as registerStartDate,sach.register_end_date as registerEndDate,
+        sach.data_status as dataStatus
+        from srm_ac_conference_host sach
+        left join ct_srm_conference_type csct on csct.code= sach.conference_type
+        left join ct_srm_user csu on csu.id=sach.sub_user_id
+        left join ct_srm_year csy on csy.code=sach.year
+        left join ct_srm_user huser on huser.id=sach.conference_head
+        left join ct_srm_location csl on csl.code=sach.city
+        left join ct_srm_dept sdept on sdept.id=sach.dept_code
+        left join ct_srm_rely_unit csru on csru.code=sach.host_unit
+        left join ct_srm_rely_unit csru2 on csru2.code=sach.assist_unit
+        left join ct_srm_dept ddept on ddept.id=sach.division_code
+        left join ct_srm_class sclass on sclass.code=sach.discipline_class
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=sach.discipline_code
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no="P032" and eafrec.check_rec_id=sach.id
+        where
+        eafrec.step_no>1
+
+        <if test="acConferenceHostDto.name!=null and acConferenceHostDto.name!=''">
+            and sach.name LIKE CONCAT('%', #{acConferenceHostDto.name}, '%')
+        </if>
+        <if test="acConferenceHostDto.startDate != null and acConferenceHostDto.startDate != ''">
+            and sach.sub_date &gt;= #{acConferenceHostDto.startDate}
+        </if>
+
+        <if test="acConferenceHostDto.endDate != null and acConferenceHostDto.endDate != ''">
+            and sach.sub_date &lt;= #{acConferenceHostDto.startDate}
+        </if>
+        <if test="acConferenceHostDto.no != null and acConferenceHostDto.no != ''">
+            and sach.no = #{acConferenceHostDto.no}
+        </if>
+        <if test="acConferenceHostDto.year != null and acConferenceHostDto.year != ''">
+            and sach.year = #{acConferenceHostDto.year}
+        </if>
+        <if test="acConferenceHostDto.auditState== null and acConferenceHostDto.auditState == ''">
+            and (
+            (sach.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where seafrec.sys_no="P032" and seafrec.check_rec_id=sach.id) and eafrec.checker_string  LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (sach.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%'))
+            )
+        </if>
+        <if test='acConferenceHostDto.auditState=="0"'>
+            and sach.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%')
+        </if>
+        <if test='acConferenceHostDto.auditState=="1"'>
+            and sach.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%')
+        </if>
+        <if test='acConferenceHostDto.auditState=="2"'>
+            and sach.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{acConferenceHostDto.userId}, '|%')
+        </if>
+
+    </select>
+</mapper>

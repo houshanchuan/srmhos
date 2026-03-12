@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmAchvTransformantsTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmAchvTransformantsType">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+    <select id="listAchvTransformantsType" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.AchvTransformantsTypeDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.AchvTransformantsTypeVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_achv_transformants_type
+    </select>
+
+</mapper>

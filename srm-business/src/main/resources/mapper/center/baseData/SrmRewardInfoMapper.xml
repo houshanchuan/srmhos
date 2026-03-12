@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmRewardInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmRewardInfo">
+        <id column="id" property="id" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="auditor" property="auditor" />
+        <result column="audit_date" property="auditDate" />
+        <result column="reward_rec_id" property="rewardRecId" />
+        <result column="reward_rec_sys_no" property="rewardRecSysNo" />
+        <result column="reward_level" property="rewardLevel" />
+        <result column="unit_order" property="unitOrder" />
+        <result column="register_no" property="registerNo" />
+        <result column="reward_sys_no" property="rewardSysNo" />
+        <result column="is_rewarded" property="isRewarded" />
+        <result column="reward_date" property="rewardDate" />
+        <result column="reward_amount" property="rewardAmount" />
+        <result column="currency" property="currency" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, audit_status, auditor, audit_date, reward_rec_id, reward_rec_sys_no, reward_level, unit_order, register_no, reward_sys_no, is_rewarded, reward_date, reward_amount, currency
+    </sql>
+
+</mapper>

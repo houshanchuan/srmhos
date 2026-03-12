@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.approvalProcess.SrmEafRecLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.approvalProcess.SrmEafRecLog">
+        <id column="id" property="id" />
+        <result column="eaf_rec_id" property="eafRecId" />
+        <result column="sys_module_id" property="sysModuleId" />
+        <result column="check_rec_id" property="checkRecId" />
+        <result column="check_proc_desc" property="checkProcDesc" />
+        <result column="check_user" property="checkUser" />
+        <result column="dept" property="dept" />
+        <result column="check_time" property="checkTime" />
+        <result column="check_desc" property="checkDesc" />
+        <result column="check_result" property="checkResult" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, eaf_rec_id, sys_module_id, check_rec_id, check_proc_desc, check_user, dept, check_time, check_desc, check_result
+    </sql>
+    <select id="listCheckLog" resultType="com.mediway.hos.srm.business.center.model.vo.approvalProcess.EafRecLogVo">
+        select rlog.id as rowId,check_rec_id as eafRecId,check_proc_desc as checkProcDesc,check_time as checkTime,suser.name as checkUserName,
+               check_desc as checkDesc,check_result as checkResult
+        from cf_srm_eaf_rec_log rlog
+        left join ct_srm_user suser on suser.id=check_user
+        where sys_module_id=#{sysNo} and check_rec_id=#{rowId}
+    </select>
+
+</mapper>

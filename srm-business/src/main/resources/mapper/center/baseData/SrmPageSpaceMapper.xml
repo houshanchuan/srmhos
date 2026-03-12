@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmPageSpaceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmPageSpace">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid
+    </sql>
+    <select id="getPageSpace" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from ct_srm_page_space where is_valid=1
+        <if test="pageSpaceDto.name!=null and pageSpaceDto.name!=''">
+            and name LIKE CONCAT('%', #{pageSpaceDto.name}, '%')
+        </if>
+    </select>
+    <select id="listPageSpace" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.PageSpaceDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.PageSpaceVo">
+        select id as rowId,code,name,is_valid as isValid from ct_srm_page_space
+    </select>
+</mapper>

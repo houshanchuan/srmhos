@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.approvalProcess.SrmEafRecMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.approvalProcess.SrmEafRec">
+        <id column="id" property="id" />
+        <result column="eaf_detail_id" property="eafDetailId" />
+        <result column="sys_no" property="sysNo" />
+        <result column="check_rec_id" property="checkRecId" />
+        <result column="step_no" property="stepNo" />
+        <result column="check_proc_desc" property="checkProcDesc" />
+        <result column="checker" property="checker" />
+        <result column="dept" property="dept" />
+        <result column="check_datetime" property="checkDatetime" />
+        <result column="check_result" property="checkResult" />
+        <result column="check_desc" property="checkDesc" />
+        <result column="is_current_step" property="isCurrentStep" />
+        <result column="check_user" property="checkUser" />
+        <result column="checker_string" property="checkerString" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, eaf_detail_id, sys_no, check_rec_id, step_no, check_proc_desc, checker, dept, check_datetime, check_result, check_desc, is_current_step, check_user, checker_string
+    </sql>
+    <delete id="deleteRec">
+        delete
+        from cf_srm_eaf_rec
+        where sys_no=#{sysNo} and check_rec_id=#{recId};
+    </delete>
+    <select id="getEafRecDetail"  resultType="com.mediway.hos.srm.business.center.model.vo.approvalProcess.EafRecVo">
+        select id,eaf_detail_id  as eafDetailId,sys_no as sysNo,check_rec_id as checkRecId
+             ,step_no as stepNo,check_proc_desc as checkProcDesc
+        ,checker as checker,dept as dept,check_datetime as checkDatetime,check_result as checkResult
+             ,check_desc as checkDesc,is_current_step as isCurrentStep,
+        check_user as checkUser,checker_string as checkerString
+        from cf_srm_eaf_rec
+        where 1=1
+        <if test="eafRecDto.id!= null and eafRecDto.id != ''">
+            and id=#{eafRecDto.id}
+        </if>
+        <if test="eafRecDto.sysNo!= null and eafRecDto.sysNo != ''">
+            and sys_no=#{eafRecDto.sysNo}
+        </if>
+        <if test="eafRecDto.checkRecId!= null and eafRecDto.checkRecId != ''">
+            and check_rec_id=#{eafRecDto.checkRecId}
+        </if>
+        <if test="eafRecDto.stepNo!= null and eafRecDto.stepNo != ''">
+            and step_no=#{eafRecDto.stepNo}
+        </if>
+        <if test="eafRecDto.isCurrentStep!= null and eafRecDto.isCurrentStep != ''">
+            and is_current_step=#{eafRecDto.isCurrentStep}
+        </if>
+        <if test="eafRecDto.checkResult!= null and eafRecDto.checkResult != ''">
+            and check_result=#{eafRecDto.checkResult}
+        </if>
+        LIMIT 1
+    </select>
+    <update id="updateRec">
+        update cf_srm_eaf_rec
+        <set>
+            <if test="eafRecDto.checkProcDesc != null">
+                check_proc_desc = #{eafRecDto.checkProcDesc},
+            </if>
+            <if test="eafRecDto.dept != null">
+                dept = #{eafRecDto.dept},
+            </if>
+            <if test="eafRecDto.checkDatetime != null">
+                check_datetime = #{eafRecDto.checkDatetime},
+            </if>
+            <if test="eafRecDto.checkResult != null">
+                check_result = #{eafRecDto.checkResult},
+            </if>
+            <if test="eafRecDto.checkDesc != null">
+                check_desc = #{eafRecDto.checkDesc},
+            </if>
+            <if test="eafRecDto.isCurrentStep != null">
+                is_current_step = #{eafRecDto.isCurrentStep},
+            </if>
+            <if test="eafRecDto.checkUser != null">
+                check_user = #{eafRecDto.checkUser},
+            </if>
+        <!-- 更多字段 -->
+        </set>
+        where id=#{eafRecDto.id}
+    </update>
+    <select id="getCurCheckUserStr" resultType="String">
+        select checker_string from cf_srm_eaf_rec
+        where step_no>1 and is_current_step=1 and sys_no=#{baseDto.sysNo} and check_rec_id =#{baseDto.id}
+    </select>
+    <select id="getCheckStatus" resultType="com.mediway.hos.srm.business.center.model.entity.approvalProcess.SrmEafDetail">
+        select audit_pass_status as auditPassStatus,audit_nopass_status as auditNopassStatus
+               from cf_srm_eaf_detail
+        where id in (select eaf_detail_id from cf_srm_eaf_rec where sys_no=#{sysNo} and check_rec_id=#{rowId} and is_current_step=1)
+
+    </select>
+    <select id="getMaxStepNo" resultType="Integer">
+        select max(step_no) from cf_srm_eaf_rec
+        where sys_no=#{sysNo} and check_rec_id =#{rowId}
+    </select>
+    <select id="getFinalResult" resultType="String">
+        select check_result from cf_srm_eaf_rec where sys_no=#{sysNo} and check_rec_id=#{rowId} order by id desc limit 1
+    </select>
+</mapper>

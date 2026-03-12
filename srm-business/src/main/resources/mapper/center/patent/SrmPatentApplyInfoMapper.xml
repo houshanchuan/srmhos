@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.patent.SrmPatentApplyInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.patent.SrmPatentApplyInfo">
+        <id column="id" property="id" />
+        <result column="apply_info_no" property="applyInfoNo" />
+        <result column="apply_info_name" property="applyInfoName" />
+        <result column="patent_type" property="patentType" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="apply_info_state" property="applyInfoState" />
+        <result column="note" property="note" />
+        <result column="creator_id" property="creatorId" />
+        <result column="creator_name" property="creatorName" />
+        <result column="create_time" property="createTime" />
+        <result column="operate_time" property="operateTime" />
+        <result column="patent_state" property="patentState" />
+        <result column="to_review_state" property="toReviewState" />
+        <result column="review_state" property="reviewState" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, apply_info_no, apply_info_name, patent_type, start_date, end_date, apply_info_state, note, creator_id, creator_name, create_time, operate_time, patent_state, to_review_state, review_state
+    </sql>
+    <select id="listPatentApplyInfo" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentApplyInfoVo">
+        select id as rowId, apply_info_no as applyInfoNo, apply_info_name as applyInfoName,
+               patent_type as patentType,
+                case
+                when ply.patent_type='1' then '发明专利'
+                when ply.patent_type='2' then '实用新型'
+                when ply.patent_type='3' then '外观设计'
+                else ''
+                END as patentTypeName,
+               start_date as startDate, end_date as endDate,
+               apply_info_state as applyInfoState,
+                case
+                when ply.apply_info_state='0' then '未启动'
+                when ply.apply_info_state='1' then '申报中'
+                when ply.apply_info_state='2' then '已停止'
+                else ''
+                END as applyInfoStateName,
+               note,
+               patent_state as patentState,
+                case
+                when ply.patent_state='1' then '专利申请'
+                when ply.patent_state='2' then '专利公开'
+                when ply.patent_state='3' then '专利授权'
+                when ply.patent_state='4' then '专利终止'
+                when ply.patent_state='5' then '专利转让'
+                else ''
+                END as patentStateName,
+               to_review_state as toReviewState, review_state as reviewState
+        from srm_patent_apply_info ply
+        where 1=1
+        <if test="patentApplyInfoDto.applyInfoName!=null and patentApplyInfoDto.applyInfoName!=''">
+            and ply.apply_info_name LIKE CONCAT('%', #{patentApplyInfoDto.applyInfoName}, '%')
+        </if>
+        <if test="patentApplyInfoDto.applyInfoState!=null and patentApplyInfoDto.applyInfoState!=''">
+            and ply.apply_info_state=#{patentApplyInfoDto.applyInfoState}
+        </if>
+        order by ply.id desc
+    </select>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.patent.PatentApplyInfoVo">
+        select id as rowId, apply_info_no as applyInfoNo, apply_info_name as applyInfoName,
+               patent_type as patentType,
+               case
+                   when ply.patent_type='1' then '发明专利'
+                   when ply.patent_type='2' then '实用新型'
+                   when ply.patent_type='3' then '外观设计'
+                   else ''
+                   END as patentTypeName,
+               start_date as startDate, end_date as endDate,
+               apply_info_state as applyInfoState,
+               case
+                   when ply.apply_info_state='0' then '未启动'
+                   when ply.apply_info_state='1' then '申报中'
+                   when ply.apply_info_state='2' then '已停止'
+                   else ''
+                   END as patentTypeName,
+               note,
+               patent_state as patentState,
+               case
+                   when ply.patent_state='1' then '专利申请'
+                   when ply.patent_state='2' then '专利公开'
+                   when ply.patent_state='3' then '专利授权'
+                   when ply.patent_state='4' then '专利终止'
+                   when ply.patent_state='5' then '专利转让'
+                   else ''
+                   END as patentTypeName,
+               to_review_state as toReviewState, review_state as reviewState
+        from srm_patent_apply_info ply
+        where ply.id=#{rowId}
+    </select>
+</mapper>

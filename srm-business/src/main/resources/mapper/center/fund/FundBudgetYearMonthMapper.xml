@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.fund.FundBudgetYearMonthMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.fund.FundBudgetYearMonth">
+        <id column="id" property="id" />
+        <result column="year_mon" property="yearMon" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year_mon, start_date, end_date
+    </sql>
+    <select id="listFundBudgetYearMonth" parameterType="com.mediway.hos.srm.business.center.model.dto.fund.FundBudgetYearMonthDto" resultType="com.mediway.hos.srm.business.center.model.vo.fund.FundBudgetYearMonthVo">
+        select  id as rowId,year_mon as yearMon ,start_date as stratDate,end_date  as endDate  from cf_fund_budget_year_month
+    </select>
+</mapper>

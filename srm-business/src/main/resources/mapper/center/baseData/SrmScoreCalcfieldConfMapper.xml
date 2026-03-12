@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmScoreCalcfieldConfMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmScoreCalcfieldConf">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="sys_no" property="sysNo" />
+        <result column="field_code" property="fieldCode" />
+        <result column="field_name" property="fieldName" />
+        <result column="calc_method" property="calcMethod" />
+        <result column="is_comprehensive" property="isComprehensive" />
+        <result column="table_index" property="tableIndex" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, sys_no, field_code, field_name, calc_method, is_comprehensive, table_index
+    </sql>
+
+</mapper>

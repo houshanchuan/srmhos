@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.projectapply.SrmProjectSolicitEthicAuditMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.projectapply.SrmProjectSolicitEthicAudit">
+        <id column="id" property="id" />
+        <result column="sys_no" property="sysNo" />
+        <result column="soli_project_id" property="soliProjectId" />
+        <result column="data_status" property="dataStatus" />
+        <result column="ethic_expert" property="ethicExpert" />
+        <result column="ethic_chk_result" property="ethicChkResult" />
+        <result column="ethic_audit_date" property="ethicAuditDate" />
+        <result column="ethic_audit_desc" property="ethicAuditDesc" />
+        <result column="is_feedbacked" property="isFeedbacked" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, sys_no, soli_project_id, data_status, ethic_expert, ethic_chk_result, ethic_audit_date, ethic_audit_desc, is_feedbacked
+    </sql>
+
+    <select id="listProjectSolicitEthicAudit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitAuditExpertVo">
+        select spsg.id as rowId,csu.account as account,csu.name as name,csu.id as expert
+        from srm_project_solicit_ethic_audit spsg
+        left join ct_srm_user csu on csu.id=spsg.ethic_expert
+        where is_cancel=0
+        <if test="projectSolicitEthicAuditDto.sysNo!=null and projectSolicitEthicAuditDto.sysNo!=''">
+            and spsg.sys_no=#{projectSolicitEthicAuditDto.sysNo}
+        </if>
+        <if test="projectSolicitEthicAuditDto.soliProjectId!=null and projectSolicitEthicAuditDto.soliProjectId!=''">
+            and spsg.soli_project_id=#{projectSolicitEthicAuditDto.soliProjectId}
+        </if>
+        <if test="projectSolicitEthicAuditDto.ethicAllotCount!=null and projectSolicitEthicAuditDto.ethicAllotCount!=''">
+            and spsg.ethic_allot_count=#{projectSolicitEthicAuditDto.ethicAllotCount}
+        </if>
+    </select>
+    <!--项目申请伦理审核项目-->
+    <select id="listEthicAuditProjectSolicit" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitEthicAuditVo">
+        select spsee.id as rowId,spsee.soli_project_id as soliProjectId,sps.title as title,csy.name as yearName,cspt.name as projTypeName,
+        suser.name as subuserName,sps.sub_date as subDate,sdept.name as subDeptName,
+
+        spsee.ethic_chk_result as auditStatus,spsee.data_status as dataStatus
+        from srm_project_solicit_ethic_audit spsee
+        left join srm_project_solicit sps on sps.id=spsee.soli_project_id
+        left join ct_srm_project_apply_book_type cspabt on cspabt.code=sps.apply_book_type
+        left join ct_srm_proj_type cspt on cspt.code=sps.proj_type
+        left join ct_srm_year csy on csy.code=sps.year
+        left join ct_srm_dept sdept on sdept.id=sps.sub_dept
+        left join ct_srm_user huser on huser.id=sps.head
+        left join ct_srm_user suser on suser.id=sps.sub_user_id
+
+        where is_cancel=0 and sps.is_ethic=1 and spsee.sys_no="P011"
+        and spsee.ethic_expert=#{projectSolicitDto.userId}
+        <if test='projectSolicitDto.title != null and projectSolicitDto.title != ""'>
+            and sps.title LIKE CONCAT('%', #{projectSolicitDto.title}, '%')
+        </if>
+        <if test="projectSolicitDto.year!=null and projectSolicitDto.year!=''">
+            and sps.year=#{projectSolicitDto.year}
+        </if>
+        <if test='projectSolicitDto.startDate != null and projectSolicitDto.startDate != ""'>
+            and sps.sub_date &gt;= #{projectSolicitDto.startDate}
+        </if>
+
+        <if test='projectSolicitDto.endDate != null and projectSolicitDto.endDate != ""'>
+            and sps.sub_date &lt;= #{projectSolicitDto.endDate}
+        </if>
+
+    </select>
+    <select id="listEthicAuditProjectSolicitDetail" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitEthicAuditVo">
+        select id as rowId,soli_project_id as soliProjectId,ethic_chk_result as ethicChkResult,
+        case
+        when ethic_chk_result="2" then "审核通过"
+        when ethic_chk_result="4" then "修改后重审"
+        when ethic_chk_result="5" then "修改后提交"
+        end as  ethicChkResultName
+        ,ethic_audit_desc as ethicAuditDesc,data_status as dataStatus,ethic_audit_date as ethicAuditDate
+        from srm_project_solicit_ethic_audit spsg
+        where soli_project_id=#{projectSolicitEthicAuditDto.soliProjectId} and sys_no="P011" and ethic_expert=#{projectSolicitEthicAuditDto.userId}
+    </select>
+
+    <update id="updateCancel" >
+        update srm_project_solicit_ethic_audit set is_cancel=1 where  sys_no=#{sysNo}   and soli_project_id=#{ywRowId}
+    </update>
+</mapper>

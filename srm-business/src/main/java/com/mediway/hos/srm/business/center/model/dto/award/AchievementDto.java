@@ -1,0 +1,61 @@
+package com.mediway.hos.srm.business.center.model.dto.award;
+import lombok.Data;
+
+@Data
+public class AchievementDto {
+    private Long rowId;
+    private String year;
+    private String name;
+    private String rewardType;
+    private String rewardName;
+    private String rewardLevel;
+    private String rewardGrade;
+    private String rewardUnit;
+    private String rewardDate;
+    private String ourUnitRanking;
+    private String subUserId;
+    private String subDate;
+    private Integer dataStatus;
+    private String sysNo;
+    private String bizType;
+    private String deptId;
+    private String source;
+    private String certificateNo;
+    private String mainCompleter;
+    private String achvCat;
+    private String achvOwner;
+    private String awardName;
+    private String divisionId;
+    private String classCode;
+    private String discipline;
+    private String disciplineTwo;
+    private String disciplineThree;
+    private Integer authorSum;
+    private String projectSource;
+    private String checkStatus;
+    private String note;
+    private String schoolSign;
+    private String unitsum;
+    private String fauthorType;
+    private String fauthorName;
+    private String fauthorTitle;
+    private String fauthorSex;
+    private String inFauthorCode;
+    private String inFauthorId;
+    private String inFauthorEduLevel;
+    private String inFauthorEduDegree;
+    private String operateTime;
+    private String awardLevel;
+    private String creatorId;
+    private String creatorName;
+    private String createTime;
+    private String awardApplyId;
+    // 下面是查询条件
+    private int page;
+    private int rows;
+    private String startDate;
+    private String endDate;
+    private Long userId;
+    private String userCode;
+    private String auditState;
+}

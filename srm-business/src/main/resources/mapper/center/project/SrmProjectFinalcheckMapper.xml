@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.project.SrmProjectFinalcheckMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.project.SrmProjectFinalcheck">
+        <id column="id" property="id" />
+        <result column="proj_id" property="projId" />
+        <result column="sys_no" property="sysNo" />
+        <result column="sub_user" property="subUser" />
+        <result column="sub_date" property="subDate" />
+        <result column="audit_status" property="auditStatus" />
+        <result column="data_status" property="dataStatus" />
+        <result column="situation1" property="situation1" />
+        <result column="situation2" property="situation2" />
+        <result column="situation3" property="situation3" />
+        <result column="situation4" property="situation4" />
+        <result column="situation5" property="situation5" />
+        <result column="situation6" property="situation6" />
+        <result column="situation7" property="situation7" />
+        <result column="situation8" property="situation8" />
+        <result column="situation9" property="situation9" />
+        <result column="situation10" property="situation10" />
+        <result column="situation11" property="situation11" />
+        <result column="situation12" property="situation12" />
+        <result column="situation13" property="situation13" />
+        <result column="situation14" property="situation14" />
+        <result column="situation15" property="situation15" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, proj_id, sys_no, sub_user, sub_date, audit_status, data_status, situation1, situation2, situation3, situation4, situation5, situation6, situation7, situation8, situation9, situation10, situation11, situation12, situation13, situation14, situation15
+    </sql>
+
+    <select id="getFinalCheckRowId" resultType="Long">
+        select id from srm_project_finalcheck where proj_id=#{projId} limit 1
+    </select>
+
+
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectFinalcheckVo">
+        select spfc.id as rowId, spfc.proj_id as "projId.id",spi.name as "projId.name",spfc.sys_no as sysNo,
+               spfc.data_status as dataStatus,spfc.audit_status as auditStatus,
+               situation1, situation2, situation3, situation4, situation5, situation6, situation7,
+               situation8, situation9, situation10, situation11, situation12,
+               situation13, situation14, situation15
+        from srm_project_finalcheck spfc
+                 left join srm_projects_info spi on spi.id=spfc.proj_id
+
+        where spfc.id=#{rowId}
+    </select>
+
+    <update id="updateStatus">
+        update srm_project_finalcheck
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                audit_status = #{checkStatus},
+            </if>
+
+        </set>
+        where id=#{rowId}
+    </update>
+
+    <select id="listFinalAuditProject" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,spi.sub_no as subNo,
+               huser.name as headName,sdept.name as deptName,spi.sys_no as sysNo,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate
+        from srm_projects_info spi
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+
+        where spi.sys_no=#{projectsInfoDto.sysNo}
+        <if test="projectsInfoDto.userId!=null and projectsInfoDto.userId!=''">
+            and (spi.sub_user_id=#{projectsInfoDto.userId} or spi.head=#{projectsInfoDto.userId} or spi.id in
+            (SELECT proj_id FROM srm_projects_info_member WHERE member = #{projectsInfoDto.userId})
+            )
+        </if>
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+
+        <if test="projectsInfoDto.projType!=null and projectsInfoDto.projType!=''">
+            and spi.proj_type = #{projectsInfoDto.projType}
+        </if>
+        <if test="projectsInfoDto.head!=null and projectsInfoDto.head!=''">
+            and spi.head = #{projectsInfoDto.head}
+        </if>
+    </select>
+    <select id="listProjectFinalcheck" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectFinalcheckVo">
+        select spfc.id as rowId,spi.name as projName,huser.name as subUserName,spfc.sub_date as subDate,
+               spfc.proj_id as projRowId,spfc.data_status as dataStatus,spfc.audit_status as auditStatus,
+               situation1, situation2, situation3, situation4, situation5, situation6, situation7,
+               situation8, situation9, situation10, situation11, situation12,
+               situation13, situation14, situation15
+        from srm_project_finalcheck spfc
+                 left join srm_projects_info spi on spi.id=spfc.proj_id
+                 left join ct_srm_user huser on huser.id=spfc.sub_user
+        where 1=1
+        <if test="projectFinalcheckDto.userId!=null and projectFinalcheckDto.userId!=''">
+            and spfc.sub_user=#{projectFinalcheckDto.userId}
+        </if>
+        <if test="projectFinalcheckDto.projId!=null and projectFinalcheckDto.projId!=''">
+            and spfc.proj_id=#{projectFinalcheckDto.projId}
+        </if>
+        <if test="projectFinalcheckDto.dataStatus!=null and projectFinalcheckDto.dataStatus!=''">
+            and spfc.data_status = #{projectFinalcheckDto.dataStatus}
+        </if>
+        <if test="projectFinalcheckDto.sysNo!=null and projectFinalcheckDto.sysNo!=''">
+            and spfc.sys_no = #{projectFinalcheckDto.sysNo}
+        </if>
+    </select>
+
+    <select id="listAuditProjectFinalcheck" resultType="com.mediway.hos.srm.business.center.model.vo.project.ProjectsInfoVo">
+        select spi.id as rowId,spi.name as name,csy.name as yearName,spi.sys_no as sysNo,spi.sub_no as subNo,
+               huser.name as headName,sdept.name as deptName,suser.name as subUserName,
+               spi.issued_date as issuedDate,spi.end_date as endDate,spi.acceptance_date as acceptanceDate,
+               spi.proj_status as projStatus,spi.special_funds as specialFunds,spi.project_account as projectAccount,
+               spi.enterprise_funds as enterpriseFunds,spi.data_status as dataStatus,spi.sub_date as subDate
+        from srm_project_finalcheck spfc
+                 left join srm_projects_info spi on spi.id=spfc.proj_id
+                 left join ct_srm_proj_type cspt on cspt.code=spi.proj_type
+                 left join ct_srm_year csy on csy.code=spi.year
+                 left join ct_srm_dept sdept on sdept.id=spi.dept_id
+                 left join ct_srm_user huser on huser.id=spi.head
+                left join ct_srm_user suser on suser.id=spi.sub_user_id
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spi.discipline
+                 left join ct_srm_person_type ccspt  on ccspt.code=spi.head_type_code
+                 left join  ct_srm_proj_level cspl on cspl.code=spi.proj_level
+                 left join ct_srm_user puser on puser.id=spfc.sub_user
+                 left join cf_srm_eaf_rec eafrec on eafrec.sys_no=#{projectFinalcheckDto.sysNo} and eafrec.check_rec_id=spfc.id
+        where
+            spfc.proj_id is not null and eafrec.step_no>1 and spi.sys_no=#{projectFinalcheckDto.prjSysNo}
+
+        <if test='projectFinalcheckDto.auditStatus==null or projectFinalcheckDto.auditStatus==""'>
+            and (
+            (spfc.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where seafrec.sys_no=#{projectFinalcheckDto.sysNo} and seafrec.check_rec_id=spfc.id) and eafrec.checker_string  LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (spfc.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%'))
+            )
+        </if>
+        <if test='projectFinalcheckDto.auditStatus=="0"'>
+            and spfc.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%')
+        </if>
+        <if test='projectFinalcheckDto.auditStatus=="1"'>
+            and spfc.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%')
+        </if>
+        <if test='projectFinalcheckDto.auditStatus=="2"'>
+            and spfc.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{projectFinalcheckDto.userId}, '|%')
+        </if>
+        <if test="projectFinalcheckDto.name!=null and projectFinalcheckDto.name!=''">
+            and spi.name LIKE CONCAT('%', #{projectFinalcheckDto.projName}, '%')
+        </if>
+
+        <if test="projectFinalcheckDto.projType!=null and projectFinalcheckDto.projType!=''">
+            and spi.proj_type = #{projectFinalcheckDto.projType}
+        </if>
+        <if test="projectFinalcheckDto.head!=null and projectFinalcheckDto.head!=''">
+            and spi.head = #{projectFinalcheckDto.projHead}
+        </if>
+    </select>
+    <!--验收专家审核列表-->
+    <select id="listExpertAuditFinalProject" resultType="com.mediway.hos.srm.business.center.model.vo.projectapply.ProjectSolicitGradeVo">
+        select spsg.id as rowId,csy.name as yearName, spif.name as projectName,spif.id as projectId,
+        csu.name as applyUserName, spif.sub_date as subDate,spsg.note as note,
+        spsg.audit_status as auditStatus,spsg.data_status as dataStatus
+        from srm_project_solicit_grade spsg
+        left join srm_project_finalcheck spf on spf.id=spsg.project_id
+        left join srm_projects_info spif on spif.id=spf.proj_id
+        left join ct_srm_user csu on csu.id=spif.sub_user_id
+        left join ct_srm_year csy on csy.code=spif.year
+        where spsg.expert=#{projectsInfoDto.userId} and spsg.sys_no=#{projectsInfoDto.sysNo}
+        <if test="projectsInfoDto.name!=null and projectsInfoDto.name!=''">
+            and spif.name LIKE CONCAT('%', #{projectsInfoDto.name}, '%')
+        </if>
+    </select>
+</mapper>

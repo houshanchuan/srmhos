@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmProjHumanGeneResRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmProjHumanGeneResRecord">
+        <id column="id" property="id" />
+        <result column="record_no" property="recordNo" />
+        <result column="res_req_id" property="resReqId" />
+        <result column="rec_user_id" property="recUserId" />
+        <result column="rec_date" property="recDate" />
+        <result column="rec_time" property="recTime" />
+        <result column="data_status" property="dataStatus" />
+        <result column="chk_status" property="chkStatus" />
+        <result column="chk_user_id" property="chkUserId" />
+        <result column="chk_date" property="chkDate" />
+        <result column="chk_time" property="chkTime" />
+        <result column="remark" property="remark" />
+        <result column="report_up_needed" property="reportUpNeeded" />
+        <result column="sys_no" property="sysNo" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, record_no, res_req_id, rec_user_id, rec_date, rec_time, data_status, chk_status, chk_user_id, chk_date, chk_time, remark, report_up_needed, sys_no, sub_user_id, sub_date, sub_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.paper.SrmPaperMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.paper.SrmPaper">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="en_name" property="enName" />
+        <result column="dept_id" property="deptId" />
+        <result column="division" property="division" />
+        <result column="biz_type" property="bizType" />
+        <result column="sys_no" property="sysNo" />
+        <result column="serial_no" property="serialNo" />
+        <result column="paper_reg_no" property="paperRegNo" />
+        <result column="thesis_type" property="thesisType" />
+        <result column="language" property="language" />
+        <result column="paper_source" property="paperSource" />
+        <result column="journal" property="journal" />
+        <result column="journal_name" property="journalName" />
+        <result column="journal_type" property="journalType" />
+        <result column="journal_level" property="journalLevel" />
+        <result column="pub_year" property="pubYear" />
+        <result column="publish_date" property="publishDate" />
+        <result column="roll" property="roll" />
+        <result column="period" property="period" />
+        <result column="start_page" property="startPage" />
+        <result column="end_page" property="endPage" />
+        <result column="issn" property="issn" />
+        <result column="cn_no" property="cnNo" />
+        <result column="wos_accession_no" property="wosAccessionNo" />
+        <result column="doi" property="doi" />
+        <result column="link_url" property="linkUrl" />
+        <result column="volume_info" property="volumeInfo" />
+        <result column="doc_type" property="docType" />
+        <result column="words_num" property="wordsNum" />
+        <result column="journal_if" property="journalIf" />
+        <result column="five_year_if" property="fiveYearIf" />
+        <result column="is_esi_cited" property="isEsiCited" />
+        <result column="page_space_type" property="pageSpaceType" />
+        <result column="is_translation" property="isTranslation" />
+        <result column="is_managing" property="isManaging" />
+        <result column="is_nursing" property="isNursing" />
+        <result column="school_sign" property="schoolSign" />
+        <result column="times_cited" property="timesCited" />
+        <result column="key_words" property="keyWords" />
+        <result column="sci_partition" property="sciPartition" />
+        <result column="cas_partition" property="casPartition" />
+        <result column="fund_label" property="fundLabel" />
+        <result column="proj_source_code" property="projSourceCode" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="number_of_authors" property="numberOfAuthors" />
+        <result column="pub_range_code" property="pubRangeCode" />
+        <result column="digest" property="digest" />
+        <result column="pub_unit" property="pubUnit" />
+        <result column="conf_name" property="confName" />
+        <result column="conf_address" property="confAddress" />
+        <result column="conf_intro" property="confIntro" />
+        <result column="app_paper_id" property="appPaperId" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="sub_time" property="subTime" />
+        <result column="data_status" property="dataStatus" />
+        <result column="check_status" property="checkStatus" />
+        <result column="remark" property="remark" />
+        <result column="work_count" property="workCount" />
+        <result column="not_count_reason" property="notCountReason" />
+        <result column="page_charge" property="pageCharge" />
+        <result column="first_author_id" property="firstAuthorId" />
+        <result column="first_author_name" property="firstAuthorName" />
+        <result column="first_author_title" property="firstAuthorTitle" />
+        <result column="first_author_sex" property="firstAuthorSex" />
+        <result column="first_author_type" property="firstAuthorType" />
+        <result column="first_author_unit_id" property="firstAuthorUnitId" />
+        <result column="first_author_dept_id" property="firstAuthorDeptId" />
+        <result column="first_author_remark" property="firstAuthorRemark" />
+        <result column="in_first_author_id" property="inFirstAuthorId" />
+        <result column="in_first_author_ranking" property="inFirstAuthorRanking" />
+        <result column="in_first_author_edu_level" property="inFirstAuthorEduLevel" />
+        <result column="in_first_author_edu_degree" property="inFirstAuthorEduDegree" />
+        <result column="tf_author_id" property="tfAuthorId" />
+        <result column="tf_author_name" property="tfAuthorName" />
+        <result column="tf_author_dept_id" property="tfAuthorDeptId" />
+        <result column="tf_author_unit_id" property="tfAuthorUnitId" />
+        <result column="corr_author_id" property="corrAuthorId" />
+        <result column="corr_author_name" property="corrAuthorName" />
+        <result column="corr_author_ranking" property="corrAuthorRanking" />
+        <result column="corr_author_dept_id" property="corrAuthorDeptId" />
+        <result column="corr_author_unit_id" property="corrAuthorUnitId" />
+        <result column="corr_author_remark" property="corrAuthorRemark" />
+        <result column="is_corr_author_our" property="isCorrAuthorOur" />
+        <result column="tcorr_author_id" property="tcorrAuthorId" />
+        <result column="tcorr_author_name" property="tcorrAuthorName" />
+        <result column="tcorr_author_dept_id" property="tcorrAuthorDeptId" />
+        <result column="tcorr_author_unit_id" property="tcorrAuthorUnitId" />
+        <result column="is_graduate" property="isGraduate" />
+        <result column="mentor1" property="mentor1" />
+        <result column="is_graduated_two_years" property="isGraduatedTwoYears" />
+        <result column="mentor2" property="mentor2" />
+        <result column="is_rejection" property="isRejection" />
+        <result column="is_submission_changed" property="isSubmissionChanged" />
+        <result column="change_to_journa1" property="changeToJourna1" />
+        <result column="change_to_journa2" property="changeToJourna2" />
+        <result column="sub_copies" property="subCopies" />
+        <result column="sub_elec_edition" property="subElecEdition" />
+        <result column="is_credits_registered" property="isCreditsRegistered" />
+        <result column="classCode" property="classCode" />
+        <result column="discipline" property="discipline" />
+        <result column="discipline2" property="discipline2" />
+        <result column="discipline3" property="discipline3" />
+        <result column="research_field" property="researchField" />
+        <result column="operate_time" property="operateTime" />
+        <result column="fina_no" property="finaNo" />
+        <result column="is_reim" property="isReim" />
+        <result column="reim_way" property="reimWay" />
+        <result column="reim_fee_amt" property="reimFeeAmt" />
+        <result column="reim_fee_actual_amt" property="reimFeeActualAmt" />
+        <result column="page_charge_inv_no" property="pageChargeInvNo" />
+        <result column="awardee_type" property="awardeeType" />
+        <result column="awardee_account" property="awardeeAccount" />
+        <result column="awardee_id_no" property="awardeeIdNo" />
+        <result column="awardee_bank" property="awardeeBank" />
+        <result column="awardee_bank_account" property="awardeeBankAccount" />
+        <result column="awardee_tel" property="awardeeTel" />
+        <result column="reward_amt" property="rewardAmt" />
+        <result column="proj_author" property="projAuthor" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, title, en_name, dept_id, division, biz_type, sys_no, serial_no, paper_reg_no, thesis_type, language, paper_source, journal, journal_name, journal_type, journal_level, pub_year, publish_date, roll, period, start_page, end_page, issn, cn_no, wos_accession_no, doi, link_url, volume_info, doc_type, words_num, journal_if, five_year_if, is_esi_cited, page_space_type, is_translation, is_managing, is_nursing, school_sign, times_cited, key_words, sci_partition, cas_partition, fund_label, proj_source_code, our_unit_ranking, number_of_authors, pub_range_code, digest, pub_unit, conf_name, conf_address, conf_intro, app_paper_id, sub_user_id, sub_date, sub_time, data_status, check_status, remark, work_count, not_count_reason, page_charge, first_author_id, first_author_name, first_author_title, first_author_sex, first_author_type, first_author_unit_id, first_author_dept_id, first_author_remark, in_first_author_id, in_first_author_ranking, in_first_author_edu_level, in_first_author_edu_degree, tf_author_id, tf_author_name, tf_author_dept_id, tf_author_unit_id, corr_author_id, corr_author_name, corr_author_ranking, corr_author_dept_id, corr_author_unit_id, corr_author_remark, is_corr_author_our, tcorr_author_id, tcorr_author_name, tcorr_author_dept_id, tcorr_author_unit_id, is_graduate, mentor1, is_graduated_two_years, mentor2, is_rejection, is_submission_changed, change_to_journa1, change_to_journa2, sub_copies, sub_elec_edition, is_credits_registered, class, discipline, discipline2, discipline3, research_field, operate_time, fina_no, is_reim, reim_way, reim_fee_amt, reim_fee_actual_amt, page_charge_inv_no, awardee_type, awardee_account, awardee_id_no, awardee_bank, awardee_bank_account, awardee_tel, reward_amt, proj_author
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperVo">
+        select spaper.id as rowId ,spaper.period as period, spaper.roll as roll,spaper.journal_if as journalIf,
+               spaper.start_page as startPage,spaper.end_page as endPage,spaper.page_charge as pageCharge,
+            spaper.reim_fee_amt as reimFeeAmt,
+            spaper.title as title,csy.code as "pubYear.id",csy.name as "pubYear.name",csy.name as pubYearName,
+            csptt.code as "thesisType.id",csptt.name as "thesisType.name",csptt.name as thesisTypeName,
+            fdept.id as "deptId.id",fdept.name as "deptId.name",fdept.name as deptName,
+            cuser.id as "corrAuthorId.id",cuser.name as "corrAuthorId.name",cuser.name as corrAuthorName,
+            puser.id as "projAuthor.id",puser.name as "projAuthor.name",puser.name as projAuthorName,
+            sj.code as "journal.id",sj.name as "journal.name",sj.name as journalName,
+            spaper.publish_date as publishDate,spaper.is_nursing as isNursing,spaper.is_corr_author_our as isCorrAuthorOur,
+            spaper.is_managing as isManaging,spaper.sub_copies as subCopies,spaper.is_reim as isReim,
+            csjt.code as "journalType.id",csjt.name as "journalType.name",csjt.name as journalTypeName,
+            sclass.code as "classCode.id",sclass.name as "classCode.name",sclass.name as classCodeName,
+            fdiscipline.code as "discipline.id",fdiscipline.name as "discipline.name",fdiscipline.name as disciplineName,
+            sdiscipline.code as "discipline2.id",sdiscipline.name as "discipline2.name",sdiscipline.name as discipline2Name,
+            tdiscipline.code as "discipline3.id",tdiscipline.name as "discipline3.name",tdiscipline.name as discipline3Name,
+            csuo.code as "ourUnitRanking.id",csuo.name as "ourUnitRanking.name",csuo.name as ourUnitRankingName,
+            csrw.code as "reimWay.id",csrw.name as "reimWay.name",csrw.name as reimWayName,
+            sprojectsource.code as "projSourceCode.id",sprojectsource.name as "projSourceCode.name",sprojectsource.name as projSourceName,
+        csps.code as "pageSpaceType.id",csps.name as "pageSpaceType.name",csps.name as pageSpaceTypeName,
+        csc.code as "currency.id",csc.name as "currency.name",
+        spaper.data_status as dataStatus,spaper.serial_no as serialNo,
+        spaper.awardee_type as awardeeType,
+        spaper.awardee_account as awardeeAccount,
+        spaper.awardee_id_no as awardeeIdNo,
+        spaper.awardee_bank as awardeeBank,
+        spaper.awardee_bank_account as awardeeBankAccount,
+        spaper.awardee_tel as awardeeTel,
+        spaper.reward_amt as rewardAmt,
+        spaper.remark as remark,
+        spaper.key_words as keyWords,
+        spaper.digest as digest
+        from srm_paper spaper
+        left join ct_srm_year csy on csy.code=spaper.pub_year
+        left join ct_srm_paper_thesis_type csptt  on csptt.code=spaper.thesis_type
+        left join ct_srm_dept fdept on fdept.id=spaper.dept_id
+        left join ct_srm_page_space csps on csps.code=spaper.page_space_type
+        left join srm_journal sj  on sj.code=spaper.journal
+        left join ct_srm_journal_type csjt  on csjt.code=spaper.journal_type
+        left join ct_srm_reimbursement_way csrw on csrw.code=spaper.reim_way
+        left join ct_srm_user fuser on fuser.id=spaper.first_author_id
+        left join ct_srm_user cuser on cuser.id=spaper.corr_author_id
+        left join ct_srm_user puser on puser.id=spaper.proj_author
+        left join ct_srm_class sclass on sclass.code=spaper.classCode
+        left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=spaper.proj_source_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spaper.discipline
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=spaper.discipline2
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=spaper.discipline3
+        left join ct_srm_unit_order csuo on csuo.code=spaper.our_unit_ranking
+        left join ct_srm_currency csc on csc.code=spaper.currency
+        where spaper.id=#{rowId}
+    </select>
+    <select id="listPaper" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperVo">
+        select spaper.id as rowId ,spaper.period as period, spaper.roll as roll,csptt.name as thesisTypeName,
+               spaper.start_page as startPage,spaper.end_page as endPage,sj.name as journalName,spaper.publish_date as publishDate,
+               spaper.title as title,csy.name as pubYearName,spaper.data_status as dataStatus,spaper.publish_date as publishDate,
+                spaper.first_author_name as firstAuthorName,spaper.corr_author_name as corrAuthorName,
+                firstdept.name as firstAuthorDeptName,corrdept.name as corrAuthorDeptName,createuser.name as creatorName
+        from srm_paper spaper
+                 left join ct_srm_year csy on csy.code=spaper.pub_year
+                 left join ct_srm_paper_thesis_type csptt  on csptt.code=spaper.thesis_type
+                 left join ct_srm_dept fdept on fdept.id=spaper.dept_id
+
+                 left join srm_journal sj  on sj.code=spaper.journal
+                 left join ct_srm_journal_type csjt  on csjt.code=spaper.journal_type
+                 left join ct_srm_reimbursement_way csrw on csrw.code=spaper.reim_way
+                 left join ct_srm_user createuser on createuser.id=spaper.creator
+                 left join ct_srm_user fuser on fuser.id=spaper.first_author_id
+                 left join ct_srm_user cuser on cuser.id=spaper.corr_author_id
+                 left join ct_srm_user puser on puser.id=spaper.proj_author
+                 left join ct_srm_class sclass on sclass.code=spaper.classCode
+                 left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=spaper.proj_source_code
+                 left join ct_srm_discipline fdiscipline on fdiscipline.code=spaper.discipline
+                 left join ct_srm_discipline sdiscipline on sdiscipline.code=spaper.discipline2
+                 left join ct_srm_discipline tdiscipline on tdiscipline.code=spaper.discipline3
+                 left join ct_srm_unit_order csuo on csuo.code=spaper.our_unit_ranking
+                left join ct_srm_dept firstdept on firstdept.id=spaper.first_author_dept_id
+                left join ct_srm_dept corrdept on corrdept.id=spaper.corr_author_dept_id
+        where (spaper.sub_user_id=#{paperDto.userId} or spaper.creator=#{paperDto.userId} or spaper.id in
+                (SELECT paper_id FROM srm_paper_author WHERE author = #{paperDto.userId})
+                )
+        <if test="paperDto.title!=null and paperDto.title!=''">
+            and spaper.title LIKE CONCAT('%', #{paperDto.title}, '%')
+        </if>
+        <if test="paperDto.startDate != null and paperDto.startDate != ''">
+            and spaper.sub_date &gt;= #{paperDto.startDate}
+        </if>
+
+        <if test="paperDto.endDate != null and paperDto.endDate != ''">
+            and spaper.sub_date &lt;= #{paperDto.endDate}
+        </if>
+        <if test="paperDto.journal != null and paperDto.journal != ''">
+            and spaper.journal = #{paperDto.journal}
+        </if>
+        <if test="paperDto.deptId != null and paperDto.deptId != ''">
+            and spaper.deptId = #{paperDto.deptId}
+        </if>
+        <if test="paperDto.bizType != null and paperDto.bizType != ''">
+            and spaper.biz_type= #{paperDto.bizType}
+        </if>
+        <if test="paperDto.dataStatus!=null">
+            and spaper.data_status = #{paperDto.dataStatus}
+        </if>
+        order by spaper.id desc
+    </select>
+    <update id="updateStatus">
+        update srm_paper
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                check_status = #{checkStatus},
+            </if>
+            <if test="serialNo != null">
+                serial_no = #{serialNo},
+            </if>
+            <if test="subDate != null">
+                sub_date = #{subDate},
+            </if>
+            <if test="subUserId != null">
+                sub_user_id = #{subUserId},
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditPaper" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperVo">
+        select spaper.id as rowId ,spaper.period as period, spaper.roll as roll,csptt.name as thesisTypeName,
+        spaper.start_page as startPage,spaper.end_page as endPage,sj.name as journalName,spaper.publish_date as publishDate,
+        spaper.title as title,csy.name as pubYearName,spaper.data_status as dataStatus,
+        spaper.first_author_name as firstAuthorName,spaper.corr_author_name as corrAuthorName,
+        firstdept.name as firstAuthorDeptName,corrdept.name as corrAuthorDeptName,createuser.name as creatorName
+        from srm_paper spaper
+        left join ct_srm_year csy on csy.code=spaper.pub_year
+        left join ct_srm_paper_thesis_type csptt  on csptt.code=spaper.thesis_type
+        left join ct_srm_dept fdept on fdept.id=spaper.dept_id
+
+        left join srm_journal sj  on sj.code=spaper.journal
+        left join ct_srm_journal_type csjt  on csjt.code=spaper.journal_type
+        left join ct_srm_reimbursement_way csrw on csrw.code=spaper.reim_way
+        left join ct_srm_user createuser on createuser.id=spaper.creator
+        left join ct_srm_user fuser on fuser.id=spaper.first_author_id
+        left join ct_srm_user cuser on cuser.id=spaper.corr_author_id
+        left join ct_srm_user puser on puser.id=spaper.proj_author
+        left join ct_srm_class sclass on sclass.code=spaper.classCode
+        left join  ct_srm_product_projectsource sprojectsource on sprojectsource.code=spaper.proj_source_code
+        left join ct_srm_discipline fdiscipline on fdiscipline.code=spaper.discipline
+        left join ct_srm_discipline sdiscipline on sdiscipline.code=spaper.discipline2
+        left join ct_srm_discipline tdiscipline on tdiscipline.code=spaper.discipline3
+        left join ct_srm_unit_order csuo on csuo.code=spaper.our_unit_ranking
+        left join ct_srm_dept firstdept on firstdept.id=spaper.first_author_dept_id
+        left join ct_srm_dept corrdept on corrdept.id=spaper.corr_author_dept_id
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=spaper.sys_no and eafrec.check_rec_id=spaper.id
+        where
+        eafrec.step_no>1
+
+        <if test="paperDto.title!=null and paperDto.title!=''">
+            and spaper.title LIKE CONCAT('%', #{paperDto.title}, '%')
+        </if>
+        <if test="paperDto.startDate != null and paperDto.startDate != ''">
+            and spaper.sub_date &gt;= #{paperDto.startDate}
+        </if>
+
+        <if test="paperDto.endDate != null and paperDto.endDate != ''">
+            and spaper.sub_date &lt;= #{paperDto.startDate}
+        </if>
+        <if test="paperDto.journal != null and paperDto.journal != ''">
+            and spaper.journal = #{paperDto.journal}
+        </if>
+        <if test="paperDto.deptId != null and paperDto.deptId != ''">
+            and spaper.deptId = #{paperDto.deptId}
+        </if>
+        <if test="paperDto.bizType != null and paperDto.bizType != ''">
+            and spaper.biz_type= #{paperDto.bizType}
+        </if>
+        <if test="paperDto.auditState== null and paperDto.auditState == ''">
+            and (
+            (spaper.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{paperDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where spaper.sys_no=seafrec.sys_no and seafrec.check_rec_id=spaper.id) and eafrec.checker_string  LIKE CONCAT('%|', #{paperDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (spaper.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{paperDto.userId}, '|%'))
+            )
+        </if>
+        <if test='paperDto.auditState=="0"'>
+            and spaper.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{paperDto.userId}, '|%')
+        </if>
+        <if test='paperDto.auditState=="1"'>
+            and spaper.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{paperDto.userId}, '|%')
+        </if>
+        <if test='paperDto.auditState=="2"'>
+            and spaper.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{paperDto.userId}, '|%')
+        </if>
+
+    </select>
+
+    <select id="getFirstAuthor" resultType="com.mediway.hos.srm.business.center.model.entity.user.SrmUser">
+        select spa.author as id,spa.author_name as name,spa.title,spa.edu_degree as eduDegree,spa.edu_level as eduLevel,spa.author_dept_id as dept
+        from srm_paper_author spa
+        where spa.paper_id=#{parentId}
+        <if test="isCorrFlag!=null and isCorrFlag!=''">
+            and spa.is_corr_author=#{isCorrFlag}
+        </if>
+        order by spa.ranking Asc limit 1
+    </select>
+
+    <select id="getPaperApply" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select ply.id as id,ply.title as name from srm_paper_submission_apply ply
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=ply.sys_no and eafrec.check_rec_id=ply.id
+        where eafrec.step_no>1 and
+        ( ply.sub_user_id=#{userId}
+          or ply.first_author_id=#{userId}
+          or ply.corr_author_id=#{userId}
+        )
+        and "2"=(select eafrec2.check_result from cf_srm_eaf_rec eafrec2 where eafrec2.sys_no=ply.sys_no and eafrec2.check_rec_id=ply.id order by eafrec2.step_no desc limit 1)
+    </select>
+
+    <select id="listExpertAuditPaper" resultType="com.mediway.hos.srm.business.center.model.vo.paper.PaperSubmissionExpertAuditVo">
+        select spsg.id as rowId,spsg.app_rowId as appRowId,spsg.note as note,
+        csu.name as subUserName, spaper.sub_date as subDate ,
+        fuser.name as firstAuthorName,cuser.name as corrAuthorName,
+        firstdept.name as firstAuthorDeptName,corrdept.name as corrAuthorDeptName,
+        spsg.audit_status as auditStatus,spsg.data_status as dataStatus,
+
+        spaper.title as title,spaper.data_status as dataStatus,
+        spaper.first_author_name as firstAuthorName,spaper.corr_author_name as corrAuthorName,
+        firstdept.name as firstAuthorDeptName,corrdept.name as corrAuthorDeptName
+
+        from srm_paper_submission_grade spsg
+        left join srm_paper spaper on spaper.id=spsg.app_rowId
+        left join ct_srm_user csu on csu.id=spaper.sub_user_id
+
+        left join ct_srm_user fuser on fuser.id=spaper.first_author_id
+        left join ct_srm_user cuser on cuser.id=spaper.corr_author_id
+        left join ct_srm_dept firstdept on firstdept.id=spaper.first_author_dept_id
+        left join ct_srm_dept corrdept on corrdept.id=spaper.corr_author_dept_id
+        where spsg.expert=#{paperSubmissionExpertAuditDto.userId} and spsg.sys_no=#{paperSubmissionExpertAuditDto.sysNo}
+        <if test="paperSubmissionExpertAuditDto.title!=null and paperSubmissionExpertAuditDto.title!=''">
+            and ply.title=#{paperSubmissionExpertAuditDto.title}
+        </if>
+
+    </select>
+</mapper>

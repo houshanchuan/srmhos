@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmIdentifyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmIdentify">
+        <id column="id" property="id" />
+        <result column="year" property="year" />
+        <result column="name" property="name" />
+        <result column="participants" property="participants" />
+        <result column="identify_level" property="identifyLevel" />
+        <result column="identify_unit" property="identifyUnit" />
+        <result column="identify_date" property="identifyDate" />
+        <result column="our_unit_ranking" property="ourUnitRanking" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="res_audit" property="resAudit" />
+        <result column="resdesc" property="resdesc" />
+        <result column="audit_user_id" property="auditUserId" />
+        <result column="audit_date" property="auditDate" />
+        <result column="remark" property="remark" />
+        <result column="sys_no" property="sysNo" />
+        <result column="biz_type" property="bizType" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, year, name, participants, identify_level, identify_unit, identify_date, our_unit_ranking, sub_user_id, sub_date, data_status, res_audit, resdesc, audit_user_id, audit_date, remark, sys_no, biz_type
+    </sql>
+
+</mapper>

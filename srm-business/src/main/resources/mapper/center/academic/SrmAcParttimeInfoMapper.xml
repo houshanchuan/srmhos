@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.academic.SrmAcParttimeInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.academic.SrmAcParttimeInfo">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="committee" property="committee" />
+        <result column="position" property="position" />
+        <result column="year" property="year" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="sub_user_id" property="subUserId" />
+        <result column="sub_date" property="subDate" />
+        <result column="data_status" property="dataStatus" />
+        <result column="sys_no" property="sysNo" />
+        <result column="branch" property="branch" />
+        <result column="res_audit" property="resAudit" />
+        <result column="res_desc" property="resDesc" />
+        <result column="audit_user_id" property="auditUserId" />
+        <result column="audit_date" property="auditDate" />
+        <result column="committee_type" property="committeeType" />
+        <result column="biz_type" property="bizType" />
+        <result column="committee_branch" property="committeeBranch" />
+        <result column="committee_sub_branch" property="committeeSubBranch" />
+        <result column="parttime_type" property="parttimeType" />
+        <result column="state" property="state" />
+        <result column="parttime_apply" property="parttimeApply" />
+        <result column="create_time" property="createTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, dept_id, committee, position, year, start_date, end_date, sub_user_id, sub_date, data_status, sys_no, branch, res_audit, res_desc, audit_user_id, audit_date, committee_type, biz_type, committee_branch, committee_sub_branch, parttime_type, state, parttime_apply
+    </sql>
+    <select id="getDetail" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcParttimeInfoVo">
+        select sapi.id as rowId , puser.id as "userId.id",puser.name as "userId.name", puser.name as userName,
+        csci.code as "committee.id",csci.name as "committee.name",csci.name as committeeName,sapi.branch as branch,
+        csy.code as "year.id",csy.name as "year.name",csy.name as yearName,sdept.id as "deptId.id",sdept.name as "deptId.name",
+        cspj.code as "position.id",cspj.name as "position.name",cspj.name as positionName,
+        cspt.code as "parttimeType.id",cspt.name as "parttimeType.name",cspt.name as parttimeTypeName,sapi.parttime_apply as parttimeApply,
+        sapi.start_date as startDate,sapi.end_date as endDate,sapi.data_status as dataStatus
+        from srm_ac_parttime_info sapi
+        left join ct_srm_user puser on puser.id=sapi.user_id
+        left join ct_srm_committee_info csci on csci.code=sapi.committee
+        left join ct_srm_year csy on csy.code=sapi.year
+        left join ct_srm_parttime_job cspj on cspj.code=sapi.position
+        left join ct_srm_parttime_type cspt on cspt.code=sapi.parttime_type
+        left join ct_srm_dept sdept on sdept.id=sapi.dept_id
+        where sapi.id=#{rowId}
+    </select>
+
+    <select id="listAcParttimeInfo" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcParttimeInfoVo">
+        select sapi.id as rowId ,puser.name as userName,sapi.branch as branch,
+        csci.name as committeeName,sapi.committee_branch as committeeBranch,
+        csy.name as yearName,sdept.name as deptName,suser.name as subUserName,
+        sapi.sub_date as subDate,cspt.code as parttimeTypeName,
+        cspj.name as positionName,sapi.create_time,suser1.name as creatorName,
+        sapi.start_date as startDate,sapi.end_date as endDate,sapi.data_status as dataStatus
+        from srm_ac_parttime_info sapi
+        left join ct_srm_user puser on puser.id=sapi.user_id
+        left join ct_srm_committee_info csci on csci.code=sapi.committee
+        left join ct_srm_year csy on csy.code=sapi.year
+        left join ct_srm_parttime_job cspj on cspj.code=sapi.position
+        left join ct_srm_dept sdept on sdept.id=sapi.dept_id
+        left join ct_srm_user suser on suser.id=sapi.sub_user_id
+        left join ct_srm_user suser1 on suser1.id=sapi.creator_id
+        left join ct_srm_parttime_type cspt on cspt.code=sapi.parttime_type
+        where (sapi.sub_user_id=#{acParttimeInfoDto.userId} or sapi.user_id = #{acParttimeInfoDto.userId} or creator_id=#{acParttimeInfoDto.userId})
+        <if test="acParttimeInfoDto.startDate != null and acParttimeInfoDto.startDate != ''">
+            and sapi.data_status= #{acParttimeInfoDto.dataStatus}
+        </if>
+        <if test="acParttimeInfoDto.startDate != null and acParttimeInfoDto.startDate != ''">
+            and sapi.sub_date &gt;= #{acParttimeInfoDto.startDate}
+        </if>
+
+        <if test="acParttimeInfoDto.endDate != null and acParttimeInfoDto.endDate != ''">
+            and sapi.sub_date &lt;= #{acParttimeInfoDto.endDate}
+        </if>
+        <if test="acParttimeInfoDto.parttimeType != null and acParttimeInfoDto.parttimeType != ''">
+            and sapi.parttime_type = #{acParttimeInfoDto.parttimeType}
+        </if>
+        <if test="acParttimeInfoDto.committee != null and acParttimeInfoDto.committee != ''">
+            and sapi.committee = #{acParttimeInfoDto.committee}
+        </if>
+
+    </select>
+    <update id="updateStatus">
+        update  srm_ac_parttime_info
+        <set>
+            <if test="status != null">
+                data_status = #{status},
+            </if>
+            <if test="checkStatus != null">
+                res_audit = #{checkStatus}
+            </if>
+        </set>
+        where id=#{rowId}
+    </update>
+    <select id="listAuditAcParttimeInfo" resultType="com.mediway.hos.srm.business.center.model.vo.academic.AcParttimeInfoVo">
+        select sapi.id as rowId ,puser.name as userName,sapi.branch as branch,
+        csci.name as committeeName,sapi.committee_branch as committeeBranch,
+        csy.name as yearName,sdept.name as deptName,suser.name as subUserName,
+        sapi.sub_date as subDate,
+        cspj.name as positionName,cspt.code as parttimeTypeName,
+        sapi.start_date as startDate,sapi.end_date as endDate,sapi.data_status as dataStatus
+        from srm_ac_parttime_info sapi
+        left join ct_srm_user puser on puser.id=sapi.user_id
+        left join ct_srm_committee_info csci on csci.code=sapi.committee
+        left join ct_srm_year csy on csy.code=sapi.year
+        left join ct_srm_parttime_job cspj on cspj.code=sapi.position
+        left join ct_srm_dept sdept on sdept.id=sapi.dept_id
+        left join ct_srm_user suser on suser.id=sapi.sub_user_id
+        left join ct_srm_parttime_type cspt on cspt.code=sapi.parttime_type
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no="T001" and eafrec.check_rec_id=sapi.id
+        where
+        eafrec.step_no>1
+        <if test="acParttimeInfoDto.parttimeType != null and acParttimeInfoDto.parttimeType != ''">
+            and sapi.parttime_type = #{acParttimeInfoDto.parttimeType}
+        </if>
+        <if test="acParttimeInfoDto.committee != null and acParttimeInfoDto.committee != ''">
+            and sapi.committee = #{acParttimeInfoDto.committee}
+        </if>
+        <if test="acParttimeInfoDto.userId != null and acParttimeInfoDto.userId != ''">
+            and sapi.user_id = #{acParttimeInfoDto.userId}
+        </if>
+        <if test="acParttimeInfoDto.startDate != null and acParttimeInfoDto.startDate != ''">
+            and sapi.sub_date &gt;= #{acParttimeInfoDto.startDate}
+        </if>
+
+        <if test="acParttimeInfoDto.endDate != null and acParttimeInfoDto.endDate != ''">
+            and sapi.sub_date &lt;= #{acParttimeInfoDto.endDate}
+        </if>
+
+        <if test="acParttimeInfoDto.auditState== null and acParttimeInfoDto.auditState == ''">
+            and (
+            (sapi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string  LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%'))
+            or (eafrec.step_no = (select max(step_no) from cf_srm_eaf_rec seafrec where seafrec.sys_no="T001" and seafrec.check_rec_id=sapi.id) and eafrec.checker_string  LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%') and eafrec.check_datetime is not null)
+            or (sapi.data_status=0 and eafrec.is_current_step=1 and eafrec.check_result=3 and eafrec.checker_string  LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%'))
+            )
+        </if>
+        <if test='acParttimeInfoDto.auditState=="0"'>
+            and sapi.data_status=1 and eafrec.is_current_step=1 and eafrec.checker_string LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%')
+        </if>
+        <if test='acParttimeInfoDto.auditState=="1"'>
+            and sapi.data_status=1 and eafrec.check_result="2" and eafrec.checker_string  LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%')
+        </if>
+        <if test='acParttimeInfoDto.auditState=="2"'>
+            and sapi.data_status=0 and eafrec.check_result="3" and eafrec.checker_string  LIKE CONCAT('%|', #{acParttimeInfoDto.userId}, '|%')
+        </if>
+
+    </select>
+    <select id="getParttimeApply" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select sapt.id as id,puser.name as name from srm_ac_parttime_apply sapt
+        left join ct_srm_user puser on puser.id=sapi.user_id
+        left join cf_srm_eaf_rec eafrec on eafrec.sys_no=sapt.sys_no and eafrec.check_rec_id=sapt.id
+        where eafrec.step_no>1 and
+        ( sapt.sub_user_id=#{userId}
+        or sapt.user_id=#{userId}
+        or sapt.create_user_id=#{userId}
+        )
+        and "2"=(select eafrec2.check_result from cf_srm_eaf_rec eafrec2 where eafrec2.sys_no=sapt.sys_no and eafrec2.check_rec_id=sapt.id order by eafrec2.step_no desc limit 1)
+    </select>
+</mapper>

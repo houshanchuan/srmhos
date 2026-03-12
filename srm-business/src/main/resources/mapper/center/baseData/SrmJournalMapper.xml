@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mediway.hos.srm.business.center.mapper.baseData.SrmJournalMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mediway.hos.srm.business.center.model.entity.baseData.SrmJournal">
+        <id column="id" property="id" />
+        <result column="code" property="code" />
+        <result column="name" property="name" />
+        <result column="is_valid" property="isValid" />
+        <result column="issn_code" property="issnCode" />
+        <result column="cn_code" property="cnCode" />
+        <result column="publish_cycle" property="publishCycle" />
+        <result column="mailing_code" property="mailingCode" />
+        <result column="source" property="source" />
+        <result column="responsible_unit_name" property="responsibleUnitName" />
+        <result column="factor" property="factor" />
+        <result column="eissn_code" property="eissnCode" />
+        <result column="jcr" property="jcr" />
+        <result column="alias" property="alias" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, code, name, is_valid, issn_code, cn_code, publish_cycle, mailing_code, source, responsible_unit_name, factor, eissn_code, jcr, alias
+    </sql>
+    <select id="getJournal" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.CombVo">
+        select code as id,name from srm_journal
+        where is_valid=1
+        <if test="journalDictDto.name!=null and journalDictDto.name!=''">
+            and name LIKE CONCAT('%', #{journalDictDto.name}, '%')
+        </if>
+
+    </select>
+
+    <select id="listJournalDict" parameterType="com.mediway.hos.srm.business.center.model.dto.baseData.JournalDictDto" resultType="com.mediway.hos.srm.business.center.model.vo.baseData.JournalDictVo">
+        select id as rowId,code,name,is_valid as isValid,issn_code as issnCode,cn_code as cnCode,source,publish_cycle as publishCycle, mailing_code as mailingCode,source,responsible_unit_name as responsibleUnitName,factor,eissn_code as eIssnCode,jcr,alias from srm_journal
+    </select>
+
+</mapper>
